@@ -1,0 +1,34 @@
+$highlight-color:#ff574a;
+$light-color:#666;
+.mint-tabbar {
+    .mint-tab-item {
+        color: $light-color;
+        &.is-selected {
+            background-color: #eaeaea;
+            color: $highlight-color;
+        }
+        .mint-tab-item-icon {
+            >* {
+                display: initial;
+                width: initial;
+            }
+        }
+    }
+}
+
+.page-tabbar {
+    overflow: hidden;
+    height: 100vh;
+    .page-wrap {
+        overflow: auto;
+        height: 100%;
+        padding-bottom: 100px;
+        .mint-tab-container-item {
+            padding-bottom: 55px;
+        }
+    }
+    .pro-banner {
+        width: 100%;
+        display: block;
+    }
+}
