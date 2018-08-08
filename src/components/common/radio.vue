@@ -57,7 +57,7 @@
                 if (this.modelValue === undefined) {
                     return this.checked;
                 }
-                console.log(this.value);
+                // console.log(this.value);
                 return this.modelValue === this.value;
             }
         },
@@ -74,10 +74,14 @@
                 this.toggle();
             }
         },
-         beforeUpdate(){
-           console.log(this.state);
-           console.log('modelValue',this.modelValue);
+        updated(){
+   console.log(this.state);
+   console.log('modelValue',this.modelValue);
         },
+        //  beforeUpdate(){
+        //    console.log(this.state);
+        //    console.log('modelValue',this.modelValue);
+        // },
     }
 </script>
 <style lang="scss" scoped>

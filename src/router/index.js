@@ -5,6 +5,7 @@ import Custom from '@/components/custom'
 import OnlinePlan from '@/components/onlinePlan'
 import JiaYing from '@/components/plan/jiaying/index'
 import SalaryQuery from '@/components/salaryQuery'
+import Login from '@/components/login'
 import Result from '@/components/plan/jiaying/result'
 
 Vue.use(Mint)
@@ -12,6 +13,14 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      meta: {
+        title: '登录'
+      }
+    },
     {
       path: '/custom',
       name: 'Custom',

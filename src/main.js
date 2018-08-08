@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
+import Vuex from 'vuex'
+import store from './store/index'
+Vue.use(Vuex)
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios
@@ -14,5 +17,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store
 })

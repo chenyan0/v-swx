@@ -1,6 +1,6 @@
 <template>
     <button :type="nativeType" :disabled="disabled" class="custom-button" :class="['custom-button-'+type,'custom-button-'+size,{'is-disabled':disabled}]">
-        <i v-if="loading">。</i>
+          <div v-if="loading" class="loading"></div>
         <slot></slot>
     </button>
 </template>
@@ -30,6 +30,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 $button-default-color: #656b79;
 $button-default-background-color: #f6f8fa;
 $button-primary-color: #fff;
@@ -57,7 +58,28 @@ $button-success-background-color: #6dbe4c;
 $button-success-hover-color: #85ce61;
 $button-success-active-color: #5daf34;
 $button-success-disabled-color: #b3e19d;
-
+.loading{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+    border: 2px solid;
+    border-color:#fff #fff transparent;
+    border-radius: 50%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-animation: loading 1s linear infinite;
+    animation: loading 1s linear infinite;
+}
+@keyframes loading{
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
 .custom-button {
   appearance: none;
   border-radius: 4px;
@@ -92,17 +114,26 @@ $button-success-disabled-color: #b3e19d;
   }
   &-#{default} {
     color: $button-default-color;
+    .loading{
+       border-color:$button-default-color $button-default-color transparent;
+    }
     &:hover,
     &:focus {
       color: #409eff;
       border-color: #c6e2ff;
       background-color: #ecf5ff;
+       .loading{
+        border-color:#409eff #409eff transparent;
+      }
     }
     &:active,
     &.is-active {
       color: #3a8ee6;
       border-color: #3a8ee6;
       outline: none;
+       .loading{
+       border-color:#3a8ee6 #3a8ee6 transparent;
+    }
     }
   }
   &-#{primary} {
