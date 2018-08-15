@@ -57,19 +57,24 @@ export default {
       console.log(this.$store)
       // this.$router.push('/');
         this.$store.dispatch("setLoadingState", true); //设置loading状态
-        // requestLogin(data).then(res => {
-        //   if(res == "notFound"){
-        //       Toast({
-        //           message: '登陆失败',
-        //           iconClass: 'icon icon-error'
-        //           });
-        //       this.$store.dispatch("setLoadingState", false);
-        //   }else{
+        requestLogin(data).then(res => {
+          const session=JSON.parse(sessionStorage.getItem('userInfo')) || {}
+          console.log(data,session);
+
+          if(data!=session || !session){
+              Toast({
+                  message: '用户名或密码错误',
+                  iconClass: 'icon icon-error'
+                  });
+              this.$store.dispatch("setLoadingState", false);
+
+          }
+         else{
               this.setUserInfo(data);
-              // this.setUserData(res);
+              this.setUserData(res);
               this.$router.replace("/");
-        //   }
-        // });
+          }
+        });
     }
   }
 };
@@ -101,7 +106,7 @@ export default {
       border-bottom: 1px solid #e6eaf2;
       height: 32px;
       line-height: 32px;
-      color: #99a4bf;
+          color: #2c3e50;
       & > label {
         font-size: 14px;
       }
@@ -112,6 +117,7 @@ export default {
         outline: none;
         font-size: 14px;
         width: 78%;
+        color: #99a4bf;
       }
     }
     // input

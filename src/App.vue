@@ -14,7 +14,7 @@ export default {
 body{
   margin: 0;
   min-height: 100vh;
-  background: url('./assets/ft_bg.png') no-repeat bottom center;
+  background: url('../static/img/ft_bg.png') no-repeat bottom center;
   background-size: contain;
  &.bg-fff{
    background: #fff;

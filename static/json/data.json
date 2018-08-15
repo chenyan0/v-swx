@@ -1,0 +1,36 @@
+{
+    "admin": {
+
+    },
+    "hottj": [{
+            "id": 1,
+            "name": "中银三星尊享家盈二号终身寿险",
+            "href": "jiaying",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/jyimg.png"
+        },
+        {
+            "id": 2,
+            "name": "中银聚富年金保险",
+            "href": "jufu",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/jfimg.png"
+        },
+        {
+            "id": 3,
+            "name": "中银祥佑尊享版终身重大疾病保险",
+            "href": "xiangyou",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/xyimg.png"
+        },
+        {
+            "id": 4,
+            "name": "中银乐享金生终身养老年金保险",
+            "href": "lexiang",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/lximg.png"
+        }
+    ]
+
+
+}

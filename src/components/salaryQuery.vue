@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../assets/banner/salary.jpg" alt="" class="banner">
+    <img src="../../static/img/banner/salary.jpg" alt="" class="banner">
     <div class="form-field">
       <label for="" class="form-label">选择区间</label>
       <mt-datetime-picker ref="start" type="date" v-model="startTime" year-format="{value} 年" month-format="{value} 月" date-format="{value} 日" @confirm="handleConfirm"></mt-datetime-picker>

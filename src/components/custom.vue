@@ -1,7 +1,12 @@
 <template>
   <div class="wrapper">
+     <div class="section">
+      <div class="main">
+        <p class="section-label">页码组</p>
+        <v-page :total="82" :pageSizes="5" :pageIndex="index" :pagerCount="7" @on-change="onPageChange"/>
+      </div>
+    </div>
     <div class="section">
-      <!-- <label for="" class="label">checkbox示例</label> -->
       <div class="main">
         <p class="section-label">复选框组</p>
         <v-checkbox-group v-model="fruit" @on-change="onChange">
@@ -9,11 +14,9 @@
         </v-checkbox-group>
         <div>{{ fruit }}</div>
         <p class="section-label">单个复选框</p>
-        <!-- <v-checkbox label="阿尼玛" name="anima" @on-change="onChange"></v-checkbox> -->
       </div>
     </div>
     <div class="section">
-      <!-- <label for="" class="label">card示例</label> -->
       <div class="main">
         <p class="section-label">卡片组</p>
         <v-card>
@@ -63,12 +66,14 @@
   </div>
 </template>
 <script>
-import VCheckboxGroup from "./common/checkbox-group";
-import VCheckbox from "./common/checkbox";
-import VButton from "./common/button";
-import VCard from "./common/card";
+import VPage from "./common/pages"
+import VCheckboxGroup from "./common/checkbox-group"
+import VCheckbox from "./common/checkbox"
+import VButton from "./common/button"
+import VCard from "./common/card"
 export default {
   components: {
+    VPage,
     VCheckboxGroup,
     VCheckbox,
     VButton,
@@ -90,12 +95,17 @@ export default {
         {
           label: "橘子🍊"
         }
-      ]
+      ],
+      index:2
     };
   },
   methods: {
     onChange: function(data) {
       this.fruit = data;
+    },
+    onPageChange(v){
+      this.index=v;
+console.log(v);
     }
     // onChange: function(key,state) {
     //    console.log(key);

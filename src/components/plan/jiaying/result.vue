@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../../../assets/calculate/jiaying/head.png" alt="" class="pro-banner">
+    <img src="../../../../static/img/calculate/jiaying/head.png" alt="" class="pro-banner">
     <h3>被保险人信息</h3>
     <div class="block-info">
       <ul>

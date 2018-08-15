@@ -21,7 +21,6 @@ export default {
     },
     mounted(){
         this.updateModel(true);
-        console.log(2)
     },
     methods:{
         updateModel(update){

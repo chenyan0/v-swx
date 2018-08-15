@@ -2,20 +2,22 @@ import Vue from 'vue'
 import Mint from 'mint-ui'
 import Router from 'vue-router'
 import Custom from '@/components/custom'
-import OnlinePlan from '@/components/onlinePlan'
+import OnlinePlan from '@/components/plan/onlinePlan'
 import JiaYing from '@/components/plan/jiaying/index'
 import SalaryQuery from '@/components/salaryQuery'
 import Login from '@/components/login'
 import Result from '@/components/plan/jiaying/result'
+import Type from '@/components/plan/type'
 
 Vue.use(Mint)
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login,
       meta: {
         title: '登录'
@@ -23,7 +25,7 @@ const router = new Router({
     },
     {
       path: '/custom',
-      name: 'Custom',
+      name: 'custom',
       component: Custom,
       meta: {
         title: '自定义'
@@ -31,14 +33,19 @@ const router = new Router({
     },
     {
       path: '/',
-      name: 'OnlinePlan',
+      name: 'onlineplan',
       component: OnlinePlan,
       meta: {
         title: '在线计划书'
       }
+    },
+    {
+      path: '/type/:typeId',
+      name: 'type',
+      component: Type
     }, {
       path: '/jiaying',
-      name: 'JiaYing',
+      name: 'jiaying',
       component: JiaYing,
       meta: {
         title: '尊享家盈二号'
@@ -46,7 +53,7 @@ const router = new Router({
     },
     {
       path: '/salaryQuery',
-      name: 'SalaryQuery',
+      name: 'salaryquery',
       component: SalaryQuery,
       meta: {
         title: '薪资查询'
@@ -54,7 +61,7 @@ const router = new Router({
     },
     {
       path: '/result',
-      name: 'Result',
+      name: 'result',
       component: Result,
       meta: {
         title: '利益演算结果'

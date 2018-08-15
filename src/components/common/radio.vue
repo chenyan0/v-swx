@@ -75,8 +75,6 @@
             }
         },
         updated(){
-   console.log(this.state);
-   console.log('modelValue',this.modelValue);
         },
         //  beforeUpdate(){
         //    console.log(this.state);

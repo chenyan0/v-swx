@@ -73,7 +73,6 @@ export default {
       }
       if(this.group){
         this.$parent.updateModel(true);
-        console.log(1)
       } else {
           this.updateModel();
           this.showSlot = this.$slots.default !== undefined;
@@ -109,7 +108,6 @@ export default {
       }
     },
     model(val){
-      console.log(this.model)
     }
   }
 };

@@ -8,19 +8,19 @@
         </mt-swipe-item>
       </mt-swipe>
       <ul class="types">
-        <router-link to="helloworld" v-for="type in types" :key=type.id>
+        <router-link :to="{ name: 'type', params: { typeId:type.id ,name:type.name }}" v-for="type in types" :key=type.id>
           <img :src="type.url" alt="" >
         </router-link>
       </ul>
       <div>
         <h1>热销产品</h1>
     <ul class="pro-list" >
-      <li v-for="h in hots" :key=h.id >
-      <router-link to="jiaying">
-        <img :src="h.url" alt=""  width="100" height="70">
+      <li v-for="h in hots" :key="h.id" >
+      <router-link :to="{path:h.href}">
+        <img :src="h.src" alt=""  width="100" height="70">
         <div>
-        <h2>{{h.title}}</h2>
-        <p><span>保证给付</span> | <span>灵活领取</span> | <span>保费豁免</span></p>
+        <h2>{{h.name}}</h2>
+        <p>{{h.desc}}</p>
         </div>
       </router-link>
       </li>
@@ -29,67 +29,68 @@
   </div>
 
 </template>
-<script>     
+<script>    
+import { requestHotProduct } from "../../api/api"; 
 export default {
+  created(){
+    this.fetchData()
+  },
+  methods:{
+    fetchData(){
+        requestHotProduct().then(res => {
+          this.hots=res.data
+        });
+    }
+  },
   data(){
     return{
       items:[{
         title:'中银三星尊享家盈二号终身寿险',
         href:'/jiaying',
-        url:require('../assets/banner/jybanner.png')
+        url:require('../../../static/img/banner/jybanner.png')
       },
       {
         title:'中银聚富年金保险',
         href:'',
-        url:require('../assets/banner/jfbanner.png')
+        url:require('../../../static/img/banner/jfbanner.png')
       },
       {
         title:'中银祥佑尊享版终身重大疾病保险',
         href:'',
-        url:require('../assets/banner/xybanner.png')
+        url:require('../../../static/img/banner/xybanner.png')
       },
       {
         title:'中银乐享金生终身养老年金保险',
         href:'',
-        url:require('../assets/banner/lxbanner.png')
+        url:require('../../../static/img/banner/lxbanner.png')
       }],
       types:[{
-        url:require('../assets/type_cf.png')
+        url:require('../../../static/img/type_cf.png'),
+        id:'cf',
+        name:'财富管理类'
       },{
-        url:require('../assets/type_jk.png')
+        url:require('../../../static/img/type_jk.png'),
+        id:'jk',
+         name:'健康管理类'
       },
       {
-        url:require('../assets/type_yl.png')
+        url:require('../../../static/img/type_yl.png'),
+        id:'yl',
+         name:'养老规划类'
       },{
-        url:require('../assets/type_zn.png')
+        url:require('../../../static/img/type_zn.png'),
+        id:'zn',
+         name:'子女教育类'
       }],
-      hots:[{
-        title:'中银三星尊享家盈二号终身寿险',
-        href:'',
-        url:require('../assets/jyimg.png')
-      },
-      {
-        title:'中银聚富年金保险',
-        href:'',
-        url:require('../assets/jfimg.png')
-      },
-      {
-        title:'中银祥佑尊享版终身重大疾病保险',
-        href:'',
-        url:require('../assets/xyimg.png')
-      },
-      {
-        title:'中银乐享金生终身养老年金保险',
-        href:'',
-        url:require('../assets/lximg.png')
-      }]
+      hots:[]
+    
 
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-@import '../styles/base.scss';
+@import '../../styles/base.scss';
 .banner {
     width: 100%;
     height: 130px;
@@ -154,7 +155,7 @@ li{
     color: #333;
     font-weight: normal;
   }
-  span{
+  p{
     color:#999;
     font-size: 14px;
   }
