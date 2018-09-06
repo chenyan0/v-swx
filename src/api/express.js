@@ -13,8 +13,15 @@ app.all('*', function (req, res, next) {
 app.get('/api/hotproduct', function (req, res) {
   res.json(data.hottj)
 })
+app.get('/api/getTree', function (req, res) {
+  res.json(data.tree)
+})
 app.post('/api/login', function (req, res) {
-  res.send('login success')
+  if (req.params.username !== 'admin' && req.params.password !== '12345') {
+    res.send('账号密码不匹配')
+  } else {
+    res.send('登录成功')
+  }
 })
 app.listen(8000)
 console.log('Listening on port 8000...')

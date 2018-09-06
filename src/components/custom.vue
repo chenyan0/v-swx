@@ -2,8 +2,43 @@
   <div class="wrapper">
      <div class="section">
       <div class="main">
+        <p class="section-label">模态窗</p>
+        <v-button type="success" size="small" @click="openDialog">open Dialog</v-button>
+        <v-dialog :visible.sync="isVisible" title="提示信息" size="small"  center @open="openHandle">
+          <span slot="header" >确认</span>
+          <table>
+            <thead>
+              <tr>
+                <th>sss</th>
+                <th>sss</th>
+                <th>sss</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr>
+                <td>dsdas</td>
+                <td>dsdas</td>
+                <td>dsdas</td>
+              </tr>
+            </tbody>
+          </table>
+          <div slot="footer">
+            <v-button type="success" size="small" @click="isVisible = false">确定</v-button>
+            <v-button type="success" size="small" @click="isVisible = false">取消</v-button>
+          </div>
+        </v-dialog>
+      </div>
+    </div>
+    <div class="section">
+      <div class="main">
+        <p class="section-label">树组</p>
+        <v-tree :data="tree"></v-tree>
+      </div>
+    </div>
+    <div class="section">
+      <div class="main">
         <p class="section-label">页码组</p>
-        <v-page :total="82" :pageSizes="5" :pageIndex="index" :pagerCount="7" @on-change="onPageChange"/>
+        <v-page :total="82" :pageSizes="5" :pageIndex="index" :pagerCount="7" @on-change="onPageChange" />
       </div>
     </div>
     <div class="section">
@@ -66,14 +101,19 @@
   </div>
 </template>
 <script>
-import VPage from "./common/pages"
-import VCheckboxGroup from "./common/checkbox-group"
-import VCheckbox from "./common/checkbox"
-import VButton from "./common/button"
-import VCard from "./common/card"
+import { requestTree } from "../api/api"; 
+import VDialog from "./common/dialog";
+import VPage from "./common/pages";
+import VTree from "./common/tree";
+import VCheckboxGroup from "./common/checkbox-group";
+import VCheckbox from "./common/checkbox";
+import VButton from "./common/button";
+import VCard from "./common/card";
 export default {
   components: {
     VPage,
+    VDialog,
+    VTree,
     VCheckboxGroup,
     VCheckbox,
     VButton,
@@ -81,6 +121,7 @@ export default {
   },
   data() {
     return {
+      isVisible:false,
       fruit: ["苹果🍎"],
       tags: [
         {
@@ -96,32 +137,33 @@ export default {
           label: "橘子🍊"
         }
       ],
-      index:2
+      tree:[],
+      index: 2,
+      isVisible:false
     };
+  },
+  created(){
+     requestTree().then(res => {
+          this.tree=res.data
+      });
   },
   methods: {
     onChange: function(data) {
       this.fruit = data;
     },
-    onPageChange(v){
-      this.index=v;
-console.log(v);
+    openDialog(){
+      console.log(this.isVisible)
+      this.isVisible=true
+    },
+  
+    onPageChange(v) {
+      this.index = v;
+      console.log(v);
+    },
+    openHandle(){
+    },
+    closeHandle(){
     }
-    // onChange: function(key,state) {
-    //    console.log(key);
-    //   if(state){
-    //     this.$set(this.values,this.values.length,key)
-    //       // this.values.push(key);
-    //   }else{
-    //       this.values.forEach((ele,i)=>{
-    //    console.log(Object.keys(ele).join(),Object.keys(key).join());
-    //         if(Object.keys(ele).join()==Object.keys(key).join()){
-    //           this.values.splice(this.values.indexOf(i),1);
-    //         }
-    //       })
-
-    //   }
-    // }
   }
 };
 </script>

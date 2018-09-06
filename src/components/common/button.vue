@@ -1,5 +1,5 @@
 <template>
-    <button :type="nativeType" :disabled="disabled" class="custom-button" :class="['custom-button-'+type,'custom-button-'+size,{'is-disabled':disabled}]">
+    <button :type="nativeType" :disabled="disabled" class="custom-button" :class="['custom-button-'+type,'custom-button-'+size,{'is-disabled':disabled}]" @click="handleClick">
           <div v-if="loading" class="loading"></div>
         <slot></slot>
     </button>
@@ -24,6 +24,11 @@ export default {
     size: {
       type: String,
       default: "large"
+    }
+  },
+  methods:{
+    handleClick(evt){
+      this.$emit('click',evt)
     }
   },
   created() {}

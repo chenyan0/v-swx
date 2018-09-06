@@ -17,7 +17,7 @@ export default {
     return {
       showPrevMore: false, //后退
       showNextMore: false, //前进
-      currentPage: 1, //当前页
+      currentPage: this.pageIndex, //当前页
       pageCount: Math.ceil(this.total / this.pageSizes) //总页数
     };
   },
@@ -36,6 +36,10 @@ export default {
       //每组显示页数
       type: Number,
       default: 7
+    },
+    pageIndex:{
+        type: Number,
+      default: 1
     }
   },
 

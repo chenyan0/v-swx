@@ -6,11 +6,11 @@
         </div>
         <div class="login">
             <div class="username">
-                <label>账号:</label>
+                <label>账 号</label>
                 <input type="text" v-model="username" placeholder="测试账号admin">
             </div>
             <div class="password">
-                <label>密码:</label>
+                <label>密 码</label>
                 <input v-model="password" type="password" placeholder="测试密码123456">
             </div>
             <!-- <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
@@ -54,25 +54,23 @@ export default {
         username: this.username,
         password: this.password
       };
+      
       console.log(this.$store)
       // this.$router.push('/');
         this.$store.dispatch("setLoadingState", true); //设置loading状态
         requestLogin(data).then(res => {
-          const session=JSON.parse(sessionStorage.getItem('userInfo')) || {}
-          console.log(data,session);
-
-          if(data!=session || !session){
+          console.log(res);
+          if(res){
               Toast({
-                  message: '用户名或密码错误',
+                  message: res.data,
                   iconClass: 'icon icon-error'
                   });
               this.$store.dispatch("setLoadingState", false);
-
           }
          else{
               this.setUserInfo(data);
               this.setUserData(res);
-              this.$router.replace("/");
+              // this.$router.replace("/");
           }
         });
     }
@@ -83,10 +81,12 @@ export default {
 @import "../styles/base";
 .wrapper {
   background-color: white;
+  height: 100vh;
   .title {
-    height: 40px;
-    background-color: #f7f9fc;
+       height: 32vh;
+    background-color: #221e33;
     line-height: 40px;
+    color: #fff;
     .back {
       font-size: 20px;
       margin-left: 0.3rem;
@@ -98,8 +98,7 @@ export default {
     }
   }
   .login {
-    width: 80%;
-    margin: 0 auto;
+    margin:0 30px;
     .username,
     .password {
       margin: 10px;
@@ -117,17 +116,15 @@ export default {
         outline: none;
         font-size: 14px;
         width: 78%;
-        color: #99a4bf;
+        color: #99a4bf;padding-left: 10px;
       }
     }
-    // input
-    // background-color white
     button {
-      width: 50%;
-      height: 33px;
-      margin: 30px auto;
+          width: 100%;
+    height: 40px;
+    margin: 30px 0;
       border-radius: 20px;
-      background-color: #ff564a;
+      background-color: #f44336;
       border: 0;
       outline: none;
       font-size: 16px;
