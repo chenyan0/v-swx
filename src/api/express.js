@@ -17,8 +17,8 @@ app.get('/api/getTree', function (req, res) {
   res.json(data.tree)
 })
 app.post('/api/login', function (req, res) {
-  if (req.params.username !== 'admin' && req.params.password !== '12345') {
-    res.send('账号密码不匹配')
+  if (req.username !== 'admin' && req.password !== '123456') {
+    res.send('账号或密码错误')
   } else {
     res.send('登录成功')
   }

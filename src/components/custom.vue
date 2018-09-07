@@ -2,6 +2,14 @@
   <div class="wrapper">
      <div class="section">
       <div class="main">
+        <p class="section-label">switch开关</p>
+        <v-switch v-model="val1" :width="40" id="id" name="nn">
+          <slot>是否同意xxxx协议</slot>
+        </v-switch>
+      </div>
+    </div>
+     <div class="section">
+      <div class="main">
         <p class="section-label">模态窗</p>
         <v-button type="success" size="small" @click="openDialog">open Dialog</v-button>
         <v-dialog :visible.sync="isVisible" title="提示信息" size="small"  center @open="openHandle">
@@ -109,6 +117,7 @@ import VCheckboxGroup from "./common/checkbox-group";
 import VCheckbox from "./common/checkbox";
 import VButton from "./common/button";
 import VCard from "./common/card";
+import VSwitch from "./common/switch";
 export default {
   components: {
     VPage,
@@ -117,10 +126,11 @@ export default {
     VCheckboxGroup,
     VCheckbox,
     VButton,
-    VCard
+    VCard,VSwitch
   },
   data() {
     return {
+      val1:true,
       isVisible:false,
       fruit: ["苹果🍎"],
       tags: [
