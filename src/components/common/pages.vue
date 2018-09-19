@@ -145,6 +145,7 @@ export default {
     outline: none;
     box-sizing: content-box;
     padding: 0;
+        background: #fff;
     cursor: pointer;
     &:after {
       content: "";

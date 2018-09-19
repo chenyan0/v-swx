@@ -5,28 +5,28 @@
     "hottj": [{
             "id": 1,
             "name": "中银三星尊享家盈二号终身寿险",
-            "href": "jiaying",
+            "href": "jiaying/index",
             "desc": "保证给付 | 领取灵活 | 保费豁免",
             "src": "../../static/img/jyimg.png"
         },
         {
             "id": 2,
             "name": "中银聚富年金保险",
-            "href": "jufu",
+            "href": "jufu/index",
             "desc": "保证给付 | 领取灵活 | 保费豁免",
             "src": "../../static/img/jfimg.png"
         },
         {
             "id": 3,
             "name": "中银祥佑尊享版终身重大疾病保险",
-            "href": "xiangyou",
+            "href": "xiangyou/index",
             "desc": "保证给付 | 领取灵活 | 保费豁免",
             "src": "../../static/img/xyimg.png"
         },
         {
             "id": 4,
             "name": "中银乐享金生终身养老年金保险",
-            "href": "lexiang",
+            "href": "lexiang/index",
             "desc": "保证给付 | 领取灵活 | 保费豁免",
             "src": "../../static/img/lximg.png"
         }
@@ -93,7 +93,44 @@
 
             }
         ]
-    }]
+    }],
+    "sqData": [{
+            "month": "2017-12",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        },
+        {
+            "month": "2017-11",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        },
+        {
+            "month": "2017-10",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        },
+        {
+            "month": "2017-9",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        }
+    ]
 
 
 }

@@ -68,6 +68,7 @@ export default {
     }
   },
   mounted(){
+    console.log(this)
       if(this.$parent){
         this.group=true;
       }

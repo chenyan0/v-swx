@@ -1,10 +1,16 @@
 <template>
   <div class="wrapper">
+    <div class="section">
+      <div class="main">
+        <p class="section-label">实时搜索</p>
+        <v-search></v-search>
+      </div>
+    </div>
      <div class="section">
       <div class="main">
         <p class="section-label">switch开关</p>
-        <v-switch v-model="val1" :width="40" id="id" name="nn">
-          <slot>是否同意xxxx协议</slot>
+        <v-switch v-model="val1" :width="40" id="id" name="nn" @change="onSwitchChange">
+          <slot>是否同意《xxxx》协议？</slot>
         </v-switch>
       </div>
     </div>
@@ -57,6 +63,7 @@
         </v-checkbox-group>
         <div>{{ fruit }}</div>
         <p class="section-label">单个复选框</p>
+        <v-checkbox label="xxx"></v-checkbox>
       </div>
     </div>
     <div class="section">
@@ -118,6 +125,7 @@ import VCheckbox from "./common/checkbox";
 import VButton from "./common/button";
 import VCard from "./common/card";
 import VSwitch from "./common/switch";
+import VSearch from "./common/search";
 export default {
   components: {
     VPage,
@@ -126,11 +134,13 @@ export default {
     VCheckboxGroup,
     VCheckbox,
     VButton,
-    VCard,VSwitch
+    VCard,
+    VSwitch,
+    VSearch
   },
   data() {
     return {
-      val1:true,
+      val1:false,
       isVisible:false,
       fruit: ["苹果🍎"],
       tags: [
@@ -158,6 +168,9 @@ export default {
       });
   },
   methods: {
+    onSwitchChange(v){
+      this.val1=v
+    },
     onChange: function(data) {
       this.fruit = data;
     },

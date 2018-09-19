@@ -1,10 +1,8 @@
 <template>
     <div class="v-tree">
-        <ul class="v-tree-node" v-for="(item, index) in data" :key="index" :is-expanded="childNodeRendered">
+        <ul class="v-tree-node" v-for="(item, index) in data" :key="index" :is-expanded="item.children ? true : false">
             <li @click="toggleDown(item,index)" :class="{expanded:scope[index]}">{{item.name}}</li>
-            <div v-if="scope[index]" class="v-tree-content">
-                <tree-menu :data="item.children"></tree-menu>
-            </div>
+            <tree-menu :data="item.children"  v-if="scope[index]"></tree-menu>
         </ul>
     </div>
 </template>
@@ -15,7 +13,6 @@ export default {
     return {
       scope: [],
       expanded: false,
-      childNodeRendered: true
     };
   },
   props: {
@@ -24,7 +21,9 @@ export default {
       default: []
     }
   },
-  computed: {},
+  computed: {
+  
+  },
   methods: {
     doTask(index) {
       this.$set(this.scope, index, !this.scope[index]);

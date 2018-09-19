@@ -1,12 +1,15 @@
 <template>
-    <div class="v-switch">
-        <div class="v-switch-wrapper" :class="{'is-disabled':disabled,'is-checked':checked}" :style="{ 'width': coreWidth + 'px' }">
+    <div class="v-switch-wrapper">
+        <div :class="wrapperClass"  :style="{ 'width': coreWidth + 'px' }">
             <input type="checkbox" ref="input" :name="name" :id="id" :disabled="disabled" @change="handleChange">
         </div>
-        <slot></slot>
+        <span>
+          <slot></slot>
+        </span>
     </div>
 </template>
 <script>
+const prefixCls=`v-switch`
 export default {
   data() {
     return {
@@ -14,6 +17,10 @@ export default {
     };
   },
   props: {
+       value: {
+        type: [Boolean, String, Number],
+        default: false
+      },
     disabled: {
       type: Boolean,
       default: false
@@ -22,14 +29,14 @@ export default {
       type: Number,
       default: 80
     },
-    activeValue: {
-      type: [Boolean, String, Number],
-      default: true
-    },
-    inactiveValue: {
-      type: [Boolean, String, Number],
-      default: false
-    },
+     onValue: {
+        type: [Boolean, String, Number],
+        default: true
+      },
+      offValue: {
+        type: [Boolean, String, Number],
+        default: false
+      },
     name: {
       type: String,
       default: ""
@@ -37,9 +44,17 @@ export default {
     id: String
   },
   computed: {
+    wrapperClass(){
+      return [
+        `${prefixCls}`,
+        {
+          [`${prefixCls}-checked`]:this.checked,
+          [`${prefixCls}-disabled`]:this.disabled
+        }
+      ]
+    },
     checked() {
-        console.log(1)
-      return this.value === this.activeValue;
+      return this.value === this.onValue;
     }
   },
   watch: {
@@ -52,34 +67,37 @@ export default {
   },
   methods: {
     handleChange() {
-      //       this.$nextTick(() => {
-      //   // set input's checked property
-      //   // in case parent refuses to change component's value
-      //   this.$refs.input.checked = this.checked;
-      // });
+      this.$emit('change', !this.checked ? this.onValue : this.offValue);
+      this.$nextTick(() => {
+        this.$refs.input.checked = this.checked;
+      });
     }
   }
 };
+
 </script>
 <style lang="scss" scoped>
-.v-switch {
-  .v-switch-wrapper {
+.v-switch-wrapper {
+      font-size: 14px;
+  .v-switch {
     width: 80px;
     height: 16px;
     border: 1px solid #eb7200;
     border-radius: 16px;
     position: relative;
     overflow: hidden;
-    &.is-disabled {
+    display: inline-block;
+    vertical-align: bottom;
+    &.v-switch-disabled {
       border: 1px solid #dcdfe6;
       cursor: not-allowed;
       .v-switch-circle {
         background: #dcdfe6;
       }
     }
-    &.is-checked {
+    &.v-switch-checked {
       &:after {
-        left: 50px;
+        left: 24px;
         border: 1px solid #eb7200;
         background: #fff;
       }
@@ -93,7 +111,7 @@ export default {
       margin: 0;
       position: relative;
       z-index: 2;
-      // opacity: 0;
+      opacity: 0;
     }
     &:before {
       background: #eb7200;
@@ -103,7 +121,7 @@ export default {
       left: 0;
       height: 100%;
       top: 0;
-      transition: width 0.5s ease;
+      transition: width 0.2s ease;
       content: "";
     }
     &:after {
@@ -116,7 +134,7 @@ export default {
       position: absolute;
       left: 0;
       top: 0;
-      transition: left 0.6s ease;
+      transition: left 0.2s ease;
       content: "";
     }
   }

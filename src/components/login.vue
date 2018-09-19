@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper">
         <div class="title">
-            <span class="back" @click="back">&lt;</span>
             <span class="title">登录</span>
         </div>
         <div class="login">
@@ -31,9 +30,6 @@ export default {
     };
   },
   methods: {
-    back() {
-      this.$router.go("-1");
-    },
     ...mapActions(
       [
         'setUserData','setUserInfo',
@@ -54,15 +50,12 @@ export default {
         username: this.username,
         password: this.password
       };
-      
-      console.log(this.$store)
       // this.$router.push('/');
         this.$store.dispatch("setLoadingState", true); //设置loading状态
         requestLogin(data).then(res => {
-          console.log(res);
-          if(res){
+          if(!res.data.status){     
               Toast({
-                  message: res.data,
+                  message: res.data.message,
                   iconClass: 'icon icon-error'
                   });
               this.$store.dispatch("setLoadingState", false);
@@ -70,7 +63,7 @@ export default {
          else{
               this.setUserInfo(data);
               this.setUserData(res);
-              // this.$router.replace("/");
+              this.$router.replace("/navigation");
           }
         });
     }
@@ -84,9 +77,10 @@ export default {
   height: 100vh;
   .title {
        height: 32vh;
-    background-color: #221e33;
+        background: url('../../static/img/login/login.png') center center;
     line-height: 40px;
-    color: #fff;
+    color: #fff;   
+    background-size: cover;
     .back {
       font-size: 20px;
       margin-left: 0.3rem;
@@ -120,11 +114,11 @@ export default {
       }
     }
     button {
-          width: 100%;
-    height: 40px;
-    margin: 30px 0;
+      width: 100%;
+      height: 40px;
+      margin: 30px 0;
       border-radius: 20px;
-      background-color: #f44336;
+      background: -webkit-linear-gradient(left,rgba(103, 81, 239, .8),rgb(177, 72, 224));
       border: 0;
       outline: none;
       font-size: 16px;

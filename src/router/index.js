@@ -2,19 +2,21 @@ import Vue from 'vue'
 import Mint from 'mint-ui'
 import Router from 'vue-router'
 import Custom from '@/components/custom'
-import OnlinePlan from '@/components/plan/onlinePlan'
-import JiaYing from '@/components/plan/jiaying/index'
-import SalaryQuery from '@/components/salaryQuery'
+import Navigation from '@/components/navigation'
 import Login from '@/components/login'
-import Result from '@/components/plan/jiaying/result'
-import Type from '@/components/plan/type'
 
+import planRouter from '@/components/plan/index'
+import queryRouter from '@/components/query/index'
 Vue.use(Mint)
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/',
+      redirect: 'login'
+    },
     {
       path: '/login',
       name: 'login',
@@ -32,41 +34,15 @@ const router = new Router({
       }
     },
     {
-      path: '/',
-      name: 'onlineplan',
-      component: OnlinePlan,
+      path: '/navigation',
+      name: 'navigation',
+      component: Navigation,
       meta: {
-        title: '在线计划书'
+        title: '导航'
       }
     },
-    {
-      path: '/type/:typeId',
-      name: 'type',
-      component: Type
-    }, {
-      path: '/jiaying',
-      name: 'jiaying',
-      component: JiaYing,
-      meta: {
-        title: '尊享家盈二号'
-      }
-    },
-    {
-      path: '/salaryQuery',
-      name: 'salaryquery',
-      component: SalaryQuery,
-      meta: {
-        title: '薪资查询'
-      }
-    },
-    {
-      path: '/result',
-      name: 'result',
-      component: Result,
-      meta: {
-        title: '利益演算结果'
-      }
-    }
+    ...queryRouter,
+    ...planRouter
   ]
 })
 router.beforeEach((to, from, next) => {

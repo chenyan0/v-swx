@@ -69,13 +69,11 @@ export default {
       this.$emit("update:visible", val);
       if (val) {
         this.$emit("open");      //打开的回调函数
-        // this.$el.addEventListener('scroll', this.updatePopper);
         this.$nextTick(() => {
           console.log( this.$refs.dialog.scrollTop)
           this.$refs.dialog.scrollTop = 0;
         });
       } else {
-        // this.$el.removeEventListener('scroll', this.updatePopper);
         this.$emit("close");   //关闭的回调函数
       }
     },
