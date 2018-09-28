@@ -2,24 +2,38 @@
   <div class="wrapper">
     <div class="section">
       <div class="main">
-        <p class="section-label">实时搜索</p>
-        <v-search></v-search>
+        <p class="section-label">Real-time search</p>
+        <v-search :searchValues="searchValues"></v-search>
       </div>
     </div>
-     <div class="section">
+    <div class="section">
       <div class="main">
-        <p class="section-label">switch开关</p>
-        <v-switch v-model="val1" :width="40" id="id" name="nn" @change="onSwitchChange">
-          <slot>是否同意《xxxx》协议？</slot>
-        </v-switch>
+        <p class="section-label">Form</p>
+        <div class="form-group">
+          <label for="">姓名:</label>
+          <v-input name="name" id="username" type="text" placeholder="First Name" v-model="username" />
+        </div>
+        <div class="form-group label-p-10">
+          <label for="">上门取件:</label>
+          <v-switch v-model="val1" :width="40" id="id" name="nn" @change="onSwitchChange" />
+        </div>
+        <div class="form-group label-p-10">
+          <label for="">货物类型:</label>
+          <v-checkbox-group v-model="fruit" @on-change="onChange">
+            <v-checkbox v-for="(i,id) in tags" :key="id" :label="i.label">{{i.text}}</v-checkbox>
+          </v-checkbox-group>
+        </div>
+
+        <v-button type="default" size="small">提交</v-button>
+        <v-button type="default" size="small">取消</v-button>
       </div>
     </div>
-     <div class="section">
+    <div class="section">
       <div class="main">
         <p class="section-label">模态窗</p>
-        <v-button type="success" size="small" @click="openDialog">open Dialog</v-button>
-        <v-dialog :visible.sync="isVisible" title="提示信息" size="small"  center @open="openHandle">
-          <span slot="header" >确认</span>
+        <v-button type="default" size="small" @click="openDialog">open Dialog</v-button>
+        <v-dialog :visible.sync="isVisible" title="提示信息" size="small" center @open="openHandle">
+          <span slot="header">确认</span>
           <table>
             <thead>
               <tr>
@@ -28,7 +42,7 @@
                 <th>sss</th>
               </tr>
             </thead>
-            <tbody> 
+            <tbody>
               <tr>
                 <td>dsdas</td>
                 <td>dsdas</td>
@@ -45,30 +59,19 @@
     </div>
     <div class="section">
       <div class="main">
-        <p class="section-label">树组</p>
+        <p class="section-label">Tree</p>
         <v-tree :data="tree"></v-tree>
       </div>
     </div>
     <div class="section">
       <div class="main">
-        <p class="section-label">页码组</p>
+        <p class="section-label">Page Group</p>
         <v-page :total="82" :pageSizes="5" :pageIndex="index" :pagerCount="7" @on-change="onPageChange" />
       </div>
     </div>
     <div class="section">
       <div class="main">
-        <p class="section-label">复选框组</p>
-        <v-checkbox-group v-model="fruit" @on-change="onChange">
-          <v-checkbox v-for="(i,id) in tags" :key="id" :label="i.label"></v-checkbox>
-        </v-checkbox-group>
-        <div>{{ fruit }}</div>
-        <p class="section-label">单个复选框</p>
-        <v-checkbox label="xxx"></v-checkbox>
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">卡片组</p>
+        <p class="section-label">Card Group</p>
         <v-card>
           <div slot="title">Classic film</div>
           <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type.</p>
@@ -82,28 +85,25 @@
     <div class="section">
       <!-- <label for="" class="label">button示例</label> -->
       <div class="main">
-        <p class="section-label">按钮组（大尺寸）</p>
+        <p class="section-label">Button</p>
         <v-button type="default" size="large" loading>default</v-button>
         <v-button type="primary" size="large" loading>primary</v-button>
         <v-button type="info" size="large">info</v-button>
         <v-button type="warning" size="large">warn</v-button>
         <v-button type="success" size="large">success</v-button>
         <v-button type="danger" size="large">danger</v-button>
-        <p class="section-label">按钮组（常规尺寸）</p>
         <v-button type="default" size="normal" loading>default</v-button>
         <v-button type="primary" size="normal">primary</v-button>
         <v-button type="info" size="normal">info</v-button>
         <v-button type="warning" size="normal">warn</v-button>
         <v-button type="success" size="normal">success</v-button>
         <v-button type="danger" size="normal">danger</v-button>
-        <p class="section-label">按钮组（小尺寸）</p>
         <v-button type="default" size="small">default</v-button>
         <v-button type="primary" size="small">primary</v-button>
         <v-button type="info" size="small">info</v-button>
         <v-button type="warning" size="small">warn</v-button>
         <v-button type="success" size="small">success</v-button>
         <v-button type="danger" size="small">danger</v-button>
-        <p class="section-label">按钮组（禁用）</p>
         <v-button type="default" size="small" disabled>default</v-button>
         <v-button type="primary" size="small" disabled>primary</v-button>
         <v-button type="info" size="small" disabled>info</v-button>
@@ -116,7 +116,7 @@
   </div>
 </template>
 <script>
-import { requestTree } from "../api/api"; 
+import { requestTree } from "../api/api";
 import VDialog from "./common/dialog";
 import VPage from "./common/pages";
 import VTree from "./common/tree";
@@ -126,6 +126,7 @@ import VButton from "./common/button";
 import VCard from "./common/card";
 import VSwitch from "./common/switch";
 import VSearch from "./common/search";
+import VInput from "./common/input";
 export default {
   components: {
     VPage,
@@ -136,72 +137,100 @@ export default {
     VButton,
     VCard,
     VSwitch,
-    VSearch
+    VSearch,
+    VInput
   },
   data() {
     return {
-      val1:false,
-      isVisible:false,
-      fruit: ["苹果🍎"],
+      username:"",
+      searchValues: [
+        "张雪",
+        "蜜蜜",
+        "真心",
+        "孟林",
+        "真假呀",
+        "张天",
+        "孟婆汤",
+        "辛弦",
+        "郑板桥"
+      ],
+      val1: false,
+      isVisible: false,
+      fruit: ["a"],
       tags: [
         {
-          label: "苹果🍎"
+          label: "a",
+          text: "文件"
         },
         {
-          label: "香蕉🍌"
+          label: "b",
+          text: "食品"
         },
         {
-          label: "橙子🍊"
-        },
-        {
-          label: "橘子🍊"
+          label: "c",
+          text: "易碎品"
         }
       ],
-      tree:[],
+      tree: [],
       index: 2,
-      isVisible:false
+      isVisible: false
     };
   },
-  created(){
-     requestTree().then(res => {
-          this.tree=res.data
-      });
+    beforeCreate: function() {
+      document.getElementsByTagName("body")[0].className="bg-f7";
+  },
+  created() {
+    requestTree().then(res => {
+      this.tree = res.data;
+    });
   },
   methods: {
-    onSwitchChange(v){
-      this.val1=v
+    onSwitchChange(v) {
+      this.val1 = v;
     },
     onChange: function(data) {
       this.fruit = data;
     },
-    openDialog(){
-      console.log(this.isVisible)
-      this.isVisible=true
+    openDialog() {
+      console.log(this.isVisible);
+      this.isVisible = true;
     },
-  
+
     onPageChange(v) {
       this.index = v;
       console.log(v);
     },
-    openHandle(){
-    },
-    closeHandle(){
-    }
+    openHandle() {},
+    closeHandle() {}
   }
 };
 </script>
 <style lang="scss" scoped>
 .wrapper {
   .section {
-    margin: 20px 0;
+    margin: 20px;
+    padding: 10px 0;
+    background: #fff;
+    box-shadow: 0px 2px 8px #dedede;
     .main {
       margin: 0 20px;
+      .form-group {
+        display: flex;
+        margin-bottom: 20px;
+            align-items: center;
+            &.label-p-10{
+              padding: 10px 0;
+            }
+        label {
+          flex: 0 0 15%;
+        }
+      }
     }
     .section-label {
-      color: #a9a9a9;
+      color: #333;
       font-weight: bold;
-      border-left: 3px solid #f3683c;
-      padding-left: 10px;
+      font-size: 18px;
+      margin: 0 0 10px 0;
     }
     .label {
       display: block;

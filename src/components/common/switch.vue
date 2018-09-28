@@ -82,7 +82,7 @@ export default {
   .v-switch {
     width: 80px;
     height: 16px;
-    border: 1px solid #eb7200;
+    border: 1px solid #39f;
     border-radius: 16px;
     position: relative;
     overflow: hidden;
@@ -98,7 +98,7 @@ export default {
     &.v-switch-checked {
       &:after {
         left: 24px;
-        border: 1px solid #eb7200;
+        border: 1px solid #39f;
         background: #fff;
       }
       &:before {
@@ -112,9 +112,10 @@ export default {
       position: relative;
       z-index: 2;
       opacity: 0;
+      cursor: pointer;
     }
     &:before {
-      background: #eb7200;
+      background: #39f;
       border-radius: 16px;
       width: 0;
       position: absolute;
@@ -129,7 +130,7 @@ export default {
       height: 16px;
       border: 1px solid #ffffff;
       box-sizing: border-box;
-      background: #eb7200;
+      background: #39f;
       border-radius: 50%;
       position: absolute;
       left: 0;

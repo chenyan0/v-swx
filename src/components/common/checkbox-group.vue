@@ -8,7 +8,8 @@ export default {
     data(){
         return{
             currentValue: this.value,
-            children:[]
+            children:[],
+            componentName:'VCheckboxGroup'
         }
     },
     props:{

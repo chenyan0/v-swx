@@ -1,7 +1,7 @@
 <template>
     <div class="list">
         <p class="title">我的薪资清单</p>
-        <div v-if="queryData.length > 0" class="empty">
+        <div v-if="queryData.length == 0" class="empty">
             <img src="../../../../static/img/plan/tipbg.png" alt="">
         </div>
         <div v-else>

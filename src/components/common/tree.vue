@@ -42,14 +42,17 @@ ul {
 }
 .v-tree {
   ul.v-tree-node {
-    padding-left: 20px;
-    font-size: 12px;
+    font-size: 14px;
     li {
       cursor: pointer;
       list-style: none;
       display: flex;
       align-items: center;
       height: 26px;
+      &.expanded+.v-tree{
+    padding-left: 20px;
+
+      }
     }
     &[is-expanded] > li:before {
       content: "";

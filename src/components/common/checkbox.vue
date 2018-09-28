@@ -4,11 +4,11 @@
             <input v-if="group" type="checkbox" class="v-checkbox-input" v-model="model" :value="label" :name="name" :disabled="disabled"  @change="change">
             <input v-else type="checkbox" class="v-checkbox-input" :value="label" :name="name" :disabled="disabled" :checked="currentValue" @change="change">
         </div>
-        <slot>
-            <span v-if="showSlot">
-                {{label}}
-            </span>
-        </slot>
+        <span>
+          <slot>
+            {{label}}
+          </slot>
+        </span>
     </div>
 </template>
 <script>
@@ -68,8 +68,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this)
-      if(this.$parent){
+      if(this.$parent.$options.componentName=='VCheckboxGroup'){
         this.group=true;
       }
       if(this.group){
@@ -125,19 +124,22 @@ export default {
   cursor: pointer;
   outline: 0;
   margin-right: 20px;
+      display: inline-flex;
+    align-items: center;
   &.v-checkbox-disabled {
     .v-checkbox-inner {
       background-color: #eee;
     }
   }
   .v-checkbox-inner {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
     top: 0;
     left: 0;
-    border: 1px solid #d7dde4;
+    border:1px solid #b3b3b3;
     border-radius: 2px;
     background-color: #fff;
+    margin-right: 8px;
     -webkit-transition: border-color 0.2s ease-in-out,
       background-color 0.2s ease-in-out;
     transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
@@ -162,11 +164,11 @@ export default {
   &:after {
     content: "";
     display: table;
-    width: 4px;
-    height: 8px;
+       width: 6px;
+    height: 12px;
     position: absolute;
-    top: 1px;
-    left: 4px;
+    top: 2px;
+    left: 6px;
     border: 2px solid #fff;
     border-top: 0;
     border-left: 0;

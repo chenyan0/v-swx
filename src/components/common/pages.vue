@@ -178,15 +178,9 @@ export default {
   }
 }
 .v-pages {
-  // &:after{
-  //     display:block;
-  //     clear:both;
-  //     height:0;
-  //     content: "";
-  //     visibility: hidden;
-  //     overflow:hidden;
-
-  // }
+     float: left;
+    padding: 0;
+    margin: 0;
   li {
     float: left;
     list-style: none;

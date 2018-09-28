@@ -12,8 +12,6 @@
                 <label>密 码</label>
                 <input v-model="password" type="password" placeholder="测试密码123456">
             </div>
-            <!-- <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-          <mt-field label="密码" placeholder="请输入密码" type="password" v-model="password"></mt-field> -->
             <button @click="login">登录</button>
         </div>
     </div>
@@ -50,7 +48,6 @@ export default {
         username: this.username,
         password: this.password
       };
-      // this.$router.push('/');
         this.$store.dispatch("setLoadingState", true); //设置loading状态
         requestLogin(data).then(res => {
           if(!res.data.status){     
