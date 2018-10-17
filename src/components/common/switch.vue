@@ -1,42 +1,42 @@
 <template>
-    <div class="v-switch-wrapper">
-        <div :class="wrapperClass"  :style="{ 'width': coreWidth + 'px' }">
-            <input type="checkbox" ref="input" :name="name" :id="id" :disabled="disabled" @change="handleChange">
-        </div>
-        <span>
-          <slot></slot>
-        </span>
+  <div class="v-switch-wrapper">
+    <div :class="wrapperClass">
+      <input type="checkbox" ref="input" :name="name" :id="id" :disabled="disabled" @change="handleChange">
     </div>
+    <span>
+      <slot></slot>
+    </span>
+  </div>
 </template>
 <script>
-const prefixCls=`v-switch`
+const prefixCls = `v-switch`;
 export default {
   data() {
     return {
-      coreWidth: this.width
+      // coreWidth: this.width
     };
   },
   props: {
-       value: {
-        type: [Boolean, String, Number],
-        default: false
-      },
+    value: {
+      type: [Boolean, String, Number],
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
     },
-    width: {
-      type: Number,
-      default: 80
+    size: {
+      type: String,
+      default: 'small'
     },
-     onValue: {
-        type: [Boolean, String, Number],
-        default: true
-      },
-      offValue: {
-        type: [Boolean, String, Number],
-        default: false
-      },
+    onValue: {
+      type: [Boolean, String, Number],
+      default: true
+    },
+    offValue: {
+      type: [Boolean, String, Number],
+      default: false
+    },
     name: {
       type: String,
       default: ""
@@ -44,14 +44,15 @@ export default {
     id: String
   },
   computed: {
-    wrapperClass(){
+    wrapperClass() {
       return [
         `${prefixCls}`,
         {
-          [`${prefixCls}-checked`]:this.checked,
-          [`${prefixCls}-disabled`]:this.disabled
+          [`${prefixCls}-`+this.size]: this.size,
+          [`${prefixCls}-checked`]: this.checked,
+          [`${prefixCls}-disabled`]: this.disabled
         }
-      ]
+      ];
     },
     checked() {
       return this.value === this.onValue;
@@ -67,38 +68,41 @@ export default {
   },
   methods: {
     handleChange() {
-      this.$emit('change', !this.checked ? this.onValue : this.offValue);
+      this.$emit("change", !this.checked ? this.onValue : this.offValue);
       this.$nextTick(() => {
         this.$refs.input.checked = this.checked;
       });
     }
   }
 };
-
 </script>
 <style lang="scss" scoped>
+$height:20px;
+$width:40px;
+$higher-color:#39f;
+$lighter-color:#dcdfe6;
 .v-switch-wrapper {
-      font-size: 14px;
+  font-size: 14px;
   .v-switch {
-    width: 80px;
-    height: 16px;
-    border: 1px solid #39f;
-    border-radius: 16px;
+    width: $width;
+    height: $height;
+    border: 1px solid $higher-color;
+    border-radius: $height;
     position: relative;
     overflow: hidden;
     display: inline-block;
     vertical-align: bottom;
     &.v-switch-disabled {
-      border: 1px solid #dcdfe6;
+      border: 1px solid $lighter-color;
       cursor: not-allowed;
       .v-switch-circle {
-        background: #dcdfe6;
+        background: $lighter-color;
       }
     }
     &.v-switch-checked {
       &:after {
-        left: 24px;
-        border: 1px solid #39f;
+        left: $width - $height;
+        border: 1px solid $higher-color;
         background: #fff;
       }
       &:before {
@@ -115,8 +119,8 @@ export default {
       cursor: pointer;
     }
     &:before {
-      background: #39f;
-      border-radius: 16px;
+      background: $higher-color;
+      border-radius: $height;
       width: 0;
       position: absolute;
       left: 0;
@@ -126,11 +130,11 @@ export default {
       content: "";
     }
     &:after {
-      width: 16px;
-      height: 16px;
+      width: $height;
+      height: $height;
       border: 1px solid #ffffff;
       box-sizing: border-box;
-      background: #39f;
+      background: $higher-color;
       border-radius: 50%;
       position: absolute;
       left: 0;

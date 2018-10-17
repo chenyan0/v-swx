@@ -12,11 +12,11 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'https://dsn.apizza.net/mock/a13a6177321ca2a6b49592aeb8ec42ae/',// 请换成你的地址
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
+        // target: 'http://localhost:8000',// 请换成你的地址
+        // changeOrigin: true,
+        // pathRewrite: {
+        //   '^/api': '/api'
+        // }
       }
 
     },

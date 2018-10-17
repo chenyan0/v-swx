@@ -27,6 +27,32 @@ export const requestHotProduct = params => {
   })
 }
 /**
+ * 生成计划书请求
+ */
+export const requestGetCalculus = params => {
+  return axios.post(`${base}/getCalculus`, params).then(res => {
+    return res
+  }, err => {
+    console.log(err)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+/**
+ * 薪资查询请求
+ */
+export const requestSalaryQuery = params => {
+  return axios.post(`${base}/salaryQuery`, params).then(res => {
+    return res
+  }, err => {
+    console.log(err)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+/**
  * 树结构请求
  */
 export const requestTree = params => {
@@ -39,10 +65,10 @@ export const requestTree = params => {
   })
 }
 /**
- * 薪资查询请求
+ * 自定义表单提交
  */
-export const requestSalaryQuery = params => {
-  return axios.post(`${base}/salaryQuery`, params).then(res => {
+export const requestCustomForm = params => {
+  return axios.post(`${base}/customForm`, params).then(res => {
     return res
   }, err => {
     console.log(err)

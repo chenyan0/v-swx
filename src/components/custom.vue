@@ -8,29 +8,40 @@
     </div>
     <div class="section">
       <div class="main">
+        <p class="section-label">Tooltip</p>
+        <v-button type="primary" size="small">向上提示</v-button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="main" ref="validateForm">
         <p class="section-label">Form</p>
         <div class="form-group">
           <label for="">姓名:</label>
-          <v-input name="name" id="username" type="text" placeholder="First Name" v-model="username" />
+          <v-input v-model="validateForm.username" name="name" id="username" type="text" placeholder="First Name" />
         </div>
         <div class="form-group label-p-10">
           <label for="">上门取件:</label>
-          <v-switch v-model="val1" :width="40" id="id" name="nn" @change="onSwitchChange" />
+          <v-switch v-model="validateForm.switchValue" size="small" id="pickUp" name="pickUp" @change="onChange($event,'switchValue')" />
+        </div>
+        <div class="form-group label-p-10">
+          <label for="">支付方式:</label>
+          <v-select v-model="validateForm.payMethod" placeholder="您的支付方式是" :values="jobValue" @change="onChange($event,'payMethod')"></v-select>
         </div>
         <div class="form-group label-p-10">
           <label for="">货物类型:</label>
-          <v-checkbox-group v-model="fruit" @on-change="onChange">
-            <v-checkbox v-for="(i,id) in tags" :key="id" :label="i.label">{{i.text}}</v-checkbox>
+          <v-checkbox-group v-model="validateForm.checkboxValue" @on-change="onChange($event,'checkboxValue')">
+            <v-checkbox v-for="(i,index) in tags" :key="index" :label="i.label" name="checkbox">{{i.text}}</v-checkbox>
           </v-checkbox-group>
         </div>
-
-        <v-button type="default" size="small">提交</v-button>
+        <v-button type="primary" size="small" @click="handleSubmit()">提交</v-button>
         <v-button type="default" size="small">取消</v-button>
+        <v-button type="default" size="small" @click="resetForm('validateForm')">重置</v-button>
+        <span class="error" v-show="error" ref="error">xxx</span>
       </div>
     </div>
     <div class="section">
       <div class="main">
-        <p class="section-label">模态窗</p>
+        <p class="section-label">Dialog</p>
         <v-button type="default" size="small" @click="openDialog">open Dialog</v-button>
         <v-dialog :visible.sync="isVisible" title="提示信息" size="small" center @open="openHandle">
           <span slot="header">确认</span>
@@ -66,7 +77,7 @@
     <div class="section">
       <div class="main">
         <p class="section-label">Page Group</p>
-        <v-page :total="82" :pageSizes="5" :pageIndex="index" :pagerCount="7" @on-change="onPageChange" />
+        <v-page :total="82" :pageSizes="5" :pageIndex="curPage" :pagerCount="7" @on-change="onPageChange" />
       </div>
     </div>
     <div class="section">
@@ -116,7 +127,8 @@
   </div>
 </template>
 <script>
-import { requestTree } from "../api/api";
+import { required, minLength, between } from "vuelidate/lib/validators";
+import { requestTree, requestCustomForm } from "../api/api";
 import VDialog from "./common/dialog";
 import VPage from "./common/pages";
 import VTree from "./common/tree";
@@ -127,6 +139,7 @@ import VCard from "./common/card";
 import VSwitch from "./common/switch";
 import VSearch from "./common/search";
 import VInput from "./common/input";
+import VSelect from "./common/select";
 export default {
   components: {
     VPage,
@@ -138,11 +151,12 @@ export default {
     VCard,
     VSwitch,
     VSearch,
-    VInput
+    VInput,
+    VSelect
   },
   data() {
     return {
-      username:"",
+      error: false,
       searchValues: [
         "张雪",
         "蜜蜜",
@@ -154,9 +168,14 @@ export default {
         "辛弦",
         "郑板桥"
       ],
-      val1: false,
+      jobValue: ["到付", "现付"],
+      validateForm: {
+        username: "",
+        payMethod: "",
+        checkboxValue: ["a"],
+        switchValue: false
+      },
       isVisible: false,
-      fruit: ["a"],
       tags: [
         {
           label: "a",
@@ -172,36 +191,58 @@ export default {
         }
       ],
       tree: [],
-      index: 2,
+      curPage: 2,
       isVisible: false
     };
   },
-    beforeCreate: function() {
-      document.getElementsByTagName("body")[0].className="bg-f7";
+  validations: {
+    username: {
+      required,
+      minLength: minLength(4)
+    }
+  },
+  beforeCreate: function() {
+    document.getElementsByTagName("body")[0].className = "bg-f7";
   },
   created() {
     requestTree().then(res => {
       this.tree = res.data;
     });
   },
+  destroyed: function() {
+    document.getElementsByTagName("body")[0].className = "";
+  },
   methods: {
-    onSwitchChange(v) {
-      this.val1 = v;
+    onChange(v, type) {
+      this.validateForm[type] = v;
     },
-    onChange: function(data) {
-      this.fruit = data;
+    handleSubmit() {
+      const formData = JSON.stringify(this.validateForm);
+      if (!this.validateForm.username) {
+        this.error = true;
+        this.$refs.error.innerText = "姓名必填";
+      } else if (!this.validateForm.payMethod) {
+        this.error = true;
+        this.$refs.error.innerText = "请选择支付方式";
+      } else {
+        this.error = false;
+        requestCustomForm(formData)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {});
+      }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
     },
     openDialog() {
-      console.log(this.isVisible);
       this.isVisible = true;
     },
-
     onPageChange(v) {
-      this.index = v;
-      console.log(v);
+      this.curPage = v;
     },
-    openHandle() {},
-    closeHandle() {}
+    openHandle() {}
   }
 };
 </script>
@@ -217,13 +258,17 @@ export default {
       .form-group {
         display: flex;
         margin-bottom: 20px;
-            align-items: center;
-            &.label-p-10{
-              padding: 10px 0;
-            }
+        align-items: center;
+        &.label-p-10 {
+          padding: 10px 0;
+        }
         label {
           flex: 0 0 15%;
         }
+      }
+      .error {
+        color: #f44336;
+        font-size: 12px;
       }
     }
     .section-label {

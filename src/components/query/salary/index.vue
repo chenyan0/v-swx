@@ -14,7 +14,7 @@
         <input type="text" label="结束时间" placeholder="请输入" v-model="endReal" readonly @click="openPicker('end')">
       </div>
       <div class="submit">
-        <v-button @click="handleSubmit">提交</v-button>
+        <v-button type="primary" @click="handleSubmit">提交</v-button>
       </div>
     </div>
   </div>
@@ -36,6 +36,9 @@ export default {
       startReal: "",
       endReal: ""
     };
+  },
+  beforeCreate: function() {
+    document.getElementsByTagName("body")[0].className = "";
   },
   watch: {
     startTime(now, before) {
@@ -109,6 +112,6 @@ export default {
 }
 
 .submit {
-  margin: 20px;
+  margin: 20px 20px  0;
 }
 </style>

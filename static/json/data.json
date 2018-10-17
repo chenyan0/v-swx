@@ -31,9 +31,13 @@
             "src": "../../static/img/lximg.png"
         }
     ],
+    "calculusResult": {
+        "insuranceExpenses": 78220.75,
+        "cum_Prem": 2564.84
+    },
     "tree": [{
         "grade": 0,
-        "name": "部门",
+        "name": "总公司部门",
         "children": [{
                 "grade": 11,
                 "parent": 0,

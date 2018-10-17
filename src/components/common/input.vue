@@ -4,7 +4,7 @@
             <div class="v-input-table">
                 <div class="v-input-prefix"></div>
                 <div class="v-input-infix">
-                    <input ref="" :name="name" :id="id" class="v-input-trigger" :value="value" :type="type"  @focus="handleFocus()" @blur="handleBlur()"  @input="$emit('input', $event.target.value)">
+                    <input ref="input" :name="name" :id="id" class="v-input-trigger" :value="value" :type="type"  @focus="handleFocus()" @blur="handleBlur()"  @input="$emit('input', $event.target.value)">
                     <div class="v-input-placeholder" :class="[{'v-float':isFloat}]">{{placeholder}}</div>
                 </div>
                 <div class="v-input-suffix"></div>
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       isFocus: false,
-      isFloat: false,
+      isFloat: this.value ? true : false,
     };
   },
   props: {
@@ -52,6 +52,9 @@ export default {
         this.isFloat = this.value ? true : false
         this.isFocus = false;
     }
+  },
+  computed:{
+   
   }
 };
 </script>

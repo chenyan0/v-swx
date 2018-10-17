@@ -1,41 +1,45 @@
 <template>
-    <div class="list">
-        <p class="title">我的薪资清单</p>
-        <div v-if="queryData.length == 0" class="empty">
-            <img src="../../../../static/img/plan/tipbg.png" alt="">
-        </div>
-        <div v-else>
-            <div class="list-item" v-for="(item,index) in queryData" :key="item.id">
-                <div class="item-sum flex has-detail" @click="toggle(index)">{{item.month}}
-                    <span>{{item.salarySum}}元</span>
-                </div>
-                <transition name="bounce">
-                    <ul v-if="scope[index]">
-                        <li class="flex">
-                            <span>基础底薪</span>{{item.baseSalary}}元</li>
-                        <li>
-                            <div class="flex has-detail">津贴
-                                <span>{{item.subsidy}}元</span>
-                            </div>
-                            <ul>
-                                <li class="flex">
-                                    <span>长期服务津贴</span>{{item.serviceSubsidy}}元</li>
-                                <li class="flex">
-                                    <span>岗位津贴</span>{{item.postSubsidy}}元</li>
-                                <li class="flex">
-                                    <span>行为津贴</span>{{item.behaviorSubsidy}}元</li>
-                            </ul>
-                        </li>
-                        <li class="flex">
-                            <span>绩效</span>{{item.performance}}元</li>
-                        <li class="flex">
-                            <span>奖金</span>{{item.bonus}}元</li>
-                    </ul>
-                </transition>
-            </div>
-        </div>
-
+  <div class="list">
+    <p class="title">我的薪资清单</p>
+    <div v-if="queryData.length == 0 || !queryData" class="empty">
+      <img src="../../../../static/img/plan/tipbg.png" alt="">
     </div>
+    <div v-else>
+      <div class="list-item" v-for="(item) in queryData" :key="item.id">
+        <div class="item-sum flex has-detail" @click="toggle($event,curindex)" :class="{open:$event.show}">
+          <p>
+            {{item.month}}
+          </p>
+          <div><span>{{item.salarySum}}元</span></div>
+        </div>
+        <transition name="bounce">
+          <ul>
+            <li class="flex">
+              <span>基础底薪</span>{{item.baseSalary}}元</li>
+            <li>
+              <div class="flex has-detail" @click="toggle($event,curindex)" :class="{open:$event.show}">
+                <p>津贴</p>
+                <div><span>{{item.subsidy}}元</span></div>
+              </div>
+              <ul>
+                <li class="flex">
+                  <span>长期服务津贴</span>{{item.serviceSubsidy}}元</li>
+                <li class="flex">
+                  <span>岗位津贴</span>{{item.postSubsidy}}元</li>
+                <li class="flex">
+                  <span>行为津贴</span>{{item.behaviorSubsidy}}元</li>
+              </ul>
+            </li>
+            <li class="flex">
+              <span>绩效</span>{{item.performance}}元</li>
+            <li class="flex">
+              <span>奖金</span>{{item.bonus}}元</li>
+          </ul>
+        </transition>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -44,11 +48,15 @@ export default {
     return {
       queryData: [],
       scope: []
-    }
+    };
   },
   methods: {
-    toggle(index) {
-      this.$set(this.scope, index, !this.scope[index]);
+    // toggle(index) {
+    //   this.$set(this.scope, index, !this.scope[index]);
+    // },
+    toggle($event) {
+      $event.show=!$event.show;
+      // this.$set(this.scope, index, !this.scope[index]);
     },
     init() {
       this.queryData.forEach((item, index) => {
@@ -79,10 +87,9 @@ export default {
     height: 0;
   }
   100% {
-    height: max-content;
+    height: 240px;
   }
 }
-
 .list {
   font-size: 14px;
   padding: 0 15px;
@@ -103,15 +110,21 @@ export default {
     justify-content: space-between;
   }
   .has-detail {
-    padding-right: 30px;
-    position: relative;
-    &:after {
-      content: ">";
-      position: absolute;
-      right: 10px;
-      height: 0.22rem;
-      width: 0.12rem;
-      color: #7b7b7b;
+    div {
+      padding-right: 30px;
+      position: relative;
+      &:after {
+        background: url("../../../../static/img/query/back_small.png") center
+          no-repeat;
+        background-size: cover;
+        content: " ";
+        position: absolute;
+        right: 0;
+        height: 10px;
+        width: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
   .list-item {
@@ -126,21 +139,33 @@ export default {
       span {
         color: #b06164;
       }
+    
     }
-    ul {
-      // height: 0;
-      overflow: hidden;
-      margin: 0;
-      padding-left: 20px;
-      li {
-        list-style: none;
-        line-height: 30px;
-        color: #7b7b7b;
-        &.flex {
-          padding-right: 30px;
+    .has-detail{
+      &.open + ul {
+        max-height: 300px;
+        -webkit-transition: max-height 0.5s;
+        transition: max-height 0.5s;
+      }
+      & + ul {
+        overflow: auto;
+        max-height: 0;
+        -webkit-transition: max-height 0.3s;
+        transition: max-height 0.3s;
+        margin: 0;
+        padding-left: 20px;
+
+        li {
+          list-style: none;
+          line-height: 30px;
+          color: #7b7b7b;
+          &.flex {
+            padding-right: 30px;
+          }
         }
       }
     }
+
   }
 }
 </style>
