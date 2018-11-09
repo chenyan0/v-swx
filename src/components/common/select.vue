@@ -20,6 +20,7 @@ export default {
         isFloat:false,
         isFocus:false,
         visible:false,
+       
     }
   },
   props:{
@@ -30,7 +31,8 @@ export default {
     placeholder:{
       type:String,
       default:''
-    }
+    },
+   
   },
   methods:{
       trigger(){
@@ -44,6 +46,8 @@ export default {
         this.isFocus=false
         this.$emit('change',$event.target.innerHTML)
       }
+  },
+  created(){
   }
 };
 </script>

@@ -3,6 +3,7 @@ import Plan from './plan'
 import Type from './type'
 import jyIndex from './jiaying/index'
 import jfIndex from './jufu/index'
+import jfResult from './jufu/result'
 import xyIndex from './xiangyou/index'
 import jyResult from './jiaying/result'
 
@@ -49,6 +50,13 @@ export default [
       meta: {
         title: '中银聚富'
       }
+    },
+    {
+      path: 'result',
+      component: jfResult,
+      meta: {
+        title: '利益演算结果'
+      }
     }
     ]
   },
@@ -60,7 +68,7 @@ export default [
       path: 'index',
       component: xyIndex,
       meta: {
-        title: '中银聚富'
+        title: '中银祥佑'
       }
     }
     ]

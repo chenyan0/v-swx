@@ -128,7 +128,7 @@ h1 {
   padding: 0 10px;
   li {
     padding: 10px 0;
-
+list-style: none;
     position: relative;
     a {
       text-decoration: none;

@@ -25,6 +25,9 @@ app.get('/api/hotproduct', function (req, res) {
 app.post('/api/getCalculus', function (req, res) {
   res.json(data.calculusResult)
 })
+app.post('/api/getFeedata', function (req, res) {
+  res.json(data.feeData)
+})
 app.get('/api/getTree', function (req, res) {
   res.json(data.tree)
 })

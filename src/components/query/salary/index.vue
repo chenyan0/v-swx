@@ -74,11 +74,9 @@ export default {
       } else if (Date.parse(this.startReal) > Date.parse(this.endReal)) {
         MessageBox("提示", "结束时间不能小于开始时间");
       } else {
-        requestSalaryQuery(data).then(res => {
-          this.$router.push({
-            name: "salaryResult",
-            params: { result: res.data }
-          })
+        this.$router.push({
+          path: "/salary/result",
+          query: data
         })
       }
     }

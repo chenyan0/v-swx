@@ -33,10 +33,10 @@
         </p>
         <p>交费年期:
           <span v-if="$route.query.payTimeLimit==1">
-              一次缴清
+            一次缴清
           </span>
           <span v-else>
-              {{$route.query.payTimeLimit}}年
+            {{$route.query.payTimeLimit}}年
           </span>
         </p>
         <p>年交保费:
@@ -47,21 +47,28 @@
         <h1>中银三星尊享家盈二号终身寿险利益演示</h1>
         <p>被保险人<span>{{rangeValue}}</span>周岁时</p>
         <div class="custom-range">
-          <mt-range
-            v-model="rangeValue"
-            :min="0"
-            :max="90"
-            :step="1"
-            :bar-height="10">
+          <mt-range v-model="rangeValue" :min="0" :max="90" :step="1" :bar-height="10">
           </mt-range>
         </div>
         <ul>
-          <li><label for="">年度保险费</label><p><span>34412.22</span>元</p></li>
-          <li><label for="">累积保险费</label><p><span>34412.22</span>元</p></li>
-          <li><label for="">年度养老金</label><p><span>34412.22</span>元</p></li>
-          <li><label for="">养老金累计账户价值</label><p><span>34412.22</span>元</p></li>
-          <li><label for="">身故保险金</label><p><span>34412.22</span>元</p></li>
-          <li><label for="">现金价值</label><p><span>34412.22</span>元</p></li>
+          <li><label for="">年度保险费</label>
+            <p><span>34412.22</span>元</p>
+          </li>
+          <li><label for="">累积保险费</label>
+            <p><span>34412.22</span>元</p>
+          </li>
+          <li><label for="">年度养老金</label>
+            <p><span>34412.22</span>元</p>
+          </li>
+          <li><label for="">养老金累计账户价值</label>
+            <p><span>34412.22</span>元</p>
+          </li>
+          <li><label for="">身故保险金</label>
+            <p><span>34412.22</span>元</p>
+          </li>
+          <li><label for="">现金价值</label>
+            <p><span>34412.22</span>元</p>
+          </li>
         </ul>
       </div>
     </div>
@@ -94,35 +101,64 @@
   </div>
 </template>
 <script>
+import { requestFeeData } from "@/api/api";
 export default {
   data() {
     return {
-      rangeValue:Number(this.$route.query.age),
-      dataList:[]
+      rangeValue: Number(this.$route.query.age),
+      dataList: [
+        {
+          year: 1,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        },
+        {
+          year: 2,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        },
+        {
+          year: 3,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        },
+        {
+          year: 4,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        }
+      ]
     };
   },
   methods: {
-    fetchTableData: function() {
-      this.$ajax({
-        methods:'post',
-        baseURL:'api',
-        url:'/getFeedata',
-      }).then((res)=>{
-        if(res.status=='200'){
-          this.dataList=res.data.tabdata;
-        }
-      }).catch((error)=>{
-        console.log(error);
-      })
-    }
+    //  fetchTableData() {
+    //   requestFeeData({a:1}).then(res => {
+    //     // this.dataList=res.data.tabdata;
+    //   });
+    //  }
   },
   beforeCreate: function() {
     document.getElementsByTagName("body")[0].className = "bg-fff";
   },
   created() {
-    this.fetchTableData();
-  },
-
+    // this.fetchTableData();
+  }
 };
 </script>
 <style lang="scss" >
@@ -134,21 +170,21 @@ $yellowColor: #fccd80;
   display: block;
 }
 h3 {
-  font-size: 14px;    
+  font-size: 14px;
   margin: 10px;
   color: $usualColor;
   font-weight: normal;
 }
-.wrapper{
- background: #fff3e9;
+.wrapper {
+  background: #fff3e9;
   border-radius: 4px;
   border: 1px solid $yellowColor;
   margin: 0 10px 10px;
   font-size: 14px;
 }
 .block-info {
- @extend .wrapper;
-  >ul {
+  @extend .wrapper;
+  > ul {
     overflow: auto;
     padding: 0;
     margin: 0;
@@ -171,7 +207,7 @@ h3 {
     background: #fff;
     margin: 0 10px;
     border: 1px solid $yellowColor;
-    padding:0  10px;
+    padding: 0 10px;
     p {
       margin: 6px 0;
       span {
@@ -179,50 +215,50 @@ h3 {
       }
     }
   }
-  .block-benefit{
-    >p{
+  .block-benefit {
+    > p {
       text-align: center;
-          margin-top: 0;
-      span{
+      margin-top: 0;
+      span {
         color: $focusColor;
       }
     }
-    >h1{
+    > h1 {
       text-align: center;
       font-size: 14px;
       color: $focusColor;
       margin-bottom: 5px;
       font-weight: normal;
     }
-    .mt-range{
+    .mt-range {
       width: 80%;
       margin: 0 auto;
-      .mt-range-runway{
-        border-top-color:#fff;
+      .mt-range-runway {
+        border-top-color: #fff;
       }
-      .mt-range-progress{
-        background-color:#fff;
+      .mt-range-progress {
+        background-color: #fff;
       }
-      .mt-range-thumb{
-        background-color:$focusColor;
+      .mt-range-thumb {
+        background-color: $focusColor;
       }
     }
-    >ul{
+    > ul {
       padding: 10px;
-      li{
+      li {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        span{
-          border:1px solid $yellowColor;
+        span {
+          border: 1px solid $yellowColor;
           padding: 2px 20px;
           border-radius: 50px;
           background: #fff;
           color: $focusColor;
           margin-right: 5px;
         }
-        p{
-              margin: 10px 0;
+        p {
+          margin: 10px 0;
         }
       }
     }
@@ -231,23 +267,22 @@ h3 {
 .block-table {
   @extend .wrapper;
   overflow: auto;
-  table{
+  table {
     width: 150%;
     text-align: center;
     border-collapse: collapse;
-    thead{
-      background: #FFF3E9;
+    thead {
+      background: #fff3e9;
     }
-    tbody{
-        color: #b4844e;
+    tbody {
+      color: #b4844e;
       line-height: 20px;
-      tr:nth-child(n){
-        background:#fff ;
+      tr:nth-child(n) {
+        background: #fff;
       }
-       tr:nth-child(2n){
-       background: #FFF3E9;
+      tr:nth-child(2n) {
+        background: #fff3e9;
       }
-     
     }
   }
 }

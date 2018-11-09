@@ -35,6 +35,11 @@
         "insuranceExpenses": 78220.75,
         "cum_Prem": 2564.84
     },
+    "feeData": [{
+        "0": 1
+    }, {
+        "1": 2
+    }],
     "tree": [{
         "grade": 0,
         "name": "总公司部门",

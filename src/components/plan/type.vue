@@ -81,6 +81,7 @@ export default {
   li {
     padding: 10px 0;
     position: relative;
+    list-style: none;
     a {
       text-decoration: none;
       display: flex;

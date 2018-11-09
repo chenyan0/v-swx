@@ -98,7 +98,44 @@ export default {
   data() {
     return {
       rangeValue:Number(this.$route.query.age),
-      dataList:[]
+      dataList:[
+        {
+          year: 1,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        },
+        {
+          year: 2,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        },
+        {
+          year: 3,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        },
+        {
+          year: 4,
+          age: 12,
+          insuranceExpenses: "1000,000",
+          cum_Prem: 1000,
+          aa: 12000,
+          bb: 11000,
+          cc: 10000
+        }
+      ]
     };
   },
   methods: {
@@ -120,7 +157,7 @@ export default {
     document.getElementsByTagName("body")[0].className = "bg-fff";
   },
   created() {
-    this.fetchTableData();
+    // this.fetchTableData();
   },
 
 };

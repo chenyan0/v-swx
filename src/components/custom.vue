@@ -36,7 +36,7 @@
         <v-button type="primary" size="small" @click="handleSubmit()">提交</v-button>
         <v-button type="default" size="small">取消</v-button>
         <v-button type="default" size="small" @click="resetForm('validateForm')">重置</v-button>
-        <span class="error" v-show="error" ref="error">xxx</span>
+        <span class="error" v-show="error" ref="error"></span>
       </div>
     </div>
     <div class="section">
@@ -208,6 +208,7 @@ export default {
     requestTree().then(res => {
       this.tree = res.data;
     });
+    this.defaultData = JSON.parse(JSON.stringify(this.$data.validateForm));
   },
   destroyed: function() {
     document.getElementsByTagName("body")[0].className = "";
@@ -234,7 +235,7 @@ export default {
       }
     },
     resetForm(formName) {
-      console.log(this.$refs[formName]);
+      this.$data.validateForm = Object.assign({}, this.defaultData);
     },
     openDialog() {
       this.isVisible = true;

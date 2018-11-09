@@ -27,6 +27,18 @@ export const requestHotProduct = params => {
   })
 }
 /**
+ * 保费试算表格数据
+ */
+export const requestFeeData = params => {
+  return axios.post(`${base}/getFeedata`, params).then(res => {
+    return res
+  }, err => {
+    console.log(err)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+/**
  * 生成计划书请求
  */
 export const requestGetCalculus = params => {

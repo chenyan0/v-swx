@@ -4,38 +4,38 @@
     <div v-if="queryData.length == 0 || !queryData" class="empty">
       <img src="../../../../static/img/plan/tipbg.png" alt="">
     </div>
-    <div v-else>
-      <div class="list-item" v-for="(item) in queryData" :key="item.id">
-        <div class="item-sum flex has-detail" @click="toggle($event,curindex)" :class="{open:$event.show}">
+    <div >
+      <div class="list-item" v-for="(item,index) in queryData" :key="item.id">
+        <div class="item-sum flex has-detail" @click="toggle(index)">
           <p>
             {{item.month}}
           </p>
           <div><span>{{item.salarySum}}元</span></div>
         </div>
-        <transition name="bounce">
-          <ul>
-            <li class="flex">
-              <span>基础底薪</span>{{item.baseSalary}}元</li>
-            <li>
-              <div class="flex has-detail" @click="toggle($event,curindex)" :class="{open:$event.show}">
-                <p>津贴</p>
-                <div><span>{{item.subsidy}}元</span></div>
-              </div>
-              <ul>
-                <li class="flex">
-                  <span>长期服务津贴</span>{{item.serviceSubsidy}}元</li>
-                <li class="flex">
-                  <span>岗位津贴</span>{{item.postSubsidy}}元</li>
-                <li class="flex">
-                  <span>行为津贴</span>{{item.behaviorSubsidy}}元</li>
-              </ul>
-            </li>
-            <li class="flex">
-              <span>绩效</span>{{item.performance}}元</li>
-            <li class="flex">
-              <span>奖金</span>{{item.bonus}}元</li>
-          </ul>
-        </transition>
+        <!-- <transition name="bounce"  > -->
+        <ul v-show="scope[index]">
+          <li class="flex">
+            <span>基础底薪</span>{{item.baseSalary}}元</li>
+          <li>
+          <div class="flex has-detail" @click="toggle()">
+              <p>津贴</p>
+              <div><span>{{item.subsidy}}元</span></div>
+            </div>
+            <ul>
+              <li class="flex">
+                <span>长期服务津贴</span>{{item.serviceSubsidy}}元</li>
+              <li class="flex">
+                <span>岗位津贴</span>{{item.postSubsidy}}元</li>
+              <li class="flex">
+                <span>行为津贴</span>{{item.behaviorSubsidy}}元</li>
+            </ul>
+          </li>
+          <li class="flex">
+            <span>绩效</span>{{item.performance}}元</li>
+          <li class="flex">
+            <span>奖金</span>{{item.bonus}}元</li>
+        </ul>
+        <!-- </transition> -->
       </div>
     </div>
 
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { requestSalaryQuery } from "@/api/api";
+
 export default {
   data() {
     return {
@@ -51,27 +53,23 @@ export default {
     };
   },
   methods: {
-    // toggle(index) {
-    //   this.$set(this.scope, index, !this.scope[index]);
-    // },
-    toggle($event) {
-      $event.show=!$event.show;
-      // this.$set(this.scope, index, !this.scope[index]);
+    toggle(index) {
+      this.$set(this.scope, index, !this.scope[index])
     },
-    init() {
-      this.queryData.forEach((item, index) => {
-        item.subsidy =
-          item.serviceSubsidy + item.postSubsidy + item.behaviorSubsidy;
-        item.salarySum =
-          item.baseSalary + item.subsidy + item.performance + item.bonus;
-      });
-    }
   },
   created() {
     document.getElementsByTagName("body")[0].className = "bg-f7";
-    this.queryData = this.$route.params.result;
-    this.init();
-  }
+    let data = this.$route.query;
+      requestSalaryQuery(data).then(res => {
+          this.queryData=res.data
+          this.queryData.forEach((item, index) => {
+            item.subsidy =
+              item.serviceSubsidy + item.postSubsidy + item.behaviorSubsidy;
+            item.salarySum =
+              item.baseSalary + item.subsidy + item.performance + item.bonus;
+          });
+      })
+    }
 };
 </script>
 
@@ -139,9 +137,8 @@ export default {
       span {
         color: #b06164;
       }
-    
     }
-    .has-detail{
+    .has-detail {
       &.open + ul {
         max-height: 300px;
         -webkit-transition: max-height 0.5s;
@@ -149,9 +146,8 @@ export default {
       }
       & + ul {
         overflow: auto;
-        max-height: 0;
-        -webkit-transition: max-height 0.3s;
-        transition: max-height 0.3s;
+        -webkit-transition: height 0.3s;
+        transition: height 0.3s;
         margin: 0;
         padding-left: 20px;
 
@@ -165,7 +161,6 @@ export default {
         }
       }
     }
-
   }
 }
 </style>
