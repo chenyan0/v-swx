@@ -1,19 +1,17 @@
 import Vue from 'vue'
-import Mint from 'mint-ui'
 import Router from 'vue-router'
 import Custom from '@/components/custom'
 import Navigation from '@/components/navigation'
 import Login from '@/components/login'
-import Header from '@/components/header'
+import Header from '@/components/common/header'
 import Setting from '@/components/setting'
-
 import planRouter from '@/components/plan/index'
 import queryRouter from '@/components/query/index'
+import swxRouter from '@/components/shouwangxuan/index'
 Router.prototype.goBack = function () {
   this.isBack = true
   window.history.go(-1)
 }
-Vue.use(Mint)
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
@@ -69,7 +67,8 @@ const router = new Router({
       }
     },
     ...queryRouter,
-    ...planRouter
+    ...planRouter,
+    ...swxRouter
   ]
 })
 router.beforeEach((to, from, next) => {

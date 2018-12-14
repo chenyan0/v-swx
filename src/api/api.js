@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 let base = 'http://localhost:8000/api'
 
 /**
@@ -81,6 +80,17 @@ export const requestTree = params => {
  */
 export const requestCustomForm = params => {
   return axios.post(`${base}/customForm`, params).then(res => {
+    return res
+  }, err => {
+    console.log(err)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+export const HotArticle = params => {
+  return axios.get(`${base}/article`, params).then(res => {
+    console.log(res)
     return res
   }, err => {
     console.log(err)

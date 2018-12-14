@@ -1,11 +1,20 @@
 $highlight-color:#ff574a;
 $light-color:#666;
 .mint-tabbar {
+    background-color: #fff;
     .mint-tab-item {
         color: $light-color;
         &.is-selected {
-            background-color: #eaeaea;
+            background-color: transparent;
             color: $highlight-color;
+        }
+        .tab-icon {
+            height: 24px;
+            margin-bottom: 5px;
+            .fa-icon {
+                width: auto;
+                height: 100%;
+            }
         }
         .mint-tab-item-icon {
             >* {
@@ -30,5 +39,12 @@ $light-color:#666;
     .pro-banner {
         width: 100%;
         display: block;
+    }
+}
+
+.mint-swipe-items-wrap {
+    position: static;
+    >div {
+        position: static;
     }
 }

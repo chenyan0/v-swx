@@ -2,16 +2,24 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-// import MintUI from 'mint-ui'
-// import 'mint-ui/lib/style.css'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import router from './router'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
-import Vuex from 'vuex'
 import store from './store/index'
-// Vue.use(MintUI)
+import Vuex from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(fas)
+library.add(far)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vuex)
+Vue.use(MintUI)
 Vue.use(Vuelidate)
+Vue.config.productionTip = false
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios
 

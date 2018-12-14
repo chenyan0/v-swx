@@ -74,7 +74,6 @@ export default {
   height: 100vh;
   .title {
        height: 32vh;
-        background: url('../../static/img/login/login.png') center center;
     line-height: 40px;
     color: #fff;   
     background-size: cover;
@@ -115,7 +114,7 @@ export default {
       height: 40px;
       margin: 30px 0;
       border-radius: 20px;
-      background: -webkit-linear-gradient(left,rgba(103, 81, 239, .8),rgb(177, 72, 224));
+      background: #118fff;
       border: 0;
       outline: none;
       font-size: 16px;

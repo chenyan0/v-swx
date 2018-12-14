@@ -1,13 +1,14 @@
 <template>
     <div class="header">
-        <div id="left">
-              <router-link  v-if="islogin" :to="{path:'/login'}">登录</router-link>
+        <div id="left" @click="back()">
+            <font-awesome-icon icon="chevron-left" v-if="isBack" />
+            <router-link  v-if="islogin" :to="{path:'/login'}">登录</router-link>
         </div>
         <div id="middle" v-if="title ? true : false">
             {{title}}
         </div>
         <div id="right">
-           ...
+            <font-awesome-icon icon="address-book" v-if="isRight"/>
         </div>
     </div>
 </template>
@@ -26,7 +27,21 @@ export default {
         },
         islogin:{
             type:Boolean,
-            default:"",
+            default:false,
+        },
+        isBack:{
+            type:Boolean,
+            default:false,
+        },
+        isRight:{
+            type:Boolean,
+            default:false,
+        }
+    },
+    methods:{
+        back(){
+            console.log(1)
+            window.history.go(-1)
         }
     }
 }
@@ -37,9 +52,12 @@ export default {
     display: flex;
     align-items: center;
       justify-content: space-between;
-    background: -webkit-linear-gradient(left, rgba(103, 81, 239, 0.8), #b148e0);
+    background:#118fff;
     line-height: 40px;
     color: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 3;
     #middle{
         font-size: 16px;
     }

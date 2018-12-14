@@ -19,16 +19,20 @@
     </div>
     <mt-tabbar v-model="selected">
       <mt-tab-item id="产品特色">
-        <img slot="icon" src="../../../../static/img/cpts2.png"> 产品特色
+          <div class="tab-icon"><icon name="magic" ></icon></div>
+         <p>产品特色</p>
       </mt-tab-item>
       <mt-tab-item id="保险责任">
-        <img slot="icon" src="../../../../static/img/bxzr2.png"> 保险责任
+        <div class="tab-icon"><icon name="hourglass-end" ></icon></div>
+        <p>保险责任</p>
       </mt-tab-item>
       <mt-tab-item id="投保示例">
-        <img slot="icon" src="../../../../static/img/tbsl2.png"> 投保示例
+           <div class="tab-icon"><icon name="flag"></icon></div>
+        <p>投保示例</p>
       </mt-tab-item>
       <mt-tab-item id="利益演示">
-        <img slot="icon" src="../../../../static/img/lyys2.png"> 利益演示
+         <div class="tab-icon"><icon name="address-book" ></icon></div>
+        <p>利益演示</p>
       </mt-tab-item>
     </mt-tabbar>
   </div>
