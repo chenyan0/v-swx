@@ -70,7 +70,7 @@
 </template>
 <script>
 import { required, minLength, between } from 'vuelidate/lib/validators'
-import { requestGetCalculus } from '@/api/api'
+
 import radio from '../../common/radio';
 import { MessageBox } from 'mint-ui';
 export default {

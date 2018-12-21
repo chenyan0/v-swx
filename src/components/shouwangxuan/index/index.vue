@@ -79,17 +79,14 @@
         <Common-List :data="list" />
       </div>
     </div>
-    <copyright/>
   </div>
 </template>
 <script>
 import CommonList from "../../template/common-list";
-import Copyright from "../../template/copyright"
 import { Indicator,Toast } from "mint-ui";
 export default {
   components: {
     CommonList,
-    Copyright
   },
   data() {
     return {
@@ -126,14 +123,13 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:8000/api/post?page=" + this.curpage;
+      const url = "http://localhost:8000/api/post";
       const self = this;
-      setTimeout(() => {
-        self.$ajax
+        this.$ajax
           .get(url)
           .then(
             res => {
-              self.list = res.data;
+              self.list = res.data.data;
               Indicator.close();
               return res;
             },
@@ -144,7 +140,6 @@ export default {
           .catch(error => {
             console.log(error);
           });
-      }, 1000);
     },
     formSubmit(){
       let key = this.$refs.input.value;

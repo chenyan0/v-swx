@@ -23,7 +23,7 @@ export default {
         fetchData(){
            const url = 'http://localhost:8000/api/categories';
            this.$ajax.get(url).then((res)=>{
-               this.list = res.data
+               this.list = res.data.data
            },err =>{
                console.log(err)
            }).catch((error) => {

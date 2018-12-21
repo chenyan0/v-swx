@@ -22,7 +22,6 @@
 <script>
 import Vue from "vue";
 import VButton from "../../common/button";
-import { requestSalaryQuery } from "../../../api/api";
 import { MessageBox } from "mint-ui";
 
 export default {

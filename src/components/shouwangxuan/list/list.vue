@@ -1,5 +1,11 @@
 <template>
   <div>
+      <Header
+      :title="title"
+      isBack
+    ></Header>
+    <div class="main-container">
+
     <div class="top">
       <img
         src=""
@@ -9,15 +15,19 @@
       <span>全局搜索</span>
     </div>
     <common-list :data="list" />
+    </div>
+
   </div>
 </template>
 <script>
 import CommonList from "../../template/common-list";
 import { Indicator } from "mint-ui";
+import Header from "../../common/header";
 
 export default {
   components: {
-    CommonList
+    CommonList,
+    Header
   },
   data() {
     return {
@@ -30,6 +40,11 @@ export default {
     });
     this.fetchData();
   },
+  computed:{
+    title:function(){
+      return "搜索词："+this.$route.query.search
+    }
+  },
   methods: {
     fetchData() {
       Indicator.close();
@@ -37,14 +52,12 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:8000/api/post?page=" + this.curpage;
+      const url = "http://localhost:8000/api/post";
       const self = this;
-      setTimeout(() => {
-        self.$ajax
-          .get(url)
+      this.$ajax.get(url)
           .then(
             res => {
-              self.list = res.data;
+              self.list = res.data.data;
               Indicator.close();
               return res;
             },
@@ -55,12 +68,13 @@ export default {
           .catch(error => {
             console.log(error);
           });
-      }, 1000);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.main-container {
+    padding: 40px 0;
 .top {
   height: 200px;
   background: bisque;
@@ -77,6 +91,7 @@ export default {
 }
 .common-list {
   padding: 0 15px;
+}
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="common-list">
     <router-link
-      :to="{ path: '/hot'}"
+      :to="{ path: '/detail',query:{id:item.id}}"
       tag="div"
       class="list-item has-img"
       v-for="item in data"
@@ -11,7 +11,7 @@
         :src="item.post_thumbnail_image"
         alt=""
       >
-      <div class="content-title">{{item.title.rendered}}</div>
+      <div class="content-title">{{item.post_title}}</div>
       <div class="content-date">
         <div>
           <font-awesome-icon :icon="['far', 'clock']" />

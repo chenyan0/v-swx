@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import { requestSalaryQuery } from "@/api/api";
-
 export default {
   data() {
     return {

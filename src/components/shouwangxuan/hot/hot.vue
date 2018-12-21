@@ -54,16 +54,15 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:8000/api/article?t="+t;
+      const url = "http://localhost:8000/api/hotpost";
       const self = this;
-      setTimeout(() => {
-        self.$ajax
-          .get(url)
+        this.$ajax
+          .post(url,{t:t})
           .then(
             res => {
-              self.list = res.data;
+              console.log(res)
+              self.list = res.data.data;
               Indicator.close();
-              return res;
             },
             err => {
               console.log(err);
@@ -72,7 +71,6 @@ export default {
           .catch(error => {
             console.log(error);
           });
-      }, 1000);
     }
   },
   created() {

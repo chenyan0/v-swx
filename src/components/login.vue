@@ -49,7 +49,7 @@ export default {
         password: this.password
       };
         this.$store.dispatch("setLoadingState", true); //设置loading状态
-        requestLogin(data).then(res => {
+        this.$ajax.post('http://localhost:8000/api/login',data).then(res => {
           if(!res.data.status){     
               Toast({
                   message: res.data.message,

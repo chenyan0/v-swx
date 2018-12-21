@@ -1,19 +1,17 @@
 // 使用 Mock
 const Mock = require('mockjs')
+// const Random = Mock.Random
 // 使用mockjs模拟数据
 const mock = Mock.mock({
   'hotpost|2-10': [
     {
-      'post_id|+1': 1,
+      'id|+1': 1,
       'total_comments|1-100': 1,
       'like_count|0-200': 1,
       'pageviews|0-100000': 0,
       'post_date': "@date('yyyy-mm-dd')",
       'post_thumbnail_image': "@Image('100x75')",
-      'post_title': '@ctitle()',
-      'title': {
-        'rendered': '@ctitle()'
-      }
+      'post_title': '@ctitle()'
     }
   ],
   'post|10': [
@@ -21,9 +19,7 @@ const mock = Mock.mock({
       'id|+1': 1,
       'date': "@date('yyyy-mm-dd')",
       'status': 'publish',
-      'title': {
-        'rendered': '@ctitle()'
-      },
+      'post_title': '@ctitle()',
       'post_thumbnail_image': "@Image('100x75')",
       'total_comments|1-100': 1,
       'category_name': '@ctitle()',
@@ -44,37 +40,20 @@ const mock = Mock.mock({
       'parent': 0,
       'meta': [],
       'post_date': "@date('yyyy-mm-dd')",
-      'category_thumbnail_image': "@Image('100x75')",
-      '_links': {
-        'self': [
-          {
-            'href': 'https://www.watch-life.net/wp-json/wp/v2/categories/1'
-          }
-        ],
-        'collection': [
-          {
-            'href': 'https://www.watch-life.net/wp-json/wp/v2/categories'
-          }
-        ],
-        'about': [
-          {
-            'href': 'https://www.watch-life.net/wp-json/wp/v2/taxonomies/category'
-          }
-        ],
-        'wp:post_type': [
-          {
-            'href': 'https://www.watch-life.net/wp-json/wp/v2/posts?categories=1'
-          }
-        ],
-        'curies': [
-          {
-            'name': 'wp',
-            'href': 'https://api.w.org/{rel}',
-            'templated': true
-          }
-        ]
-      }
+      'category_thumbnail_image': "@Image('100x75')"
     }
-  ]
+  ],
+  'articleDetail': {
+    'id|+1': 1,
+    'date': "@date('yyyy-mm-dd')",
+    'status': 'publish',
+    'post_title': '@ctitle()',
+    'post_thumbnail_image': "@Image('100x75')",
+    'total_comments|1-100': 1,
+    'category_name': '@ctitle()',
+    'post_date': "@date('yyyy-mm-dd')",
+    'like_count|0-200': 1,
+    'pageviews|0-100000': 0
+  }
 })
-module.exports = mock
+export default mock

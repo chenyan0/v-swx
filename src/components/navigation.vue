@@ -10,6 +10,7 @@
     >
       <mt-tab-container-item id="首页">
         <index />
+        <copyright/>
         <!-- <ul>
             <router-link tag="li" :to="{path:'/onlineplan'}">计划书</router-link>
             <router-link tag="li" :to="{path:'/salary'}">薪资查询</router-link>
@@ -19,11 +20,14 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="专题">
         <topic />
+        <copyright/>
       </mt-tab-container-item>
       <mt-tab-container-item id="我的">
         <mine />
+        <copyright/>
       </mt-tab-container-item>
       <mt-tab-container-item id="关于">
+        <copyright/>
       </mt-tab-container-item>
     </mt-tab-container>
     <mt-tabbar v-model="selected">
@@ -59,12 +63,14 @@ import Index from "./shouwangxuan/index/index";
 import Topic from "./shouwangxuan/topic/topic";
 import Mine from "./shouwangxuan/mine/mine";
 import Header from "./common/header";
+import Copyright from "./template/copyright"
 export default {
   components: {
     Index,
     Topic,
     Mine,
-    Header
+    Header,
+    Copyright
   },
   data() {
     return {
