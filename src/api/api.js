@@ -42,18 +42,18 @@ Mock.mock(`${base}/login`, 'post', {
 // 首页文章列表接口
 Mock.mock(`${base}/post`, 'get', {
   code: 0,
-  data: mock.post
+  data: Array.from({ length: 10}).map(a => Mock.mock(mock.post))
 })
 // 专题接口
 Mock.mock(`${base}/categories`, 'get', {
   code: 0,
-  data: mock.categories
+  data: Array.from({ length: 10}).map(a => Mock.mock( mock.categories))
 })
 // 热门文章接口
 Mock.mock(`${base}/hotpost`, 'post', (options) => {
   return {
     code: 0,
-    data: mock.post
+    data: Array.from({ length: 10}).map(a => Mock.mock(mock.post))
   }
 })
 // 文章详情
@@ -61,7 +61,7 @@ Mock.mock(RegExp(`${base}/article/detail`), 'post', (options) => {
   console.log(options)
   return {
     code: 0,
-    data: mock.articleDetail
+    data:Mock.mock(mock.articleDetail)
   }
 })
 // 发表评论

@@ -1,5 +1,7 @@
 <template>
   <div class="wrapper">
+    <div class="inner">
+
     <div class="title">
       <img
         src="../../../static/img/login/logo.png"
@@ -39,6 +41,7 @@
     <router-link class="link-to-another" tag="div" :to="{path:'register'}">
       Forget password ?
     </router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -93,7 +96,15 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/base";
 .wrapper {
-  background-color: white;
+  .inner{
+        background-color: rgba(255, 255, 255, 0.9);
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+  }
+    background-image:url("../../../static/img/login/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
   height: 100vh;
   .title {
     line-height: 40px;
@@ -125,7 +136,7 @@ export default {
       }
       & > input {
         border: 0;
-        background-color: white;
+        background-color: transparent;
         height: 30px;
         outline: none;
         font-size: 14px;
@@ -150,7 +161,7 @@ export default {
     }
     #signup {
       border: 1px solid #008cff;
-      background: #fff;
+      background: transparent;
       color: #008cff;
     }
   }

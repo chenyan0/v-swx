@@ -2,25 +2,22 @@
 const Mock = require('mockjs')
 const Random = Mock.Random
 // 使用mockjs模拟数据
-const mock = Mock.mock({
-  'post|10': [
-    {
-      'id|+1': 1,
-      'date': () => Random.date('yyyy-mm-dd'),
-      'status': 'publish',
-      'post_title': () => Random.ctitle(),
-      'post_thumbnail_image': () => Random.image('100x75'),
-      'total_comments|1-100': 1,
-      'category_name': () => Random.ctitle(),
-      'post_date': () => Random.date('yyyy-mm-dd'),
-      'like_count|0-200': 1,
-      'pageviews|0-10000': 0
 
-    }
-  ],
-  'categories|10': [
-    {
-      'id|+1': 1,
+const mock = {
+  post: {
+    'id|+1': 1,
+    'date': () => Random.date('yyyy-mm-dd'),
+    'status': 'publish',
+    'post_title': () => Random.ctitle(),
+    'post_thumbnail_image': () => Random.image('100x75'),
+    'total_comments|1-100': 1,
+    'category_name': () => Random.ctitle(),
+    'post_date': () => Random.date('yyyy-mm-dd'),
+    'like_count|0-200': 1,
+    'pageviews|0-10000': 0
+  },
+  categories:{
+    'id|+1': 1,
       'count': 150,
       'description': () => Random.ctitle(),
       'link': 'https://www.watch-life.net/category/life-thinking',
@@ -31,9 +28,8 @@ const mock = Mock.mock({
       'meta': [],
       'post_date': () => Random.date('yyyy-mm-dd'),
       'category_thumbnail_image': () => Random.image('100x75')
-    }
-  ],
-  'articleDetail': {
+  },
+  articleDetail: {
     'id': () => Random.integer(20, 100),
     'date': () => Random.date('yyyy-mm-dd'),
     'status': () => 'publish',
@@ -63,5 +59,5 @@ const mock = Mock.mock({
     }]
 
   }
-})
+};
 export default mock
