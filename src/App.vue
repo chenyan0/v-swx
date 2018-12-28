@@ -6,7 +6,7 @@
       mode="out-in"
     > -->
       <!-- 命名路由  -->
-      <router-view class="Router"></router-view>
+        <router-view class="Router"></router-view>
     <!-- </transition> -->
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
   transform: translate(-100% 0);
 }
 body {
-  margin: 0;
+  margin: 0 !important;
   min-height: 100vh;
   background: #fff;
   // background: url("../static/img/ft_bg.png") no-repeat bottom center;

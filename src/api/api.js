@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import mock from './mock'
 import data from '../../static/json/data.json'
-let base = 'http://localhost:8000/api'
+const base = 'http://localhost:8000/api'
 Mock.setup({
   // timeout: 2000 方式一 直接设置值
   timeout: '1000 - 3000' // 方式二 设置区间 注意这个是一个字符串形式
@@ -53,13 +53,24 @@ Mock.mock(`${base}/categories`, 'get', {
 Mock.mock(`${base}/hotpost`, 'post', (options) => {
   return {
     code: 0,
-    data: mock.hotpost
+    data: mock.post
   }
 })
 // 文章详情
-Mock.mock(`${base}/article/detail`, 'post', (options) => {
+Mock.mock(RegExp(`${base}/article/detail`), 'post', (options) => {
+  console.log(options)
   return {
     code: 0,
     data: mock.articleDetail
   }
 })
+// 发表评论
+Mock.mock(`${base}/article/postComment`, 'post', (options) => {
+  console.log(options)
+  return {
+    code: 0,
+    status: 1,
+    message: '发表成功'
+  }
+})
+console.log(mock)

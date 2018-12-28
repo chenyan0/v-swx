@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Custom from '@/components/custom'
 import Navigation from '@/components/navigation'
-import Login from '@/components/login'
+import Login from '@/components/user/login'
+import Register from '@/components/user/register'
 import Header from '@/components/common/header'
 import Setting from '@/components/setting'
 import planRouter from '@/components/plan/index'
@@ -14,7 +15,8 @@ Router.prototype.goBack = function () {
 }
 Vue.use(Router)
 const router = new Router({
-  mode: 'history',
+  scrollBehavior: () => ({ y: 0 }),
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -30,6 +32,15 @@ const router = new Router({
       }
     },
     {
+      path: '/register',
+      name: 'register',
+      component: Register,
+      meta: {
+        title: '注册',
+        index: 1
+      }
+    },
+    {
       path: '/navigation',
       name: 'navigation',
       components: {
@@ -39,7 +50,6 @@ const router = new Router({
       meta: {
         title: '导航',
         index: 2
-
       }
     },
     {

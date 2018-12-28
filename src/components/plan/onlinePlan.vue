@@ -30,15 +30,14 @@
 
 </template>
 <script>
-import { requestHotProduct } from "../../api/api";
 export default {
   created() {
     this.fetchData();
   },
   methods: {
     fetchData() {
-      requestHotProduct().then(res => {
-        this.hots = res.data;
+      this.$ajax.get("http://localhost:8000/api/hotproduct").then(res => {
+        this.hots = res.data.data;
       });
     }
   },

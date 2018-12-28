@@ -81,8 +81,7 @@ export default {
     data(){
         return{
             selected:"1",
-            avatorUrl: require("../../../../static/img/jfimg.png")
-
+            avatorUrl: ""
         }
     },
     beforeCreate() {
@@ -90,7 +89,8 @@ export default {
     },
     created(){
         this.$nextTick(()=>{
-            this.$refs.name.innerHTML=this.$store.getters.userInfo.username;
+            this.$refs.name.innerHTML=this.$store.getters.userInfo.username
+            this.avatorUrl=this.$store.getters.userInfo.avatar
         })
     },
     methods: {

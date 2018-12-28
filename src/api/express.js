@@ -17,32 +17,4 @@ app.use(bodyParser.json({limit: '1mb'})) // body-parser 解析json格式数据
 app.use(bodyParser.urlencoded({ // 此项必须在 bodyParser.json 下面,为参数编码
   extended: true
 }))
-
-// app.get('/api/hotproduct', function (req, res) {
-//   res.json(data.hottj)
-// })
-// app.post('/api/getCalculus', function (req, res) {
-//   res.json(data.calculusResult)
-// })
-// app.post('/api/getFeedata', function (req, res) {
-//   res.json(data.feeData)
-// })
-// app.get('/api/getTree', function (req, res) {
-//   res.json(data.tree)
-// })
-// app.post('/api/login', function (req, res) {
-//   res.send({status: 1, message: '登录成功'})
-//   // if (req.body.username === 'admin' && req.body.password === '123456') {
-//   //   res.send({status: 1, message: '登录成功'})
-//   // } else {
-//   //   res.send({status: 0, message: '账号或密码错误'})
-//   // }
-// })
-// app.post('/api/salaryQuery', function (req, res) {
-//   res.json(data.sqData)
-// })
-// app.post('/api/customForm', function (req, res) {
-//   res.send({status: 1, message: '提交成功'})
-// })
-
 app.listen(8000)

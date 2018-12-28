@@ -128,7 +128,7 @@
 </template>
 <script>
 import { required, minLength, between } from "vuelidate/lib/validators";
-import { requestTree, requestCustomForm } from "../api/api";
+// import { requestTree, requestCustomForm } from "../api/api";
 import VDialog from "./common/dialog";
 import VPage from "./common/pages";
 import VTree from "./common/tree";
@@ -205,8 +205,8 @@ export default {
     document.getElementsByTagName("body")[0].className = "bg-f7";
   },
   created() {
-    requestTree().then(res => {
-      this.tree = res.data;
+    this.$ajax.get("http://localhost:8000/api/getTree").then(res => {
+      this.tree = res.data.data;
     });
     this.defaultData = JSON.parse(JSON.stringify(this.$data.validateForm));
   },
@@ -227,7 +227,7 @@ export default {
         this.$refs.error.innerText = "请选择支付方式";
       } else {
         this.error = false;
-        requestCustomForm(formData)
+        this.$ajax.post("http://localhost:8000/api/customForm",formData)
           .then(res => {
             console.log(res);
           })
