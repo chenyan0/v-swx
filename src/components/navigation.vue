@@ -62,7 +62,7 @@
 import Index from "./shouwangxuan/index/index";
 import Topic from "./shouwangxuan/topic/topic";
 import Mine from "./shouwangxuan/mine/mine";
-import Header from "./common/header";
+import Header from "./template/header";
 import Copyright from "./template/copyright"
 export default {
   components: {

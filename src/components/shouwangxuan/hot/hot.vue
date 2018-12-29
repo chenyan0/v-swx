@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import Header from "../../common/header";
+import Header from "../../template/header";
 import CommonList from "../../template/common-list";
 import { Indicator } from "mint-ui";
 export default {

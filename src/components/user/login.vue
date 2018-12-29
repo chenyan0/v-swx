@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="inner">
-
     <div class="title">
       <img
         src="../../../static/img/login/logo.png"
@@ -15,7 +14,7 @@
             <font-awesome-icon icon="user" /></label>
           <input
             type="text"
-            v-model="username"
+            v-model="fullname"
             placeholder="测试账号admin"
           >
         </div>
@@ -45,24 +44,24 @@
   </div>
 </template>
 <script>
-import { requestLogin } from "../../api/api";
 import { mapActions } from "vuex";
 import { Toast } from "mint-ui";
 export default {
   data() {
     return {
-      username: "",
-      password: ""
+      password: "",
+      fullname: ""
     };
   },
+  
   methods: {
-    ...mapActions(["setUserData", "setUserInfo"]),
+    ...mapActions(["setUserData", "setUserInfo"]),   //分发dispatch
     register(){
      this.$router.push('register')
     },
     login() {
       //登录操作
-      if (!this.username || !this.password) {
+      if (!this.fullname || !this.password) {
         Toast({
           message: "请填写完整",
           iconClass: "icon icon-error",
@@ -70,27 +69,37 @@ export default {
         });
         return;
       }
+      const USERINFO=this.$store.getters.userInfo;
       let data = {
-        username: this.username,
+        fullname: this.fullname,
         password: this.password,
         avatar: require("../../../static/img/jyimg.png")
       };
       this.$store.dispatch("setLoadingState", true); //设置loading状态
-      this.$ajax.post("http://localhost:8000/api/login", data).then(res => {
-        if (!res.data.status) {
+      if(this.fullname!==USERINFO.fullname||this.password!==USERINFO.password){
           Toast({
-            message: res.data.message,
+            message: "用户账号信息不匹配",
             iconClass: "icon icon-error"
           });
-          this.$store.dispatch("setLoadingState", false);
-        } else {
-          this.setUserInfo(data);
-          this.setUserData(res);
-          this.$router.replace("/navigation");
-        }
-      });
+      }else{
+        this.$ajax.post("http://localhost:8000/api/login", data).then(res => {
+          if (!res.data.status) {
+            Toast({
+              message: res.data.message,
+              iconClass: "icon icon-error"
+            });
+            this.$store.dispatch("setLoadingState", false);
+          } else {
+            this.$router.replace("/navigation");
+          }
+        });
+      }
     }
+  },
+  mounted(){
+     
   }
+
 };
 </script>
 <style lang="scss" scoped>

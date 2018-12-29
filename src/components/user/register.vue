@@ -10,22 +10,27 @@
           @change="changeImage($event)"
         >
         <img
-          :src="avatorUrl"
+          :src="form.avatorUrl"
           alt=""
         >
       </div>
+      <span class="edit-trigger">
+         <font-awesome-icon :icon="['fas', 'edit']" />
+      </span>
     </div>
     <div class="edit-info">
       <h1>Basic Infomation</h1>
       <div class="form-group">
         <input
           type="text"
+          v-model="form.fullname"
           placeholder="Full Name"
         >
       </div>
       <div class="form-group">
         <input
-          type="text"
+          type="email"
+             v-model="form.email"
           placeholder="Email"
         >
       </div>
@@ -34,17 +39,19 @@
       <h1>Private Infomation</h1>
       <div class="form-group">
         <input
-          type="text"
+          type="password"
+             v-model="form.password"
           placeholder="Password"
         >
       </div>
       <div class="form-group">
         <input
-          type="password"
+          type="number"
+          v-model="form.mobile"
           placeholder="Mobile"
         >
       </div>
-      <button>Sign-Up</button>
+      <button @click="submit">Sign-Up</button>
     </div>
     <router-link class="link-to-another" tag="div" :to="{path:'login'}">
       Already have an account ?
@@ -52,18 +59,68 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapActions } from "vuex";
+export default {
+  data(){
+    return{
+      form:{
+        avatorUrl: "",
+        fullname: "",
+        email: "",
+        password: "",
+        mobile: ""
+      }
+    }
+  },
+  methods:{
+    ...mapActions(["setUserData", "setUserInfo"]),
+    changeImage(e){
+      let file = e.target.files[0]
+      this.file = file
+      let reader = new FileReader()
+      let that = this
+      reader.readAsDataURL(file)
+      reader.onload = function(e) {
+        that.form.avatorUrl = this.result;
+      }
+    },
+    submit(){
+      // if (!this.username || !this.password) {
+      //   Toast({
+      //     message: "请填写完整",
+      //     iconClass: "icon icon-error",
+      //     position: "top"
+      //   });
+      //   return;
+      // }
+      const data =this.form
+      this.$store.dispatch("setLoadingState", true); //设置loading状态
+      this.$ajax.post("http://localhost:8000/api/register",data).then(res => {
+        if (!res.data.status) {
+          Toast({
+            message: res.data.message,
+            iconClass: "icon icon-error"
+          });
+          this.$store.dispatch("setLoadingState", false);
+        } else {
+          this.setUserInfo(data);
+          this.$router.replace("/login");
+        }
+      });
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 @import "../../styles/base";
 .wrapper {
   .edit-avatar {
     height: 32vh;
-    background: #5da3ff;
+    background: #118fff;
     position: relative;
     .avator {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       overflow: hidden;
       position: absolute;
       background: rgba(255, 255, 255, 0.5);
@@ -84,6 +141,13 @@ export default {};
         opacity: 0;
       }
     }
+    .edit-trigger{
+          position: absolute;
+    right: 30px;
+    bottom: 30px;
+    color: rgba(58, 58, 58, 0.3);
+        font-size: 20px;
+    }
   }
   .edit-info {
     margin: 0 30px 30px;
@@ -91,7 +155,7 @@ export default {};
           margin: 0 30px 10px;
   }
     h1 {
-      color: #5da3ff;
+      color: #118fff;
       font-size: 14px;
       font-weight: normal;
     }
@@ -99,7 +163,7 @@ export default {};
       margin: 10px 0;
       height: 32px;
       line-height: 32px;
-      color: #2c3e50;
+      color: #181a1d;
 
       & > input {
         border: 0;
@@ -109,7 +173,7 @@ export default {};
         font-size: 14px;
         width: 100%;
         border-bottom: 1px solid rgba(0, 140, 255, 0.4);
-        color: #99a4bf;
+        color: #181a1d;
       }
     }
     button {
@@ -126,7 +190,7 @@ export default {};
     }
   }
   .link-to-another {
-    color: #5da3ff;
+    color: #118fff;
     font-size: 14px;
     text-align: center;
   }

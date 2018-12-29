@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <Header
       :title="article.post_title"
       isBack
@@ -26,22 +26,18 @@
           </span>
         </div>
         <div class="article-text">
-          <p>一个免费的临时文件中转服务，FireFox出品，可以上传1G以内的文件(除体积外没有其它限制)，上传完成后将生成一个可供下载的加密链接，下载1次或上传24小时后该链接即失效。使用场景嘛，大家自己想象吧🤣~</p>
-          <p>一个免费的临时文件中转服务，FireFox出品，可以上传1G以内的文件(除体积外没有其它限制)，上传完成后将生成一个可供下载的加密链接，下载1次或上传24小时后该链接即失效。使用场景嘛，大家自己想象吧🤣~</p>
-          <p>一个免费的临时文件中转服务，FireFox出品，可以上传1G以内的文件(除体积外没有其它限制)，上传完成后将生成一个可供下载的加密链接，下载1次或上传24小时后该链接即失效。使用场景嘛，大家自己想象吧🤣~</p>
-          <p>一个免费的临时文件中转服务，FireFox出品，可以上传1G以内的文件(除体积外没有其它限制)，上传完成后将生成一个可供下载的加密链接，下载1次或上传24小时后该链接即失效。使用场景嘛，大家自己想象吧🤣~</p>
-          <p>一个免费的临时文件中转服务，FireFox出品，可以上传1G以内的文件(除体积外没有其它限制)，上传完成后将生成一个可供下载的加密链接，下载1次或上传24小时后该链接即失效。使用场景嘛，大家自己想象吧🤣~</p>
+          {{article.post_content}}
         </div>
       </div>
       <!-- 上一页 下一页 -->
-      <div class="pagination">
+      <div class="pagination"  >
         <router-link
-          tag="p"
-          :to="{ path: '/detail',query:{id:article.prev_page.id}}"
+          tag="p" v-if="article.prev_page" 
+          :to="{ path: '/detail',query:{id:article.prev_page.id ? article.prev_page.id : 1 }}"
         >← {{article.prev_page.title}}</router-link>
         <router-link
-          tag="p"
-          :to="{ path: '/detail',query:{id:article.next_page.id}}"
+          tag="p" v-if="article.next_page" 
+          :to="{ path: '/detail',query:{id:article.next_page.id ? article.next_page.id : 1}}"
         >{{article.next_page.title}} →</router-link>
       </div>
       <!-- 猜你喜欢 -->
@@ -110,7 +106,7 @@
                 alt=""
               >
               <span>{{item.comments_username}}</span>
-              <span>{{item.comments_date | formatDate}}</span>
+              <span>{{item.comments_date }}</span>
             </div>
             <div class="comment-text">
               {{item.comments_text}}
@@ -150,7 +146,7 @@
   </div>
 </template>
 <script>
-import Header from "../../common/header";
+import Header from "../../template/header";
 import formatDate from "../../../utils/formatDate";
 import { Toast,Indicator } from "mint-ui";
 
@@ -200,9 +196,9 @@ export default {
     postComment() {
       let v = this.$refs.commentText.value;
       const params = {
-        comments_thumb: this.$store.getters.userInfo.avatar,
+        comments_thumb: this.$store.getters.userInfo.avator_url,
         comments_date: formatDate(new Date(), "yyyy-MM-dd"),
-        comments_username: this.$store.getters.userInfo.username,
+        comments_username: this.$store.getters.userInfo.fullname,
         comments_text: v
       };
       if (v) {
@@ -241,28 +237,22 @@ export default {
     document.getElementsByTagName("body")[0].className = "bg-fff";
   },
   created() {
-    // this.fetchData();
+    this.fetchData();
   },
   watch: {
     $route: function(to, from) {
       const newId = to.query.id;
       const oldId = from.query.id;
+      if(oldId){
+
         this.id = newId;
         this.fetchData();
+      }
     }
   },
   mounted(){
-    this.fetchData();
+    // this.fetchData();
   }
-  // beforeRouteUpdate(to, from, next) {
-  //     const newId = to.query.id;
-  //     const oldId = from.query.id;
-  //     if(oldId){
-  //       next();
-  //       this.id=newId
-  //       this.fetchData()
-  //     }
-  // }
 };
 </script>
 

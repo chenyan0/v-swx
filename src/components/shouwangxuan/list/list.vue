@@ -22,7 +22,7 @@
 <script>
 import CommonList from "../../template/common-list";
 import { Indicator } from "mint-ui";
-import Header from "../../common/header";
+import Header from "../../template/header";
 
 export default {
   components: {

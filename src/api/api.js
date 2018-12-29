@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import mock from './mock'
+import {post, categories, articleDetail} from './mock'
 import data from '../../static/json/data.json'
 const base = 'http://localhost:8000/api'
 Mock.setup({
@@ -34,34 +34,45 @@ Mock.mock(`${base}/customForm`, 'post', {
   message: '提交成功'
 })
 // =====================分割线=====================
-Mock.mock(`${base}/login`, 'post', {
-  code: 0,
-  status: 1,
-  message: '登录成功'
+//  用户登录
+Mock.mock(`${base}/login`, 'post', (options) => {
+  console.log(options)
+  return {
+    code: 0,
+    status: 1,
+    message: '登录成功'
+  }
+})
+// 用户注册账户
+Mock.mock(`${base}/register`, 'post', (options) => {
+  return {
+    code: 0,
+    status: 1,
+    message: '注册成功'
+  }
 })
 // 首页文章列表接口
 Mock.mock(`${base}/post`, 'get', {
   code: 0,
-  data: Array.from({ length: 10}).map(a => Mock.mock(mock.post))
+  data: Array.from({length: 10}).map(a => Mock.mock(post))
 })
 // 专题接口
 Mock.mock(`${base}/categories`, 'get', {
   code: 0,
-  data: Array.from({ length: 10}).map(a => Mock.mock( mock.categories))
+  data: Array.from({length: 10}).map(a => Mock.mock(categories))
 })
 // 热门文章接口
 Mock.mock(`${base}/hotpost`, 'post', (options) => {
   return {
     code: 0,
-    data: Array.from({ length: 10}).map(a => Mock.mock(mock.post))
+    data: Array.from({length: 10}).map(a => Mock.mock(post))
   }
 })
 // 文章详情
-Mock.mock(RegExp(`${base}/article/detail`), 'post', (options) => {
-  console.log(options)
+Mock.mock(`${base}/article/detail`, 'post', (options) => {
   return {
     code: 0,
-    data:Mock.mock(mock.articleDetail)
+    data: Mock.mock(articleDetail)
   }
 })
 // 发表评论
@@ -73,4 +84,3 @@ Mock.mock(`${base}/article/postComment`, 'post', (options) => {
     message: '发表成功'
   }
 })
-console.log(mock)
