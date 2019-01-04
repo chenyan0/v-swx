@@ -1,6 +1,7 @@
 import * as types from '../constants/types'
 
 const state = {
+  token: JSON.parse(sessionStorage.getItem('token')) || '',
   // 用户登录状态
   loginStatus: JSON.parse(sessionStorage.getItem('loginStatus')) || false,
   // 用户登录信息
@@ -39,26 +40,35 @@ const actions = {
     sessionStorage.setItem('userData', JSON.stringify(res))
     commit(types.COM_LOADING_STATUS, false)
     commit(types.SET_USER_DATA, res)
+  },
+  /**
+    *
+    */
+  setToken ({ commit }, res) {
+    sessionStorage.setItem('token', res)
+    commit(types.SET_TOKEN, res)
   }
 }
 
 const getters = {
   getUserData: state => state.userData,
   loginStatus: state => state.loginStatus,
-  userInfo: state => state.userInfo
+  userInfo: state => state.userInfo,
+  token: state => state.token
 }
 
 const mutations = {
   [types.SET_USER_INFO] (state, res) {
     state.userInfo = res
   },
-
   [types.SET_LOGIN_STATUS] (state, status) {
     state.loginStatus = status
   },
-
   [types.SET_USER_DATA] (state, res) {
     state.userData = res
+  },
+  [types.SET_TOKEN] (state, res) {
+    state.token = res
   }
 }
 

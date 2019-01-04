@@ -36,10 +36,10 @@ Mock.mock(`${base}/customForm`, 'post', {
 // =====================分割线=====================
 //  用户登录
 Mock.mock(`${base}/login`, 'post', (options) => {
-  console.log(options)
   return {
     code: 0,
     status: 1,
+    token: 'dsadsadasffmoiniofew',
     message: '登录成功'
   }
 })

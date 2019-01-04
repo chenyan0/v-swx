@@ -55,7 +55,7 @@ export default {
   },
   
   methods: {
-    ...mapActions(["setUserData", "setUserInfo"]),   //分发dispatch
+    ...mapActions(["setUserData", "setUserInfo","setToken"]),   //分发dispatch
     register(){
      this.$router.push('register')
     },
@@ -90,7 +90,11 @@ export default {
             });
             this.$store.dispatch("setLoadingState", false);
           } else {
-            this.$router.replace("/navigation");
+             this.$store.dispatch('setToken',res.data.token);     //改变token状态
+              let redirect = decodeURIComponent(this.$route.query.redirect || '/navigation');  
+              this.$router.push({
+                path: redirect
+              })
           }
         });
       }

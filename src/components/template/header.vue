@@ -40,7 +40,6 @@ export default {
     },
     methods:{
         back(){
-            console.log(1)
             window.history.go(-1)
         }
     }

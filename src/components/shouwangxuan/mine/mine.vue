@@ -30,145 +30,50 @@
         <mt-tab-container-item id="1">
           <ul>
             <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >1、python-布尔值 - unixfbi.com - 博客园</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >2、js中的undefined,null,空字符串,false,true之间的关系 ..._CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >3、布尔值为false的5种情况 - 光明大神棍的博客 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >4、NULL和空字符串的布尔值 - dengzhaoqun的专栏 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >5、空数组+空数组=空字符串 为什么_慕课猿问</router-link>
+              :to="{path:'/detail'}"
+              tag="li" v-for="i in list" :key="i.id"
+            >{{i.post_title}}</router-link>
+            
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <ul>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >1、python-布尔值 - unixfbi.com - 博客园</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >3、布尔值为false的5种情况 - 光明大神棍的博客 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >5、空数组+空数组=空字符串 为什么_慕课猿问</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >4、NULL和空字符串的布尔值 - dengzhaoqun的专栏 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >2、js中的undefined,null,空字符串,false,true之间的关系 ..._CSDN博客</router-link>
+         <router-link
+              :to="{path:'/detail'}"
+              tag="li" v-for="i in list" :key="i.id"
+            >{{i.post_title}}</router-link>
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
           <ul>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >3、布尔值为false的5种情况 - 光明大神棍的博客 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >2、js中的undefined,null,空字符串,false,true之间的关系 ..._CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >1、python-布尔值 - unixfbi.com - 博客园</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >4、NULL和空字符串的布尔值 - dengzhaoqun的专栏 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >5、空数组+空数组=空字符串 为什么_慕课猿问</router-link>
+             <router-link
+              :to="{path:'/detail'}"
+              tag="li" v-for="i in list" :key="i.id"
+            >{{i.post_title}}</router-link>
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
           <ul>
             <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >3、布尔值为false的5种情况 - 光明大神棍的博客 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >2、js中的undefined,null,空字符串,false,true之间的关系 ..._CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >4、NULL和空字符串的布尔值 - dengzhaoqun的专栏 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >1、python-布尔值 - unixfbi.com - 博客园</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >5、空数组+空数组=空字符串 为什么_慕课猿问</router-link>
+              :to="{path:'/detail'}"
+              tag="li" v-for="i in list" :key="i.id"
+            >{{i.post_title}}</router-link>
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="5">
           <ul>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >1、python-布尔值 - unixfbi.com - 博客园</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >2、js中的undefined,null,空字符串,false,true之间的关系 ..._CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >3、布尔值为false的5种情况 - 光明大神棍的博客 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >4、NULL和空字符串的布尔值 - dengzhaoqun的专栏 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >5、空数组+空数组=空字符串 为什么_慕课猿问</router-link>
+         <router-link
+              :to="{path:'/detail'}"
+              tag="li" v-for="i in list" :key="i.id"
+            >{{i.post_title}}</router-link>
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="6">
           <ul>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >5、空数组+空数组=空字符串 为什么_慕课猿问</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >2、js中的undefined,null,空字符串,false,true之间的关系 ..._CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >3、布尔值为false的5种情况 - 光明大神棍的博客 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >4、NULL和空字符串的布尔值 - dengzhaoqun的专栏 - CSDN博客</router-link>
-            <router-link
-              :to="{path:'/hot'}"
-              tag="li"
-            >1、python-布尔值 - unixfbi.com - 博客园</router-link>
+          <router-link
+              :to="{path:'/detail'}"
+              tag="li" v-for="i in list" :key="i.id"
+            >{{i.post_title}}</router-link>
           </ul>
         </mt-tab-container-item>
       </mt-tab-container>
@@ -176,11 +81,14 @@
   </div>
 </template>
 <script>
+import { Indicator } from "mint-ui";
+
 export default {
   data() {
     return {
       selected: "1",
-      avatorUrl: ""
+      avatorUrl: "",
+      list:[]
     };
   },
   beforeCreate() {
@@ -191,6 +99,13 @@ export default {
       this.$refs.name.innerHTML = this.$store.getters.userInfo.fullname;
       this.avatorUrl = this.$store.getters.userInfo.avatorUrl;
     });
+    this.fetchData(this.selected)
+
+  },
+  watch:{
+    selected:function(){
+      this.fetchData(this.selected)
+    }
   },
   methods: {
     changeImage: function(e) {
@@ -202,7 +117,33 @@ export default {
       reader.onload = function(e) {
         that.avatorUrl = this.result;
       };
+    },
+    fetchData(t) {
+      Indicator.close();
+      Indicator.open({
+        text: "Loading...",
+        spinnerType: "fading-circle"
+      });
+      const url = "http://localhost:8000/api/hotpost";
+      const self = this;
+        this.$ajax
+          .post(url,{t:t})
+          .then(
+            res => {
+              console.log(res)
+              self.list = res.data.data;
+              Indicator.close();
+            },
+            err => {
+              console.log(err);
+            }
+          )
+          .catch(error => {
+            console.log(error);
+          });
     }
+
+
   }
 };
 </script>
@@ -219,6 +160,8 @@ export default {
     overflow: hidden;
     position: relative;
     margin: 0 auto 10px;
+
+        border: 1px solid #fff;
     img {
       width: 100%;
       height: 100%;
@@ -246,8 +189,8 @@ export default {
   }
 }
 ul {
-  padding: 0 15px;
-  list-style: none;
+  padding: 0 15px 0 30px;
+  list-style: decimal;
   li {
     margin-top: 10px;
     font-size: 14px;
