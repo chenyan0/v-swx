@@ -4,11 +4,7 @@ import * as types from '../constants/types'
  * App通用配置
  */
 const state = {
-  loading: false, // 暂时只开发这一个
-  showToast: false,
-  leftNavStatus: false,
-  showSuccess: true,
-  showFail: false
+  loading: false // 暂时只开发这一个
 }
 const actions = {
   setLoadingState ({ commit }, status) {
@@ -16,9 +12,7 @@ const actions = {
   }
 }
 const getters = {
-  loading: state => state.loading,
-  showToast: state => state.showToast,
-  showAlert: state => state.showAlert
+  loading: state => state.loading
 }
 const mutations = {
   [types.COM_LOADING_STATUS] (state, status) {

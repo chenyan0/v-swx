@@ -123,12 +123,18 @@
         <v-button type="danger" size="small" disabled>danger</v-button>
       </div>
     </div>
+    <div class="section">
+      <div class="main">
+
+        <p class="section-label">Load</p>
+      <v-load></v-load>
+    </div>
+    </div>
 
   </div>
 </template>
 <script>
 import { required, minLength, between } from "vuelidate/lib/validators";
-// import { requestTree, requestCustomForm } from "../api/api";
 import VDialog from "./common/dialog";
 import VPage from "./common/pages";
 import VTree from "./common/tree";
@@ -140,6 +146,7 @@ import VSwitch from "./common/switch";
 import VSearch from "./common/search";
 import VInput from "./common/input";
 import VSelect from "./common/select";
+import VLoad from "./common/loading";
 export default {
   components: {
     VPage,
@@ -152,7 +159,8 @@ export default {
     VSwitch,
     VSearch,
     VInput,
-    VSelect
+    VSelect,
+    VLoad
   },
   data() {
     return {

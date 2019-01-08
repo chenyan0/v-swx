@@ -85,23 +85,13 @@ export default {
       }
     },
     submit(){
-      // if (!this.username || !this.password) {
-      //   Toast({
-      //     message: "请填写完整",
-      //     iconClass: "icon icon-error",
-      //     position: "top"
-      //   });
-      //   return;
-      // }
       const data =this.form
-      this.$store.dispatch("setLoadingState", true); //设置loading状态
       this.$ajax.post("http://localhost:8000/api/register",data).then(res => {
         if (!res.data.status) {
           Toast({
             message: res.data.message,
             iconClass: "icon icon-error"
           });
-          this.$store.dispatch("setLoadingState", false);
         } else {
           this.setUserInfo(data);
           this.$router.replace("/login");
@@ -113,10 +103,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../styles/base";
+$colors:
+  #118fff
+  #246FE2   //按钮
+  #5f7c8b  //wenzi
+  ;
 .wrapper {
   .edit-avatar {
     height: 32vh;
-    background: #118fff;
+    background: nth($list: $colors, $n:2);
     position: relative;
     .avator {
       width: 70px;
@@ -145,7 +140,7 @@ export default {
           position: absolute;
     right: 30px;
     bottom: 30px;
-    color: rgba(58, 58, 58, 0.3);
+    color: rgba(222, 222, 222, 0.3);
         font-size: 20px;
     }
   }
@@ -155,7 +150,7 @@ export default {
           margin: 0 30px 10px;
   }
     h1 {
-      color: #118fff;
+      color: nth($list: $colors, $n:2);
       font-size: 14px;
       font-weight: normal;
     }
@@ -173,14 +168,14 @@ export default {
         font-size: 14px;
         width: 100%;
         border-bottom: 1px solid rgba(0, 140, 255, 0.4);
-        color: #181a1d;
+        color: nth($list: $colors, $n:3 );
       }
     }
     button {
       width: 100%;
       height: 40px;
       border-radius: 20px;
-      background: #118fff;
+      background: nth($list: $colors, $n:2);
       border: 0;
       outline: none;
       font-size: 18px;
@@ -190,7 +185,7 @@ export default {
     }
   }
   .link-to-another {
-    color: #118fff;
+    color: nth($list: $colors, $n:2);
     font-size: 14px;
     text-align: center;
   }

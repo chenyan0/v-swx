@@ -179,7 +179,6 @@ export default {
       this.$ajax
         .post("http://localhost:8000/api/article/detail", { id: this.$route.query.id })
         .then(res => {
-          console.log(res);
           this.article = res.data.data;
           this.praiseSum = this.article.praise.length;
           this.commentSum = this.article.comments_info.length;
@@ -188,7 +187,6 @@ export default {
         }).catch(error => {
 
         });
-  
     },
     goHome() {
       this.$router.push({ path: "navigation" });

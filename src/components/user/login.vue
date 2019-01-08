@@ -1,64 +1,90 @@
 <template>
   <div class="wrapper">
     <div class="inner">
-    <div class="title">
-      <img
-        src="../../../static/img/login/logo.png"
-        alt=""
-      >
-    </div>
-    <div class="login">
-      <div class="form">
-        <div class="form-group">
-          <label>
-            <font-awesome-icon icon="user" /></label>
-          <input
-            type="text"
-            v-model="fullname"
-            placeholder="测试账号admin"
-          >
-        </div>
-        <div class="form-group">
-          <label>
-            <font-awesome-icon icon="key" /></label>
-          <input
-            v-model="password"
-            type="password"
-            placeholder="测试密码123456"
-          >
-        </div>
+      <div class="title">
+        <img
+          src="../../../static/img/login/logo.png"
+          alt=""
+        >
       </div>
-      <button
-        @click="login"
-        id="signin"
-      >Sign In</button>
-      <button
-        @click="register"
-        id="signup"
-      >Sign Up</button>
+      <div class="login">
+        <div class="form">
+          <div class="form-group">
+            <label>
+              <font-awesome-icon icon="user" /></label>
+             <div class="form-input"> <input
+              type="text"
+              v-model="fullname"
+              placeholder="测试账号admin"
+            >
+
+          </div>
+          </div>
+          <div class="form-group">
+            <label>
+              <font-awesome-icon icon="key" /></label>
+              <div class="form-input">
+
+            <input
+              v-model="password"
+              ref="pass"
+              :type="passVisible ? 'text' : 'password'"
+              placeholder="测试密码123456"
+            >
+              <font-awesome-icon icon="eye" class="isVisible" v-if="!passVisible" @click="toggle"/>
+              <font-awesome-icon icon="eye-slash" class="isVisible" v-if="passVisible"  @click="toggle"/>
+              </div>
+          </div>
+        </div>
+        <button
+          @click="login"
+          id="signin"
+        >Sign In</button>
+        <button
+          @click="register"
+          id="signup"
+        >Sign Up</button>
+      </div>
+      <router-link
+        class="link-to-another"
+        tag="div"
+        :to="{path:'register'}"
+      >
+        Forget password ?
+      </router-link>
     </div>
-    <router-link class="link-to-another" tag="div" :to="{path:'register'}">
-      Forget password ?
-    </router-link>
-    </div>
+    <v-load v-if="loading"></v-load>
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { Toast } from "mint-ui";
+import VLoad from "../common/loading";
 export default {
+  components: {
+    VLoad
+  },
   data() {
     return {
       password: "",
-      fullname: ""
+      fullname: "",
+      passVisible:false
     };
   },
-  
+  computed: {
+    ...mapState({
+      loading: state => state.Com.loading,
+    })
+  },
   methods: {
-    ...mapActions(["setUserData", "setUserInfo","setToken"]),   //分发dispatch
-    register(){
-     this.$router.push('register')
+    ...mapActions(["setUserData", "setUserInfo", "setToken"]), //分发dispatch
+    register() {
+      this.$router.push("register");
     },
+    toggle(){
+      this.passVisible=!this.passVisible
+    },
+      
     login() {
       //登录操作
       if (!this.fullname || !this.password) {
@@ -69,19 +95,13 @@ export default {
         });
         return;
       }
-      const USERINFO=this.$store.getters.userInfo;
+      const USERINFO = this.$store.getters.userInfo;
       let data = {
         fullname: this.fullname,
         password: this.password,
-        avatar: require("../../../static/img/jyimg.png")
       };
       this.$store.dispatch("setLoadingState", true); //设置loading状态
-      if(this.fullname!==USERINFO.fullname||this.password!==USERINFO.password){
-          Toast({
-            message: "用户账号信息不匹配",
-            iconClass: "icon icon-error"
-          });
-      }else{
+      if ((this.fullname == USERINFO.fullname && this.password == USERINFO.password)||(this.fullname == "admin" && this.password == "123456")) {
         this.$ajax.post("http://localhost:8000/api/login", data).then(res => {
           if (!res.data.status) {
             Toast({
@@ -90,34 +110,44 @@ export default {
             });
             this.$store.dispatch("setLoadingState", false);
           } else {
-             this.$store.dispatch('setToken',res.data.token);     //改变token状态
-              let redirect = decodeURIComponent(this.$route.query.redirect || '/navigation');  
-              this.$router.push({
-                path: redirect
-              })
+            this.$store.dispatch("setToken", res.data.token); //改变token状态
+            let redirect = decodeURIComponent(
+              this.$route.query.redirect || "/navigation"
+            );
+            this.$router.push({
+              path: redirect
+            });
           }
         });
+      } else {
+           Toast({
+            message: "用户账号信息不匹配",
+            iconClass: "icon icon-error"
+          });
       }
     }
   },
-  mounted(){
-     
-  }
-
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>
 @import "../../styles/base";
+$colors:
+  #118fff
+  #246FE2   //按钮
+  #5f7c8b  //wenzi
+  ;
+
 .wrapper {
-  .inner{
-        background-color: rgba(255, 255, 255, 0.9);
+  .inner {
+    background-color: rgba(255, 255, 255, 0.8);
     height: 100vh;
     position: absolute;
     width: 100%;
   }
-    background-image:url("../../../static/img/login/bg.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-image: url("../../../static/img/login/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100vh;
   .title {
     line-height: 40px;
@@ -132,9 +162,7 @@ export default {
     }
     .form-group {
       margin: 10px 0;
-      height: 32px;
-      line-height: 32px;
-      color: #2c3e50;
+          display: flex;
       & > label {
         font-size: 14px;
         width: 30px;
@@ -142,29 +170,38 @@ export default {
         text-align: center;
         height: 30px;
         line-height: 30px;
-
-        border: 1px solid #5da3ff;
+        border: 1px solid nth($list: $colors, $n:1 );
         border-radius: 50%;
-        color: #5da3ff;
+        color: nth($list: $colors, $n:1 );
+            margin-right: 10px;
       }
-      & > input {
+      .form-input{
+        border-bottom: 1px solid nth($list: $colors, $n:1 );
+        width:calc(100% - 50px);
+        height: 30px;
+        display: flex;
+    align-items: center;
+      input {
         border: 0;
         background-color: transparent;
         height: 30px;
         outline: none;
         font-size: 14px;
-        width: 78%;
-        border-bottom: 1px solid rgba(0, 140, 255, 0.4);
-
-        color: #99a4bf;
         padding-left: 10px;
+        flex: 1;
+         color:nth($list: $colors, $n:3)
+      }
+      .isVisible{
+        font-size: 13px;
+        color:nth($list: $colors, $n:3)
+      }
       }
     }
     button {
       width: 100%;
       height: 40px;
       border-radius: 20px;
-      background: #118fff;
+      background: nth($list: $colors, $n:2 );
       border: 0;
       outline: none;
       font-size: 18px;
@@ -173,13 +210,13 @@ export default {
       margin-bottom: 10px;
     }
     #signup {
-      border: 1px solid #008cff;
+      border: 1px solid nth($list: $colors, $n:2 );
       background: transparent;
-      color: #008cff;
+      color: nth($list: $colors, $n:2 );
     }
   }
-  .link-to-another{
-    color: #5da3ff;
+  .link-to-another {
+    color: nth($list: $colors, $n:2 );
     font-size: 14px;
     text-align: center;
   }
