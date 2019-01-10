@@ -130,9 +130,8 @@ export default {
           .post(url,{t:t})
           .then(
             res => {
-              console.log(res)
-              self.list = res.data.data;
               Indicator.close();
+              self.list = res.data.data;
             },
             err => {
               console.log(err);

@@ -57,9 +57,11 @@ Mock.mock(`${base}/post`, 'get', {
   data: Array.from({length: 10}).map(a => Mock.mock(post))
 })
 // 专题接口
-Mock.mock(`${base}/categories`, 'get', {
-  code: 0,
-  data: Array.from({length: 10}).map(a => Mock.mock(categories))
+Mock.mock(`${base}/categories`, 'post', (options) => {
+  return {
+    status: 200,
+    data: Array.from({length: 10}).map(a => Mock.mock(categories))
+  }
 })
 // 热门文章接口
 Mock.mock(`${base}/hotpost`, 'post', (options) => {

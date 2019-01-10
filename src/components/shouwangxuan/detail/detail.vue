@@ -194,7 +194,7 @@ export default {
     postComment() {
       let v = this.$refs.commentText.value;
       const params = {
-        comments_thumb: this.$store.getters.userInfo.avator_url,
+        comments_thumb: this.$store.getters.userInfo.avatorUrl,
         comments_date: formatDate(new Date(), "yyyy-MM-dd"),
         comments_username: this.$store.getters.userInfo.fullname,
         comments_text: v
@@ -323,6 +323,7 @@ export default {
   :last-child {
     text-align: right;
     float: right;
+    
   }
 }
 .commentBlock {
@@ -384,9 +385,10 @@ export default {
       align-items: center;
       justify-content: left;
       margin-bottom: 10px;
+          font-size: 14px;
       img {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         & + span {
           margin-left: 10px;
@@ -396,13 +398,14 @@ export default {
       }
       :last-child {
         margin-left: auto;
+            color: #999;
       }
     }
   }
 }
 .praise-thumb {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   margin-right: 5px;
 }

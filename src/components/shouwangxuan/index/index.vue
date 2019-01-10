@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <mt-swipe :auto="0" class="banner">
+    <mt-swipe :auto="4000" class="banner">
       <mt-swipe-item
         v-for="item in items"
         :key=item.id
@@ -92,6 +92,11 @@ export default {
     return {
       items: [
         {
+          title: "中银乐享金生终身养老年金保险",
+          href: "",
+          url: require("../../../../static/img/banner/lxbanner.png")
+        },
+        {
           title: "中银三星尊享家盈二号终身寿险",
           href: "/jiaying",
           url: require("../../../../static/img/banner/jfbanner.png")
@@ -105,11 +110,6 @@ export default {
           title: "中银祥佑尊享版终身重大疾病保险",
           href: "",
           url: require("../../../../static/img/banner/xybanner.png")
-        },
-        {
-          title: "中银乐享金生终身养老年金保险",
-          href: "",
-          url: require("../../../../static/img/banner/lxbanner.png")
         }
       ],
       curpage: 1,
@@ -162,10 +162,15 @@ export default {
 <style lang="scss" scoped>
 @import "~@/styles/util/layout";
 .banner {
+  height:130px;
   img {
-    width: 100%;
+      width: 100%;
+    height: 100%;
     display: block;
-    height: auto;
+    object-fit: cover;
+  }
+  .mint-swipe-indicators{
+    bottom: 0;
   }
 }
 form {

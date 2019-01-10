@@ -18,7 +18,7 @@ Router.prototype.goBack = function () {
 Vue.use(Router)
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
-  // mode: 'hash',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -88,7 +88,6 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  console.log(to, store.getters.token)
   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
     if (store.getters.token) { // 通过vuex state获取当前的token是否存在
       next()

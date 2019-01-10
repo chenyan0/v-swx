@@ -1,5 +1,6 @@
 <template>
   <div class="common-list">
+     
     <router-link
       :to="{ path: '/detail',query:{id:item.id}}"
       tag="div"
@@ -31,16 +32,20 @@
         </div>
       </div>
     </router-link>
+
   </div>
 </template>
 <script>
 export default {
   data() {
-    return {};
+    return {
+      
+    };
   },
   props: {
     data: Array
-  }
+  },
+  
 };
 </script>
 
@@ -64,6 +69,12 @@ export default {
       margin-left: 100px;
       height: 40px;
       margin-bottom: 10px;
+      overflow:hidden; 
+      text-overflow:ellipsis; 
+      display:-webkit-box; 
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:2; 
+          font-size: 14px;
     }
     &.has-img .content-date {
       color: #666;

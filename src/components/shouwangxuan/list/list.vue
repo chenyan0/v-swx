@@ -1,20 +1,19 @@
 <template>
   <div>
-      <Header
+    <Header
       :title="title"
       isBack
     ></Header>
     <div class="main-container">
-
-    <div class="top">
-      <img
-        src=""
-        alt=""
-      >
-      <h1>搜索关键字：<span ref="key"></span></h1>
-      <span>全局搜索</span>
-    </div>
-    <common-list :data="list" />
+      <div class="top">
+        <img
+          src="../../../../static/img/banner/lxbanner.png"
+          alt=""
+        >
+        <h1>{{ $route.query.search ? "搜索关键字：" : ''}}<span ref="key"></span></h1>
+        <span ref="desc"></span>
+      </div>
+      <common-list :data="list" />
     </div>
 
   </div>
@@ -31,18 +30,33 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: [],
+      source:''
+
     };
   },
-  created() {
-    this.$nextTick(() => {
-      this.$refs.key.innerHTML = this.$route.query.search;
-    });
-    this.fetchData();
+  watch:{
+
   },
-  computed:{
-    title:function(){
-      return "搜索词："+this.$route.query.search
+  created() {
+    const {params,query} = this.$route
+    this.$nextTick(() => {
+      this.$refs.key.innerHTML = query.search || params.name
+      this.$refs.desc.innerHTML = params.desc ? params.desc : "本搜索是全文搜索"
+    });
+    this.fetchData()
+  },
+   beforeRouteEnter (to, from, next) {
+    if(to.query.search){
+    }else if(to.params.id){
+    }
+    next(vm => {
+    })
+  },
+  computed: {
+    title: function() {
+      let t = this.$route.query.search ? "搜索词:"+this.$route.query.search :this.$route.params.name
+      return t
     }
   },
   methods: {
@@ -54,44 +68,55 @@ export default {
       });
       const url = "http://localhost:8000/api/post";
       const self = this;
-      this.$ajax.get(url)
-          .then(
-            res => {
-              self.list = res.data.data;
-              Indicator.close();
-              return res;
-            },
-            err => {
-              console.log(err);
-            }
-          )
-          .catch(error => {
-            console.log(error);
-          });
+      this.$ajax
+        .get(url)
+        .then(
+          res => {
+            Indicator.close();
+            self.list = res.data.data;
+          },
+          err => {
+            console.log(err);
+          }
+        )
+        .catch(error => {
+          console.log(error);
+        });
     }
-  }
+  },
+  
 };
 </script>
 <style lang="scss" scoped>
 .main-container {
-    padding: 40px 0;
-.top {
-  height: 200px;
-  background: bisque;
-  h1 {
-    font-size: 20px;
-    margin-left: 30px;
-    &+span{
-    margin-left: 30px;
-    padding: 8px 0;
-    border-top: 1px solid #ea985d;
-
+  padding: 40px 0;
+  .top {
+    height: 160px;
+    position: relative;
+    color: #fff;
+    img {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      z-index: -1;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(3px);
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0;
+      padding: 40px 30px 20px;
+      & + span {
+        margin-left: 30px;
+        padding: 8px 0;
+        border-top: 1px solid #fff;
+      }
     }
   }
-}
-.common-list {
-  padding: 0 15px;
-}
+  .common-list {
+    padding: 0 15px;
+  }
 }
 </style>
 
