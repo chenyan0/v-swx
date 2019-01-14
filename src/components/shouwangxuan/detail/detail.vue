@@ -109,7 +109,10 @@
               <span>{{item.comments_date }}</span>
             </div>
             <div class="comment-text">
-              {{item.comments_text}}
+              <p>
+                {{item.comments_text}}
+                </p>
+                <p><span>William Davis</span> 回复 <span>Lisa Robinson</span>的撒的恢弘我红枫缎hi欧萨腐败日哦IQ澎湃飞虎队刷副本望闻问切</p>
             </div>
           </div>
         </div>
@@ -249,7 +252,6 @@ export default {
     }
   },
   mounted(){
-    // this.fetchData();
   }
 };
 </script>
@@ -376,9 +378,24 @@ export default {
     border-radius: 4px;
     margin-bottom: 6px;
     .comment-text {
-      font-size: 14px;
-      color: #666;
-      text-indent: 2em;
+      p{
+            font-size: 12px;
+    color: #666;
+    margin-left: 40px;
+    text-indent: 2em;
+    color: #999;
+
+    margin-bottom: 6px;
+        &:first-child{
+  
+    background: transparent;
+    color: #666;
+        }
+        span{
+    color: #666;
+    font-weight: bold;
+        }
+      }
     }
     .comment-author {
       display: flex;

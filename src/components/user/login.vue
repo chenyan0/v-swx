@@ -101,13 +101,12 @@ export default {
         password: this.password,
       };
       this.$store.dispatch("setLoadingState", true); //设置loading状态
-      if ((this.fullname == USERINFO.fullname && this.password == USERINFO.password)||(this.fullname == "admin" && this.password == "123456")) {
         this.$ajax.post("http://localhost:8000/api/login", data).then(res => {
           if (!res.data.status) {
             Toast({
-              message: res.data.message,
-              iconClass: "icon icon-error"
-            });
+            message: "用户账号信息不匹配",
+            iconClass: "icon icon-error"
+          });
             this.$store.dispatch("setLoadingState", false);
           } else {
             this.$store.dispatch("setToken", res.data.token); //改变token状态
@@ -119,12 +118,6 @@ export default {
             });
           }
         });
-      } else {
-           Toast({
-            message: "用户账号信息不匹配",
-            iconClass: "icon icon-error"
-          });
-      }
     }
   },
   mounted() {}

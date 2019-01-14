@@ -40,6 +40,7 @@ export default {
   },
   created() {
     const {params,query} = this.$route
+    console.log(params,query)
     this.$nextTick(() => {
       this.$refs.key.innerHTML = query.search || params.name
       this.$refs.desc.innerHTML = params.desc ? params.desc : "本搜索是全文搜索"

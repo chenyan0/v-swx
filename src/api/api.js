@@ -36,11 +36,22 @@ Mock.mock(`${base}/customForm`, 'post', {
 // =====================分割线=====================
 //  用户登录
 Mock.mock(`${base}/login`, 'post', (options) => {
-  return {
-    code: 0,
-    status: 1,
-    token: 'dsadsadasffmoiniofew',
-    message: '登录成功'
+  const { fullname, password } = JSON.parse(options.body)
+  console.log(fullname, password)
+  if (password === '123456' && fullname === 'admin') {
+    return {
+      code: 0,
+      status: 1,
+      token: 'dsadsadasffmoiniofew',
+      message: '登录成功'
+    }
+  } else {
+    return {
+      code: 0,
+      status: 1,
+      token: 'dsadsadasffmoiniofew',
+      message: '登录成功'
+    }
   }
 })
 // 用户注册账户
