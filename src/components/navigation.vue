@@ -11,12 +11,7 @@
       <mt-tab-container-item id="首页">
         <index />
         <copyright/>
-        <!-- <ul>
-            <router-link tag="li" :to="{path:'/onlineplan'}">计划书</router-link>
-            <router-link tag="li" :to="{path:'/salary'}">薪资查询</router-link>
-            <router-link tag="li" :to="{path:'/custom'}">写着玩卍</router-link>
-            <router-link tag="li" :to="{path:'/setting'}">设置一下</router-link>
-            </ul> -->
+       
       </mt-tab-container-item>
       <mt-tab-container-item id="专题">
         <topic />
@@ -26,6 +21,12 @@
         <copyright/>
       </mt-tab-container-item>
       <mt-tab-container-item id="关于">
+         <ul>
+            <router-link tag="li" :to="{path:'/onlineplan'}">计划书</router-link>
+            <router-link tag="li" :to="{path:'/salary'}">薪资查询</router-link>
+            <router-link tag="li" :to="{path:'/custom'}">我的组件库</router-link>
+            <router-link tag="li" :to="{path:'/setting'}">设置一下</router-link>
+            </ul>
         <copyright/>
       </mt-tab-container-item>
     </mt-tab-container>

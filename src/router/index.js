@@ -62,7 +62,7 @@ const router = new Router({
         default: Custom
       },
       meta: {
-        title: '自定义',
+        title: '我的组件库',
         index: 3
       }
     },

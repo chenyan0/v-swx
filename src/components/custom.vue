@@ -2,48 +2,138 @@
   <div class="wrapper">
     <div class="section">
       <div class="main">
-        <p class="section-label">Real-time search</p>
-        <v-search :searchValues="searchValues"></v-search>
+        <p class="section-label">Search</p>
+        <div class="search">
+          <v-search
+            :searchValues="cityList"
+            :v-model="searchValue"
+            :style="{width:'200px'}"
+             placeholder="请选择"
+             clearable
+            @change="onSearchChange($event,'searchValue')"
+          ></v-search>
+          <v-search
+            :searchValues="cityList"
+            placeholder="选择一下"
+            disabled
+            size="small"
+            :style="{width:'100px'}"
+          ></v-search>
+          <v-search
+            :searchValues="cityList"
+            placeholder="选择一下"
+            
+            size="large"
+            :style="{width:'100px'}"
+          ></v-search>
+        </div>
       </div>
     </div>
     <div class="section">
       <div class="main">
-        <p class="section-label">Tooltip</p>
-        <v-button type="primary" size="small">向上提示</v-button>
+        <p class="section-label">Toast</p>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showToast"
+        >点击弹出Toast</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showIconToast"
+        >点击弹出有Icon的Toast</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showPosToast"
+        >自定义Toast位置</v-button>
       </div>
     </div>
     <div class="section">
-      <div class="main" ref="validateForm">
+      <div
+        class="main"
+        ref="validateForm"
+      >
         <p class="section-label">Form</p>
         <div class="form-group">
           <label for="">姓名:</label>
-          <v-input v-model="validateForm.username" name="name" id="username" type="text" placeholder="First Name" />
+          <v-input
+            v-model="validateForm.username"
+            name="name"
+            id="username"
+            type="text"
+            placeholder="First Name"
+          />
         </div>
         <div class="form-group label-p-10">
           <label for="">上门取件:</label>
-          <v-switch v-model="validateForm.switchValue" size="small" id="pickUp" name="pickUp" @change="onChange($event,'switchValue')" />
+          <v-switch
+            v-model="validateForm.switchValue"
+            size="small"
+            id="pickUp"
+            name="pickUp"
+            @change="onFormChange($event,'switchValue')"
+          />
         </div>
         <div class="form-group label-p-10">
           <label for="">支付方式:</label>
-          <v-select v-model="validateForm.payMethod" placeholder="您的支付方式是" :values="jobValue" @change="onChange($event,'payMethod')"></v-select>
+          <v-select
+            v-model="validateForm.payMethod"
+            placeholder="您的支付方式是"
+            :values="jobValue"
+            @change="onFormChange($event,'payMethod')"
+          ></v-select>
         </div>
         <div class="form-group label-p-10">
           <label for="">货物类型:</label>
-          <v-checkbox-group v-model="validateForm.checkboxValue" @on-change="onChange($event,'checkboxValue')">
-            <v-checkbox v-for="(i,index) in tags" :key="index" :label="i.label" name="checkbox">{{i.text}}</v-checkbox>
+          <v-checkbox-group
+            v-model="validateForm.checkboxValue"
+            @on-change="onFormChange($event,'checkboxValue')"
+          >
+            <v-checkbox
+              v-for="(i,index) in tags"
+              :key="index"
+              :label="i.label"
+              name="checkbox"
+            >{{i.text}}</v-checkbox>
           </v-checkbox-group>
         </div>
-        <v-button type="primary" size="small" @click="handleSubmit()">提交</v-button>
-        <v-button type="default" size="small">取消</v-button>
-        <v-button type="default" size="small" @click="resetForm('validateForm')">重置</v-button>
-        <span class="error" v-show="error" ref="error"></span>
+        <v-button
+          type="primary"
+          size="small"
+          @click="handleSubmit()"
+        >提交</v-button>
+        <v-button
+          type="default"
+          size="small"
+        >取消</v-button>
+        <v-button
+          type="default"
+          size="small"
+          @click="resetForm('validateForm')"
+        >重置</v-button>
+        <span
+          class="error"
+          v-show="error"
+          ref="error"
+        ></span>
       </div>
     </div>
     <div class="section">
       <div class="main">
         <p class="section-label">Dialog</p>
-        <v-button type="default" size="small" @click="openDialog">open Dialog</v-button>
-        <v-dialog :visible.sync="isVisible" title="提示信息" size="small" center @open="openHandle">
+        <v-button
+          type="default"
+          size="small"
+          @click="openDialog"
+        >open Dialog</v-button>
+        <v-dialog
+          :visible.sync="isVisible"
+          title="提示信息"
+          size="small"
+          center
+          @open="openHandle"
+        >
           <span slot="header">确认</span>
           <table>
             <thead>
@@ -62,8 +152,16 @@
             </tbody>
           </table>
           <div slot="footer">
-            <v-button type="success" size="small" @click="isVisible = false">确定</v-button>
-            <v-button type="success" size="small" @click="isVisible = false">取消</v-button>
+            <v-button
+              type="success"
+              size="small"
+              @click="isVisible = false"
+            >确定</v-button>
+            <v-button
+              type="success"
+              size="small"
+              @click="isVisible = false"
+            >取消</v-button>
           </div>
         </v-dialog>
       </div>
@@ -77,7 +175,13 @@
     <div class="section">
       <div class="main">
         <p class="section-label">Page Group</p>
-        <v-page :total="82" :pageSizes="5" :pageIndex="curPage" :pagerCount="7" @on-change="onPageChange" />
+        <v-page
+          :total="82"
+          :pageSizes="5"
+          :pageIndex="curPage"
+          :pagerCount="7"
+          @on-change="onPageChange"
+        />
       </div>
     </div>
     <div class="section">
@@ -97,38 +201,120 @@
       <!-- <label for="" class="label">button示例</label> -->
       <div class="main">
         <p class="section-label">Button</p>
-        <v-button type="default" size="large" loading>default</v-button>
-        <v-button type="primary" size="large" loading>primary</v-button>
-        <v-button type="info" size="large">info</v-button>
-        <v-button type="warning" size="large">warn</v-button>
-        <v-button type="success" size="large">success</v-button>
-        <v-button type="danger" size="large">danger</v-button>
-        <v-button type="default" size="normal" loading>default</v-button>
-        <v-button type="primary" size="normal">primary</v-button>
-        <v-button type="info" size="normal">info</v-button>
-        <v-button type="warning" size="normal">warn</v-button>
-        <v-button type="success" size="normal">success</v-button>
-        <v-button type="danger" size="normal">danger</v-button>
-        <v-button type="default" size="small">default</v-button>
-        <v-button type="primary" size="small">primary</v-button>
-        <v-button type="info" size="small">info</v-button>
-        <v-button type="warning" size="small">warn</v-button>
-        <v-button type="success" size="small">success</v-button>
-        <v-button type="danger" size="small">danger</v-button>
-        <v-button type="default" size="small" disabled>default</v-button>
-        <v-button type="primary" size="small" disabled>primary</v-button>
-        <v-button type="info" size="small" disabled>info</v-button>
-        <v-button type="warning" size="small" disabled>warn</v-button>
-        <v-button type="success" size="small" disabled>success</v-button>
-        <v-button type="danger" size="small" disabled>danger</v-button>
+        <v-button
+          type="default"
+          size="large"
+          loading
+        >default</v-button>
+        <v-button
+          type="primary"
+          size="large"
+          loading
+        >primary</v-button>
+        <v-button
+          type="info"
+          size="large"
+        >info</v-button>
+        <v-button
+          type="warning"
+          size="large"
+        >warn</v-button>
+        <v-button
+          type="success"
+          size="large"
+        >success</v-button>
+        <v-button
+          type="danger"
+          size="large"
+        >danger</v-button>
+        <v-button
+          type="default"
+          size="normal"
+          loading
+        >default</v-button>
+        <v-button
+          type="primary"
+          size="normal"
+        >primary</v-button>
+        <v-button
+          type="info"
+          size="normal"
+        >info</v-button>
+        <v-button
+          type="warning"
+          size="normal"
+        >warn</v-button>
+        <v-button
+          type="success"
+          size="normal"
+        >success</v-button>
+        <v-button
+          type="danger"
+          size="normal"
+        >danger</v-button>
+        <v-button
+          type="default"
+          size="small"
+        >default</v-button>
+        <v-button
+          type="primary"
+          size="small"
+        >primary</v-button>
+        <v-button
+          type="info"
+          size="small"
+        >info</v-button>
+        <v-button
+          type="warning"
+          size="small"
+        >warn</v-button>
+        <v-button
+          type="success"
+          size="small"
+        >success</v-button>
+        <v-button
+          type="danger"
+          size="small"
+        >danger</v-button>
+        <v-button
+          type="default"
+          size="small"
+          disabled
+        >default</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          disabled
+        >primary</v-button>
+        <v-button
+          type="info"
+          size="small"
+          disabled
+        >info</v-button>
+        <v-button
+          type="warning"
+          size="small"
+          disabled
+        >warn</v-button>
+        <v-button
+          type="success"
+          size="small"
+          disabled
+        >success</v-button>
+        <v-button
+          type="danger"
+          size="small"
+          disabled
+        >danger</v-button>
       </div>
     </div>
     <div class="section">
       <div class="main">
-
         <p class="section-label">Load</p>
-      <v-load></v-load>
-    </div>
+        <div id="load-wrapper">
+          <v-load></v-load>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -136,6 +322,7 @@
 <script>
 import { required, minLength, between } from "vuelidate/lib/validators";
 import VDialog from "./common/dialog";
+import VToast from "./common/toast/toast";
 import VPage from "./common/pages";
 import VTree from "./common/tree";
 import VCheckboxGroup from "./common/checkbox-group";
@@ -151,6 +338,7 @@ export default {
   components: {
     VPage,
     VDialog,
+    VToast,
     VTree,
     VCheckboxGroup,
     VCheckbox,
@@ -165,17 +353,42 @@ export default {
   data() {
     return {
       error: false,
-      searchValues: [
-        "张雪",
-        "蜜蜜",
-        "真心",
-        "孟林",
-        "真假呀",
-        "张天",
-        "孟婆汤",
-        "辛弦",
-        "郑板桥"
+      searchValue:{},
+      cityList: [
+        {
+          value: "beijing",
+          label: "北京市"
+        },
+        {
+          value: "shanghai",
+          label: "上海市"
+        },
+        {
+          value: "shenzhen",
+          label: "深圳市"
+        },
+        {
+          value: "hangzhou",
+          label: "杭州市"
+        },
+        {
+          value: "nanjing",
+          label: "南京市"
+        },
+        {
+          value: "beijing",
+          label: "临汾市"
+        },
+        {
+          value: "beijing",
+          label: "郑州市"
+        },
+        {
+          value: "chongqing",
+          label: "重庆市"
+        }
       ],
+      model1: "",
       jobValue: ["到付", "现付"],
       validateForm: {
         username: "",
@@ -222,8 +435,21 @@ export default {
     document.getElementsByTagName("body")[0].className = "";
   },
   methods: {
-    onChange(v, type) {
+    showToast() {
+      this.$vtoast("我是弹出消息");
+    },
+    showIconToast() {
+      this.$vtoast({ text: "我是有图标的", duration: "2000", icon: "user" });
+    },
+    showPosToast() {
+      this.$vtoast({ text: "我的位置是自定义的", position: "top" });
+    },
+    onFormChange(v, type) {
       this.validateForm[type] = v;
+    },
+     onSearchChange(v, type) {
+       console.log(v,type)
+      this[type] = v;
     },
     handleSubmit() {
       const formData = JSON.stringify(this.validateForm);
@@ -235,7 +461,8 @@ export default {
         this.$refs.error.innerText = "请选择支付方式";
       } else {
         this.error = false;
-        this.$ajax.post("http://localhost:8000/api/customForm",formData)
+        this.$ajax
+          .post("http://localhost:8000/api/customForm", formData)
           .then(res => {
             console.log(res);
           })
@@ -294,6 +521,10 @@ export default {
       line-height: 40px;
       text-align: center;
     }
+  }
+  #load-wrapper {
+    position: relative;
+    height: 100px;
   }
 }
 </style>
