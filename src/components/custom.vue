@@ -6,7 +6,7 @@
         <div class="search">
           <v-search
             :searchValues="cityList"
-            :v-model="searchValue"
+            :v-model="searchValueModel"
             :style="{width:'200px'}"
              placeholder="请选择"
              clearable
@@ -20,9 +20,8 @@
             :style="{width:'100px'}"
           ></v-search>
           <v-search
-            :searchValues="cityList"
             placeholder="选择一下"
-            
+            notFoundText='无匹配选项'
             size="large"
             :style="{width:'100px'}"
           ></v-search>
@@ -169,7 +168,12 @@
     <div class="section">
       <div class="main">
         <p class="section-label">Tree</p>
-        <v-tree :data="tree"></v-tree>
+        <v-tree class="item"
+    :model="tree" showIcon style="width:200px;display:inline-block"></v-tree>
+    <v-tree class="item"
+    :model="tree" style="width:200px;display:inline-block;    vertical-align: top;" ></v-tree>
+        <!-- <v-tree :data="tree" showIcon></v-tree> -->
+        <!-- <v-tree :data="tree"></v-tree> -->
       </div>
     </div>
     <div class="section">
@@ -353,7 +357,7 @@ export default {
   data() {
     return {
       error: false,
-      searchValue:{},
+      searchValueModel:'',
       cityList: [
         {
           value: "beijing",
@@ -411,7 +415,7 @@ export default {
           text: "易碎品"
         }
       ],
-      tree: [],
+      tree: {},
       curPage: 2,
       isVisible: false
     };

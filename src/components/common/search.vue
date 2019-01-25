@@ -2,18 +2,22 @@
   <div class="v-select">
     <div
       class="v-select-selection"
-      @click="toggle()"
+      @click="toggleMenu()"
       :class="classes"
     >
-      <div
-        class="v-select-placeholder"
-        ref="placeholder"
-        v-show="!hasVal"
-      >{{placeholder}}</div>
-      <div
-        class="v-selected-value"
-        v-show="hasVal"
-      >{{currentVal.label}}</div>
+
+      <div :class="singleDisplayClasses">{{currentVal.label || singleDisplayValue}}</div>
+      <font-awesome-icon
+        :icon="['far', 'times-circle']"
+        class="icon-clear"
+        v-if="resetSelect"
+        @click.stop="onClear"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'caret-down']"
+        class="icon-arrow"
+        v-if="!resetSelect && !disabled"
+      />
     </div>
     <div
       class="v-select-dropdown"
@@ -28,8 +32,8 @@
           :class="{'v-select-item-selected':index == idx}"
         >{{i.label}}</li>
       </ul>
-      <ul class="v-select-not-found">
-        <li>无匹配数据</li>
+      <ul class="v-select-not-found" v-show="showNotFoundLabel">
+        <li>{{notFoundText}}</li>
       </ul>
     </div>
     <span>{{currentVal.value}}</span>
@@ -43,15 +47,16 @@ export default {
       prefixCls: prefixCls,
       values: this.searchValues,
       visible: false,
-      hasVal: false,
       idx:0,
-      currentVal:{}
+      currentVal:[],
+      remoteInitialLabel: this.initialLabel,
+      showCloseIcon:this.clearable
     };
   },
   props: {
     searchValues: {
       type: Array,
-      default: []
+      default: () => []
     },
     placeholder: {
       type: String,
@@ -68,7 +73,17 @@ export default {
     clearable: {
         type: Boolean,
         default: false
-    }
+    },
+    multiple: {
+        type: Boolean,
+        default: false
+    },
+    initialLabel: {
+        type: [String, Number, Array],
+    },
+    notFoundText: {
+        type: String
+    },
     
   },
   computed: {
@@ -77,30 +92,72 @@ export default {
         {
           [`${prefixCls}-visible`]: this.visible,
           [`${prefixCls}-disabled`]: this.disabled,
-          // [`${prefixCls}-multiple`]: this.multiple,
-          // [`${prefixCls}-single`]: !this.multiple,
           [`${prefixCls}-show-clear`]: this.showCloseIcon,
           [`${prefixCls}-${this.size}`]: !!this.size
         }
       ];
     },
+    resetSelect(){
+        return !this.showPlaceholder && this.clearable;
+    },
+    singleDisplayClasses(){
+        const {filterable, multiple, showPlaceholder} = this;
+        return [{
+            [prefixCls + '-placeholder']: showPlaceholder,
+            [prefixCls + '-selected-value']: !showPlaceholder && !multiple,
+        }];
+    },
+    singleDisplayValue(){
+        return `${this.selectedSingle}` || this.placeholder;
+    },
+    showPlaceholder(){
+      let status = false;
+      if (!this.multiple) {
+          const value = this.currentVal[0];
+          if (typeof value === 'undefined' || String(value).trim() === ''){
+            status = !this.remoteInitialLabel;
+          }
+      } else {
+        if (!this.currentVal.length > 0) {
+          status = true;
+          }
+      }
+      return status
+    },
+    selectedSingle(){
+      const selected = this.currentVal[0];
+      return selected ? selected.label : this.placeholder
+    },
+    showNotFoundLabel () {
+        const {searchValues} = this;
+        return searchValues && searchValues.length==0;
+    },
   },
   methods: {
-    toggle() {
+    toggleMenu(e, force) {
       if (this.disabled) {
         return false;
       }
-      this.visible = !this.visible;
+      this.visible = typeof force !== 'undefined' ? force : !this.visible;
     },
     save(v,id) {
-      this.currentVal = v;
+      if(!this.multiple){
+        this.reset()
+      }
+      this.currentVal.push(v)
       this.idx=id
-      this.hasVal = true;
-      this.$emit('change',v)
+      this.$emit('change',v.value)
       this.hideMenu();
     },
     hideMenu() {
-      this.visible = false;
+      this.toggleMenu(null, false);
+    },
+    reset(){
+      this.currentVal=[]
+    },
+    onClear(){
+      this.hideMenu()
+      if (this.clearable) this.reset();
     }
   }
 };
@@ -108,7 +165,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$smallHeight:28px;
+$smallHeight: 28px;
 .v-select {
   display: inline-block;
   width: 100%;
@@ -130,7 +187,20 @@ $smallHeight:28px;
     border: 1px solid #d7dde4;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
-    &:hover,&.v-select-visible{
+    .icon-clear,
+    .icon-arrow {
+      position: absolute;
+      top: 50%;
+      right: 6px;
+      transform: translate(0, -50%);
+      color: #9ea7b3;
+    }
+    .icon-arrow {
+      font-size: 22px;
+      transition: transform 0.3s ease;
+    }
+    &:hover,
+    &.v-select-visible {
       border-color: #5cadff;
     }
     &.v-select-disabled {
@@ -139,32 +209,21 @@ $smallHeight:28px;
       cursor: not-allowed;
       color: #ccc;
     }
-    &.v-select-visible{
-      box-shadow:  0 0 0 2px rgba(51,153,255,.2)
+    &.v-select-visible {
+      box-shadow: 0 0 0 2px rgba(51, 153, 255, 0.2);
+      .icon-arrow {
+        transform: translate(0, -50%) rotate(180deg);
+      }
     }
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 10px;
-      border: 6px solid transparent;
-      border-top: 8px solid #9ea7b4;
-      right: 6px;
-      border-bottom: 0;
-      transition: all 0.3s ease;
-    }
-    &.v-select-visible:after {
-      transform: rotate(180deg);
-    }
-    &.v-select-small{
+    &.v-select-small {
       height: 28px;
-        line-height: 28px;
+      line-height: 28px;
     }
-    &.v-select-middle{
+    &.v-select-middle {
       height: 32px;
-        line-height: 32px;
+      line-height: 32px;
     }
-    &.v-select-large{
+    &.v-select-large {
       height: 36px;
       line-height: 36px;
     }
@@ -172,7 +231,7 @@ $smallHeight:28px;
       color: #c3cbd6;
     }
     .v-select-placeholder,
-    .v-selected-value {
+    .v-select-selected-value {
       display: block;
       height: 100%;
       font-size: 12px;
@@ -195,10 +254,7 @@ $smallHeight:28px;
     z-index: 900;
     border-radius: 4px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-    .v-select-not-found {
-      display: none;
-    }
-    .v-select-item {
+    .v-select-item,.v-select-not-found  li {
       margin: 0;
       padding: 7px 16px;
       clear: both;
@@ -218,6 +274,5 @@ $smallHeight:28px;
       }
     }
   }
-    
 }
 </style>
