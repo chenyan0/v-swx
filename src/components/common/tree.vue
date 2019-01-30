@@ -2,20 +2,22 @@
   <li>
     <div
       :class="nodeClasses"
-      @click="toggle"
       @dblclick="changeType"
     >
       <font-awesome-icon
-        :icon="['fas', 'folder-open']"
+        :icon="['fas', open ? 'caret-down' : 'caret-right']"
         class="icon-folder"
-        v-if="opened"
+        @click="toggle"
+        v-if="!showIcon && isFolder"
       />
       <font-awesome-icon
-        :icon="['fas', 'folder']"
+        :icon="['fas', opened ? 'folder-open' : 'folder']"
         class="icon-folder"
-        v-if="closed"
+        @click="toggle"
+        v-if="showIcon && isFolder"
       />
-      <span>{{ model.name }}</span>
+      <input  type="checkbox" name="tree-node" v-if="showCheckbox" v-model="model.checked" @click="handleCheck($event,model)"/>
+      <span>{{ model.name }}{{model.checked}}</span>
     </div>
     <ul
       v-show="open"
@@ -27,6 +29,7 @@
         :key="index"
         :model="model"
         :showIcon="showIcon"
+        :showCheckbox="showCheckbox"
       >
       </node-leaf>
     </ul>
@@ -43,11 +46,15 @@ export default {
     showIcon: {
       type: Boolean,
       default: false
+    },
+    showCheckbox:{
+       type: Boolean,
+      default: false
     }
   },
   data: function() {
     return {
-      open: false
+      open: false,
     };
   },
   computed: {
@@ -83,11 +90,15 @@ export default {
         // this.open = true;
       }
     },
-    addChild: function() {
-      this.model.children.push({
-        name: "new stuff"
+    handleCheck: function($event,el){
+      console.log($event.target.checked)
+      el.children.forEach(element => {
+          element.checked=$event.target.checked
+        console.log(element.checked)
       });
-    }
+      
+
+    },
   }
 };
 </script>
@@ -98,27 +109,13 @@ li {
   font-size: 14px;
   list-style: none;
   > div {
-    &:before {
-      content: "";
-      border: 5px solid transparent;
-      height: 0;
-      display: inline-block;
-      border-left: 5px solid #c0c4cc;
-      transition: transform 0.3s ease-in-out;
-      vertical-align: middle;
-    }
     &.tree-show-icon:before {
       display: none;
     }
   }
-  > div.tree-expend:before {
-    transform: rotate(90deg);
-  }
-
   ul {
     padding-left: 1em;
   }
-
   .tree-leaf {
     padding-left: 1em;
     &:before {

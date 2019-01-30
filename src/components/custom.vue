@@ -171,7 +171,7 @@
         <v-tree class="item"
     :model="tree" showIcon style="width:200px;display:inline-block"></v-tree>
     <v-tree class="item"
-    :model="tree" style="width:200px;display:inline-block;    vertical-align: top;" ></v-tree>
+    :model="tree"  show-checkbox style="width:200px;display:inline-block;    vertical-align: top;" ></v-tree>
         <!-- <v-tree :data="tree" showIcon></v-tree> -->
         <!-- <v-tree :data="tree"></v-tree> -->
       </div>
