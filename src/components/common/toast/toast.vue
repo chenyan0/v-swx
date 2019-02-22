@@ -1,4 +1,6 @@
 <template>
+<transition name="fade">
+
   <div class="v-toast" :class="['v-pos-'+position]" v-if="show">
     <div class="icon" v-if="icon">
       <font-awesome-icon
@@ -7,6 +9,8 @@
     </div>
     <p>{{text}}</p>
   </div>
+</transition>
+
 </template>
 <style>
 </style>
@@ -14,14 +18,7 @@
 export default {
   name: "Toast",
   props: {
-    // text: {
-    //   type: String,
-    //   required:true
-    // },
-  
     duration:Number,
-
-    
   }
 };
 </script>
@@ -49,6 +46,30 @@ export default {
   .icon {
     font-size: 50px;
     text-align: center;
+  }
+}
+
+
+.fade-enter-active{
+  animation: fadeIn .3s linear  1;
+}
+.fade-leave-active{
+  animation: fadeOut .3s linear  1;
+}
+@keyframes fadeIn{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+@keyframes fadeOut{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
   }
 }
 </style>

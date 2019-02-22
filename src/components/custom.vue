@@ -8,8 +8,8 @@
             :searchValues="cityList"
             :v-model="searchValueModel"
             :style="{width:'200px'}"
-             placeholder="请选择"
-             clearable
+            placeholder="请选择"
+            clearable
             @change="onSearchChange($event,'searchValue')"
           ></v-search>
           <v-search
@@ -46,6 +46,36 @@
           size="small"
           @click="showPosToast"
         >自定义Toast位置</v-button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="main">
+        <p class="section-label">Message 全局提示</p>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showMessage"
+        >显示普通消息</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showSuccessMessage"
+        >显示成功消息</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showErrorMessage"
+        >显示错误消息</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showWarnMessage"
+        >显示警告消息</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="showLoadingMessage"
+        >显示加载中...</v-button>
       </div>
     </div>
     <div class="section">
@@ -122,45 +152,86 @@
       <div class="main">
         <p class="section-label">Dialog</p>
         <v-button
-          type="default"
+          type="primary"
           size="small"
-          @click="openDialog"
-        >open Dialog</v-button>
+          @click="isVisible1=true"
+        >显示对话框</v-button>
+
+        <v-button
+          type="primary"
+          size="small"
+          @click="isVisible2=true"
+        >不带标题栏</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="isVisible3=true"
+        >国际化</v-button>
+        <v-button
+          type="primary"
+          size="small"
+          @click="isVisible4=true"
+        >自定义页头和页脚</v-button>
+
         <v-dialog
-          :visible.sync="isVisible"
-          title="提示信息"
+          :visible.sync="isVisible1"
+          title="对话框标题"
+          size="small"
+          center
+          @open="openHandle"
+          :closeOnClickModal=false
+        >
+          <p>对话框内容</p>
+          <p>对话框内容</p>
+          <p>对话框内容</p>
+        </v-dialog>
+        <v-dialog
+          :visible.sync="isVisible2"
+          size="small"
+          center
+          @open="openHandle"
+          :closeOnClickModal=false
+        >
+          <p>对话框内容</p>
+          <p>对话框内容</p>
+          <p>对话框内容</p>
+        </v-dialog>
+        <v-dialog
+          :visible.sync="isVisible3"
+          title="Modal Title"
+          ok-text="OK"
+          cancel-text="Cancel"
+          size="tiny"
+          center
+          @on-ok="ok()"
+          @on-cancel="cancel()"
+        >
+          <p>对话框内容</p>
+          <p>对话框内容</p>
+          <p>对话框内容</p>
+        </v-dialog>
+        <v-dialog
+          :visible.sync="isVisible4"
           size="small"
           center
           @open="openHandle"
         >
-          <span slot="header">确认</span>
-          <table>
-            <thead>
-              <tr>
-                <th>sss</th>
-                <th>sss</th>
-                <th>sss</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>dsdas</td>
-                <td>dsdas</td>
-                <td>dsdas</td>
-              </tr>
-            </tbody>
-          </table>
+          <p
+            slot="header"
+            style="color:#f60;text-align:center"
+          >
+            <font-awesome-icon :icon="['fas','exclamation-circle' ]" />
+            <span>删除确认</span>
+          </p>
+          <div style="text-align:center">
+            <p>此任务删除后，下游 10 个任务将无法执行。</p>
+            <p>是否继续删除？</p>
+          </div>
           <div slot="footer">
             <v-button
-              type="success"
-              size="small"
-              @click="isVisible = false"
-            >确定</v-button>
-            <v-button
-              type="success"
-              size="small"
-              @click="isVisible = false"
-            >取消</v-button>
+              type="danger"
+              size="large"
+            >删除</v-button>
           </div>
         </v-dialog>
       </div>
@@ -168,12 +239,18 @@
     <div class="section">
       <div class="main">
         <p class="section-label">Tree</p>
-        <v-tree class="item"
-    :model="tree" showIcon style="width:200px;display:inline-block"></v-tree>
-    <v-tree class="item"
-    :model="tree"  show-checkbox style="width:200px;display:inline-block;    vertical-align: top;" ></v-tree>
-        <!-- <v-tree :data="tree" showIcon></v-tree> -->
-        <!-- <v-tree :data="tree"></v-tree> -->
+        <v-tree
+          class="item"
+          :model="tree"
+          showIcon
+          style="width:200px;display:inline-block"
+        ></v-tree>
+        <v-tree
+          class="item"
+          :model="tree"
+          show-checkbox
+          style="width:200px;display:inline-block;    vertical-align: top;"
+        ></v-tree>
       </div>
     </div>
     <div class="section">
@@ -191,14 +268,20 @@
     <div class="section">
       <div class="main">
         <p class="section-label">Card Group</p>
-        <v-card>
-          <div slot="title">Classic film</div>
-          <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type.</p>
-        </v-card>
-        <v-card option>
-          <div slot="title">Classic film two</div>
-          <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type.</p>
-        </v-card>
+        <div class="card-body">
+          <v-card>
+            <div slot="title">卡片名称</div>
+            <p>文本，是指书面语言的表现形式，从文学角度说，通常是具有完整、系统含义（Message）的一个句子或多个句子的组合。一个文本可以是一个句子（Sentence）、一个 ...</p>
+          </v-card>
+          <v-card option>
+            <img
+              src="http://placeimg.com/300/200"
+              alt=""
+              slot="img"
+            >
+            <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type.</p>
+          </v-card>
+        </div>
       </div>
     </div>
     <div class="section">
@@ -320,13 +403,11 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 import { required, minLength, between } from "vuelidate/lib/validators";
 import VDialog from "./common/dialog";
-import VToast from "./common/toast/toast";
 import VPage from "./common/pages";
 import VTree from "./common/tree";
 import VCheckboxGroup from "./common/checkbox-group";
@@ -342,7 +423,6 @@ export default {
   components: {
     VPage,
     VDialog,
-    VToast,
     VTree,
     VCheckboxGroup,
     VCheckbox,
@@ -357,7 +437,7 @@ export default {
   data() {
     return {
       error: false,
-      searchValueModel:'',
+      searchValueModel: "",
       cityList: [
         {
           value: "beijing",
@@ -400,7 +480,10 @@ export default {
         checkboxValue: ["a"],
         switchValue: false
       },
-      isVisible: false,
+      isVisible1: false,
+      isVisible2: false,
+      isVisible3: false,
+      isVisible4: false,
       tags: [
         {
           label: "a",
@@ -448,11 +531,32 @@ export default {
     showPosToast() {
       this.$vtoast({ text: "我的位置是自定义的", position: "top" });
     },
+    showMessage() {
+      this.$vmessage.info({ text: "这是一条普通消息" });
+    },
+    showSuccessMessage() {
+      this.$vmessage.success({ text: "这是一条成功消息" });
+    },
+    showErrorMessage() {
+      this.$vmessage.error({ text: "对方不想说话，并且向你抛出了一个异常" });
+    },
+    showWarnMessage() {
+      this.$vmessage.warning({ text: "这是一条警告消息" });
+    },
+    showLoadingMessage() {
+      this.$vmessage.loading({ text: "正在加载中", duration: 1000000000 });
+    },
+    ok() {
+      this.$vmessage.info("点击了确定");
+    },
+    cancel() {
+      this.$vmessage.info("点击了取消");
+    },
     onFormChange(v, type) {
       this.validateForm[type] = v;
     },
-     onSearchChange(v, type) {
-       console.log(v,type)
+    onSearchChange(v, type) {
+      console.log(v, type);
       this[type] = v;
     },
     handleSubmit() {
@@ -497,7 +601,6 @@ export default {
       margin: 0 20px;
       .form-group {
         display: flex;
-        margin-bottom: 20px;
         align-items: center;
         &.label-p-10 {
           padding: 10px 0;
@@ -512,7 +615,7 @@ export default {
       }
     }
     .section-label {
-      color: #333;
+      color: #657180;
       font-weight: bold;
       font-size: 18px;
       margin: 0 0 10px 0;
@@ -524,6 +627,20 @@ export default {
       margin-bottom: 10px;
       line-height: 40px;
       text-align: center;
+    }
+    .card-body {
+      &:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+      }
+      .v-card {
+        margin-right: 20px;
+        width: 300px;
+        float: left;
+      }
     }
   }
   #load-wrapper {

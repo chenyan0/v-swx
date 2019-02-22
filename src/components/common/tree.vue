@@ -6,7 +6,7 @@
     >
       <font-awesome-icon
         :icon="['fas', open ? 'caret-down' : 'caret-right']"
-        class="icon-folder"
+        class="icon-arrow"
         @click="toggle"
         v-if="!showIcon && isFolder"
       />
@@ -16,8 +16,8 @@
         @click="toggle"
         v-if="showIcon && isFolder"
       />
-      <input  type="checkbox" name="tree-node" v-if="showCheckbox" v-model="model.checked" @click="handleCheck($event,model)"/>
-      <span>{{ model.name }}{{model.checked}}</span>
+      <input  type="checkbox" name="tree-node" v-if="showCheckbox" :value="model.id" v-model="model.checked" @click="handleCheck($event,model)"/>
+      <span>{{ model.name }}</span>
     </div>
     <ul
       v-show="open"
@@ -40,7 +40,7 @@ export default {
   name: "node-leaf",
   props: {
     model: {
-      type: Object,
+      type: [Object,Array],
       default: () => {}
     },
     showIcon: {
@@ -91,13 +91,14 @@ export default {
       }
     },
     handleCheck: function($event,el){
-      console.log($event.target.checked)
-      el.children.forEach(element => {
-          element.checked=$event.target.checked
-        console.log(element.checked)
-      });
-      
-
+      if(el.children){
+        el.children.map(element => {
+          // element.checked=$event.target.checked
+          // return { ...element }
+          this.$set(element,'checked',$event.target.checked)
+          this.handleCheck($event,element)
+        });
+      }
     },
   }
 };
@@ -108,6 +109,8 @@ li {
   cursor: pointer;
   font-size: 14px;
   list-style: none;
+  line-height: 26px;
+    color: #444444;
   > div {
     &.tree-show-icon:before {
       display: none;
@@ -124,6 +127,10 @@ li {
   }
   .icon-folder {
     font-size: 12px;
+        vertical-align: middle;
+  }
+  .icon-arrow{
+    font-size: 16px
   }
 }
 </style>
