@@ -9,9 +9,8 @@
       v-model="selected"
     >
       <mt-tab-container-item id="首页">
-        <index />
+          <index />
         <copyright/>
-       
       </mt-tab-container-item>
       <mt-tab-container-item id="专题">
         <topic />
@@ -21,12 +20,7 @@
         <copyright/>
       </mt-tab-container-item>
       <mt-tab-container-item id="关于">
-         <ul>
-            <router-link tag="li" :to="{path:'/onlineplan'}">计划书</router-link>
-            <router-link tag="li" :to="{path:'/salary'}">薪资查询</router-link>
-            <router-link tag="li" :to="{path:'/custom'}">我的组件库</router-link>
-            <router-link tag="li" :to="{path:'/setting'}">设置一下</router-link>
-            </ul>
+         <about />
         <copyright/>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -59,16 +53,18 @@
   </div>
 </template>
 <script>
-import Index from "./shouwangxuan/index/index";
-import Topic from "./shouwangxuan/topic/topic";
-import Mine from "./shouwangxuan/mine/mine";
-import Header from "./template/header";
-import Copyright from "./template/copyright"
+import Index from "./index/index"
+import Topic from "./topic/topic"
+import Mine from "./mine/mine"
+import About from "./about/about"
+import Header from "../template/header"
+import Copyright from "../template/copyright"
 export default {
   components: {
     Index,
     Topic,
     Mine,
+    About,
     Header,
     Copyright
   },
@@ -77,10 +73,14 @@ export default {
       selected: "首页"
     };
   },
+  
   computed: {
     title: function() {
-      return this.selected;
+      return this.$route.meta.title;
     }
+  },
+  activated(){
+    document.getElementsByTagName("body")[0].className = "bg-f7";
   }
 };
 </script>
@@ -117,7 +117,7 @@ ul {
     color: #9babba;
   }
   > .mint-tab-item.is-selected {
-    color: #495056;
+    color: #246FE2;
     background-color: transparent;
   }
   .icon{

@@ -3,7 +3,7 @@
     <div class="inner">
       <div class="title">
         <img
-          src="../../../static/img/login/logo.png"
+          src="../../../../static/img/login/logo.png"
           alt=""
         >
       </div>
@@ -59,7 +59,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { Toast } from "mint-ui";
-import VLoad from "../common/loading";
+import VLoad from "@/components/common/loading";
 export default {
   components: {
     VLoad
@@ -101,7 +101,7 @@ export default {
         password: this.password,
       };
       this.$store.dispatch("setLoadingState", true); //设置loading状态
-        this.$ajax.post("http://localhost:8000/api/login", data).then(res => {
+        this.$axios.post("http://localhost:8000/api/login", data).then(res => {
           if (!res.data.status) {
             Toast({
             message: "用户账号信息不匹配",
@@ -111,7 +111,7 @@ export default {
           } else {
             this.$store.dispatch("setToken", res.data.token); //改变token状态
             let redirect = decodeURIComponent(
-              this.$route.query.redirect || "/navigation"
+              this.$route.query.redirect || "/home"
             );
             this.$router.push({
               path: redirect
@@ -124,7 +124,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../styles/base";
+@import "../../../styles/base";
 $colors:
   #118fff
   #246FE2   //按钮
@@ -138,7 +138,7 @@ $colors:
     position: absolute;
     width: 100%;
   }
-  background-image: url("../../../static/img/login/bg.jpg");
+  background-image: url("../../../../static/img/login/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;

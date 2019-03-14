@@ -14,7 +14,7 @@
           alt=""
         >
       </div>
-      <p ref="name">Fortune</p>
+      <p ref="name"></p>
     </div>
     <div class="mine-block">
       <mt-navbar v-model="selected">
@@ -33,7 +33,6 @@
               :to="{path:'/detail'}"
               tag="li" v-for="i in list" :key="i.id"
             >{{i.post_title}}</router-link>
-            
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
@@ -96,11 +95,10 @@ export default {
   },
   created() {
     this.$nextTick(() => {
-      this.$refs.name.innerHTML = this.$store.getters.userInfo.fullname;
+      this.$refs.name.innerHTML = this.$store.getters.userInfo.fullname || '请登录';
       this.avatorUrl = this.$store.getters.userInfo.avatorUrl;
     });
     this.fetchData(this.selected)
-
   },
   watch:{
     selected:function(){
@@ -126,7 +124,7 @@ export default {
       });
       const url = "http://localhost:8000/api/hotpost";
       const self = this;
-        this.$ajax
+        this.$axios
           .post(url,{t:t})
           .then(
             res => {
@@ -150,7 +148,7 @@ export default {
 .top {
   padding: 30px 0;
   text-align: center;
-  background: #128fff;
+  background: #246FE2;
   color: #fff;
   font-size: 14px;
   .avator {

@@ -51,7 +51,7 @@ export default {
     display: flex;
     align-items: center;
       justify-content: space-between;
-    background:#118fff;
+    background:#246FE2;
     line-height: 40px;
     color: #fff;
     position: fixed;

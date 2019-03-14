@@ -140,7 +140,7 @@ export default {
   },
   methods: {
     fetchTableData: function() {
-      this.$ajax({
+      this.$axios({
         methods:'post',
         baseURL:'api',
         url:'/getFeedata',
@@ -162,7 +162,7 @@ export default {
 
 };
 </script>
-<style lang="scss" >
+<style lang="scss" scoped>
 $focusColor: #f95854;
 $usualColor: #666;
 $yellowColor: #fccd80;
@@ -176,7 +176,7 @@ h3 {
   color: $usualColor;
   font-weight: normal;
 }
-.wrapper{
+.block-info-style{
  background: #fff3e9;
   border-radius: 4px;
   border: 1px solid $yellowColor;
@@ -184,7 +184,7 @@ h3 {
   font-size: 14px;
 }
 .block-info {
- @extend .wrapper;
+ @extend .block-info-style;
   >ul {
     overflow: auto;
     padding: 0;
@@ -266,7 +266,7 @@ h3 {
   }
 }
 .block-table {
-  @extend .wrapper;
+  @extend .block-info-style;
   overflow: auto;
   table{
     width: 150%;

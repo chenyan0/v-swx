@@ -1,6 +1,7 @@
 
 <template>
   <div>
+ 
     <mt-swipe :auto="4000" class="banner">
       <mt-swipe-item
         v-for="item in items"
@@ -76,17 +77,18 @@
     </div>
     <div class="container">
       <div class="index-container">
-        <Common-List :data="list" />
+        <Article-List :data="list" />
       </div>
     </div>
+
   </div>
 </template>
 <script>
-import CommonList from "../../template/common-list";
+import ArticleList from "../../template/articleList";
 import { Indicator,Toast } from "mint-ui";
 export default {
   components: {
-    CommonList,
+    ArticleList,
   },
   data() {
     return {
@@ -125,11 +127,12 @@ export default {
       });
       const url = "http://localhost:8000/api/post";
       const self = this;
-        this.$ajax
+        this.$axios
           .get(url)
           .then(
             res => {
-              self.list = res.data.data;
+              self.list.push(...res.data.data) ;
+              console.log(res.data.data,self.list)
               Indicator.close();
               return res;
             },
@@ -144,7 +147,6 @@ export default {
     formSubmit(){
       let key = this.$refs.input.value;
       if(key != ''){
-        console.log(this.$router)
         this.$router.push({ path: '/list', query: { search: key }})
       }else{
         Toast('提交信息为空');
@@ -156,7 +158,8 @@ export default {
   },
   beforeCreate() {
     document.getElementsByTagName("body")[0].className = "bg-fff";
-  }
+  },
+
 };
 </script>
 <style lang="scss" scoped>

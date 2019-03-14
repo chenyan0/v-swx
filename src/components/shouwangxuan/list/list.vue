@@ -13,19 +13,19 @@
         <h1>{{ $route.query.search ? "搜索关键字：" : ''}}<span ref="key"></span></h1>
         <span ref="desc"></span>
       </div>
-      <common-list :data="list" />
+      <Article-List :data="list" />
     </div>
 
   </div>
 </template>
 <script>
-import CommonList from "../../template/common-list";
+import ArticleList from "../../template/articleList";
 import { Indicator } from "mint-ui";
 import Header from "../../template/header";
 
 export default {
   components: {
-    CommonList,
+    ArticleList,
     Header
   },
   data() {
@@ -40,7 +40,6 @@ export default {
   },
   created() {
     const {params,query} = this.$route
-    console.log(params,query)
     this.$nextTick(() => {
       this.$refs.key.innerHTML = query.search || params.name
       this.$refs.desc.innerHTML = params.desc ? params.desc : "本搜索是全文搜索"
@@ -69,7 +68,7 @@ export default {
       });
       const url = "http://localhost:8000/api/post";
       const self = this;
-      this.$ajax
+      this.$axios
         .get(url)
         .then(
           res => {

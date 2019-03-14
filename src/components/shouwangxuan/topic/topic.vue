@@ -4,6 +4,7 @@
     ref="wrapper"
     :style="{ height: wrapperHeight + 'px' }"
   >
+
     <mt-loadmore
       :auto-fill="false"
       :top-method="loadTop"
@@ -39,6 +40,7 @@
         </router-link>
       </div>
     </mt-loadmore>
+
     <copyright />
   </div>
 
@@ -83,7 +85,7 @@ export default {
     },
     fetchData(page) {
       const url = "http://localhost:8000/api/categories";
-      this.$ajax
+      this.$axios
         .post(url, { pager: this.page })
         .then(
           res => {

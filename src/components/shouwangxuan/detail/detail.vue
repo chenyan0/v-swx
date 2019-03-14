@@ -179,7 +179,7 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      this.$ajax
+      this.$axios
         .post("http://localhost:8000/api/article/detail", { id: this.$route.query.id })
         .then(res => {
           this.article = res.data.data;
@@ -192,7 +192,7 @@ export default {
         });
     },
     goHome() {
-      this.$router.push({ path: "navigation" });
+      this.$router.push({ path: "home" });
     },
     postComment() {
       let v = this.$refs.commentText.value;
@@ -206,7 +206,7 @@ export default {
         this.article.comments_info.unshift(params);
         this.commentSum++;
         this.$refs.commentText.value = "";
-        this.$ajax
+        this.$axios
           .post("http://localhost:8000/api/article/postComment", params)
           .then(res => {
             console.log(res);

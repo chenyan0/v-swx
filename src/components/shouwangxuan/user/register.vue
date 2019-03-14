@@ -73,7 +73,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(["setUserData", "setUserInfo"]),
+    ...mapActions([ "setUserInfo"]),
     changeImage(e){
       let file = e.target.files[0]
       this.file = file
@@ -86,7 +86,7 @@ export default {
     },
     submit(){
       const data =this.form
-      this.$ajax.post("http://localhost:8000/api/register",data).then(res => {
+      this.$axios.post("http://localhost:8000/api/register",data).then(res => {
         if (!res.data.status) {
           Toast({
             message: res.data.message,
@@ -98,11 +98,14 @@ export default {
         }
       });
     }
+  },
+   beforeCreate(){
+    document.getElementsByTagName("body")[0].className = "bg-fff";
   }
-};
+}
 </script>
 <style lang="scss" scoped>
-@import "../../styles/base";
+@import "../../../styles/base";
 $colors:
   #118fff
   #246FE2   //按钮

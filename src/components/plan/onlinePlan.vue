@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     fetchData() {
-      this.$ajax.get("http://localhost:8000/api/hotproduct").then(res => {
+      this.$axios.get("http://localhost:8000/api/hotproduct").then(res => {
         this.hots = res.data.data;
       });
     }

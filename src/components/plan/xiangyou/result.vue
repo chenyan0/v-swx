@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     fetchTableData: function() {
-      this.$ajax({
+      this.$axios({
         methods:'post',
         baseURL:'api',
         url:'/getFeedata',
@@ -125,7 +125,7 @@ export default {
 
 };
 </script>
-<style lang="scss" >
+<style lang="scss" scoped>
 $focusColor: #f95854;
 $usualColor: #666;
 $yellowColor: #fccd80;

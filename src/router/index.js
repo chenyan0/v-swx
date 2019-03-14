@@ -1,86 +1,20 @@
 import Vue from 'vue'
 import store from '../store/index'
 import Router from 'vue-router'
-import Custom from '@/components/custom'
-import Navigation from '@/components/navigation'
-import Login from '@/components/user/login'
-import Register from '@/components/user/register'
-import Header from '@/components/template/header'
-import Setting from '@/components/setting'
 import planRouter from '@/components/plan/index'
 import queryRouter from '@/components/query/index'
 import swxRouter from '@/components/shouwangxuan/index'
-
-Router.prototype.goBack = function () {
-  this.isBack = true
-  window.history.go(-1)
-}
+import myPluginRouter from '@/components/example/index'
 Vue.use(Router)
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   mode: 'history',
+  linkExactActiveClass: 'active',
   routes: [
-    {
-      path: '/',
-      redirect: 'login'
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-      meta: {
-        title: '登录',
-        index: 1
-      }
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register,
-      meta: {
-        title: '注册',
-        index: 1
-      }
-    },
-    {
-      path: '/navigation',
-      name: 'navigation',
-      components: {
-        header: Header,
-        default: Navigation
-      },
-      meta: {
-        title: '导航',
-        index: 2
-      }
-    },
-    {
-      path: '/custom',
-      name: 'custom',
-      components: {
-        header: Header,
-        default: Custom
-      },
-      meta: {
-        title: '我的组件库',
-        index: 3
-      }
-    },
-    {
-      path: '/setting',
-      name: 'setting',
-      components: {
-        header: Header,
-        default: Setting
-      },
-      meta: {
-        title: '设置',
-        index: 4
-      }
-    },
     ...queryRouter,
     ...planRouter,
-    ...swxRouter
+    ...swxRouter,
+    ...myPluginRouter
   ]
 })
 router.beforeEach((to, from, next) => {

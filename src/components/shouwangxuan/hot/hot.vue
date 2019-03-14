@@ -11,16 +11,16 @@
       <!-- tab-container -->
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <Common-List :data="list" />
+          <Article-List :data="list" />
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <Common-List :data="list" />
+          <Article-List :data="list" />
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <Common-List :data="list" />
+          <Article-List :data="list" />
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
-          <Common-List :data="list" />
+          <Article-List :data="list" />
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -28,12 +28,12 @@
 </template>
 <script>
 import Header from "../../template/header";
-import CommonList from "../../template/common-list";
+import ArticleList from "../../template/articleList";
 import { Indicator } from "mint-ui";
 export default {
   components: {
     Header,
-    CommonList
+    ArticleList
   },
   data() {
     return {
@@ -56,11 +56,10 @@ export default {
       });
       const url = "http://localhost:8000/api/hotpost";
       const self = this;
-        this.$ajax
+        this.$axios
           .post(url,{t:t})
           .then(
             res => {
-              console.log(res)
               self.list = res.data.data;
               Indicator.close();
             },
@@ -82,7 +81,7 @@ export default {
 .hot-container {
   padding-top: 40px;
   background-color: #fff;
-  .common-list {
+  .Article-List {
     padding: 0 12px;
   }
   .mint-navbar .mint-tab-item {

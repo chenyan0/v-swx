@@ -1,6 +1,5 @@
 <template>
   <div class="common-list">
-     
     <router-link
       :to="{ path: '/detail',query:{id:item.id}}"
       tag="div"
@@ -50,36 +49,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../styles/util/common';
+
 .common-list {
   .list-item {
     position: relative;
     border-bottom: 1px solid #eee;
-    padding: 12px;
-    min-height: 75px;
+    padding: .75rem;
+    min-height: 5rem;
     overflow: hidden;
     &.has-img img {
       position: absolute;
       left: 0px;
-      top: 12px;
-      width: 100px;
-      height: 75px;
-      border-radius: 8px;
+      top: .75rem;
+      width:6.25rem;
+      height: 4.6875rem;
+      border-radius: .5rem;
     }
     &.has-img .content-title {
-      margin-left: 100px;
-      height: 40px;
-      margin-bottom: 10px;
+      margin-left: 6.25rem;
+      height: 2.5rem;
+      margin-bottom: .625rem;
       overflow:hidden; 
       text-overflow:ellipsis; 
       display:-webkit-box; 
       -webkit-box-orient:vertical;
       -webkit-line-clamp:2; 
-          font-size: 14px;
+      @include font-dpr(14px);
     }
     &.has-img .content-date {
       color: #666;
-      margin-left: 100px;
-      font-size: 12px;
+      margin-left: 6.25rem;
+       @include font-dpr(14px);
       display: flex;
       justify-content: space-between;
       span {
