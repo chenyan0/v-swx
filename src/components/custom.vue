@@ -1,653 +1,89 @@
 <template>
   <div class="wrapper">
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Search</p>
-        <div class="search">
-          <v-search
-            :searchValues="cityList"
-            :v-model="searchValueModel"
-            :style="{width:'200px'}"
-            placeholder="请选择"
-            clearable
-            @change="onSearchChange($event,'searchValue')"
-          ></v-search>
-          <v-search
-            :searchValues="cityList"
-            placeholder="选择一下"
-            disabled
-            size="small"
-            :style="{width:'100px'}"
-          ></v-search>
-          <v-search
-            placeholder="选择一下"
-            notFoundText='无匹配选项'
-            size="large"
-            :style="{width:'100px'}"
-          ></v-search>
-        </div>
+    <div class="wrapper-navigate">
+      <div class="v-menu">
+        <div class="navigate-group">组件</div>
+        <div class="v-menu-item-group-title">操作反馈</div>
+        <router-link to="/custom/toast" class="v-menu-item">Toast 轻提示</router-link>
+        <router-link to="/custom/dialog" class="v-menu-item">Dialog 对话窗</router-link>
+        <router-link to="/custom/message" class="v-menu-item">Message 全局提示</router-link>
+        <div class="v-menu-item-group-title">基础</div>
+        <router-link to="/custom/button" class="v-menu-item">Button 按钮</router-link>
+        <router-link to="/custom/tree" class="v-menu-item">Tree 树</router-link>
+        <router-link to="/custom/card" class="v-menu-item">Card 卡片</router-link>
+        <div class="v-menu-item-group-title">表单</div>
+        <router-link to="/custom/form" class="v-menu-item">Form 表单</router-link>
+        <router-link to="/custom/select" class="v-menu-item">Select 选择器 </router-link>
+        <div class="v-menu-item-group-title">导航</div>
+        <router-link to="/custom/pages" class="v-menu-item">Page 页码</router-link>
       </div>
     </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Toast</p>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showToast"
-        >点击弹出Toast</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showIconToast"
-        >点击弹出有Icon的Toast</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showPosToast"
-        >自定义Toast位置</v-button>
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Message 全局提示</p>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showMessage"
-        >显示普通消息</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showSuccessMessage"
-        >显示成功消息</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showErrorMessage"
-        >显示错误消息</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showWarnMessage"
-        >显示警告消息</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="showLoadingMessage"
-        >显示加载中...</v-button>
-      </div>
-    </div>
-    <div class="section">
-      <div
-        class="main"
-        ref="validateForm"
-      >
-        <p class="section-label">Form</p>
-        <div class="form-group">
-          <label for="">姓名:</label>
-          <v-input
-            v-model="validateForm.username"
-            name="name"
-            id="username"
-            type="text"
-            placeholder="First Name"
-          />
-        </div>
-        <div class="form-group label-p-10">
-          <label for="">上门取件:</label>
-          <v-switch
-            v-model="validateForm.switchValue"
-            size="small"
-            id="pickUp"
-            name="pickUp"
-            @change="onFormChange($event,'switchValue')"
-          />
-        </div>
-        <div class="form-group label-p-10">
-          <label for="">支付方式:</label>
-          <v-select
-            v-model="validateForm.payMethod"
-            placeholder="您的支付方式是"
-            :values="jobValue"
-            @change="onFormChange($event,'payMethod')"
-          ></v-select>
-        </div>
-        <div class="form-group label-p-10">
-          <label for="">货物类型:</label>
-          <v-checkbox-group
-            v-model="validateForm.checkboxValue"
-            @on-change="onFormChange($event,'checkboxValue')"
-          >
-            <v-checkbox
-              v-for="(i,index) in tags"
-              :key="index"
-              :label="i.label"
-              name="checkbox"
-            >{{i.text}}</v-checkbox>
-          </v-checkbox-group>
-        </div>
-        <v-button
-          type="primary"
-          size="small"
-          @click="handleSubmit()"
-        >提交</v-button>
-        <v-button
-          type="default"
-          size="small"
-        >取消</v-button>
-        <v-button
-          type="default"
-          size="small"
-          @click="resetForm('validateForm')"
-        >重置</v-button>
-        <span
-          class="error"
-          v-show="error"
-          ref="error"
-        ></span>
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Dialog</p>
-        <v-button
-          type="primary"
-          size="small"
-          @click="isVisible1=true"
-        >显示对话框</v-button>
-
-        <v-button
-          type="primary"
-          size="small"
-          @click="isVisible2=true"
-        >不带标题栏</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="isVisible3=true"
-        >国际化</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          @click="isVisible4=true"
-        >自定义页头和页脚</v-button>
-
-        <v-dialog
-          :visible.sync="isVisible1"
-          title="对话框标题"
-          size="small"
-          center
-          @open="openHandle"
-          :closeOnClickModal=false
-        >
-          <p>对话框内容</p>
-          <p>对话框内容</p>
-          <p>对话框内容</p>
-        </v-dialog>
-        <v-dialog
-          :visible.sync="isVisible2"
-          size="small"
-          center
-          @open="openHandle"
-          :closeOnClickModal=false
-        >
-          <p>对话框内容</p>
-          <p>对话框内容</p>
-          <p>对话框内容</p>
-        </v-dialog>
-        <v-dialog
-          :visible.sync="isVisible3"
-          title="Modal Title"
-          ok-text="OK"
-          cancel-text="Cancel"
-          size="tiny"
-          center
-          @on-ok="ok()"
-          @on-cancel="cancel()"
-        >
-          <p>对话框内容</p>
-          <p>对话框内容</p>
-          <p>对话框内容</p>
-        </v-dialog>
-        <v-dialog
-          :visible.sync="isVisible4"
-          size="small"
-          center
-          @open="openHandle"
-        >
-          <p
-            slot="header"
-            style="color:#f60;text-align:center"
-          >
-            <font-awesome-icon :icon="['fas','exclamation-circle' ]" />
-            <span>删除确认</span>
-          </p>
-          <div style="text-align:center">
-            <p>此任务删除后，下游 10 个任务将无法执行。</p>
-            <p>是否继续删除？</p>
-          </div>
-          <div slot="footer">
-            <v-button
-              type="danger"
-              size="large"
-            >删除</v-button>
-          </div>
-        </v-dialog>
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Tree</p>
-        <v-tree
-          class="item"
-          :model="tree"
-          showIcon
-          style="width:200px;display:inline-block"
-        ></v-tree>
-        <v-tree
-          class="item"
-          :model="tree"
-          show-checkbox
-          style="width:200px;display:inline-block;    vertical-align: top;"
-        ></v-tree>
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Page Group</p>
-        <v-page
-          :total="82"
-          :pageSizes="5"
-          :pageIndex="curPage"
-          :pagerCount="7"
-          @on-change="onPageChange"
-        />
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Card Group</p>
-        <div class="card-body">
-          <v-card>
-            <div slot="title">卡片名称</div>
-            <p>文本，是指书面语言的表现形式，从文学角度说，通常是具有完整、系统含义（Message）的一个句子或多个句子的组合。一个文本可以是一个句子（Sentence）、一个 ...</p>
-          </v-card>
-          <v-card option>
-            <img
-              src="http://placeimg.com/300/200"
-              alt=""
-              slot="img"
-            >
-            <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type.</p>
-          </v-card>
-        </div>
-      </div>
-    </div>
-    <div class="section">
-      <!-- <label for="" class="label">button示例</label> -->
-      <div class="main">
-        <p class="section-label">Button</p>
-        <v-button
-          type="default"
-          size="large"
-          loading
-        >default</v-button>
-        <v-button
-          type="primary"
-          size="large"
-          loading
-        >primary</v-button>
-        <v-button
-          type="info"
-          size="large"
-        >info</v-button>
-        <v-button
-          type="warning"
-          size="large"
-        >warn</v-button>
-        <v-button
-          type="success"
-          size="large"
-        >success</v-button>
-        <v-button
-          type="danger"
-          size="large"
-        >danger</v-button>
-        <v-button
-          type="default"
-          size="normal"
-          loading
-        >default</v-button>
-        <v-button
-          type="primary"
-          size="normal"
-        >primary</v-button>
-        <v-button
-          type="info"
-          size="normal"
-        >info</v-button>
-        <v-button
-          type="warning"
-          size="normal"
-        >warn</v-button>
-        <v-button
-          type="success"
-          size="normal"
-        >success</v-button>
-        <v-button
-          type="danger"
-          size="normal"
-        >danger</v-button>
-        <v-button
-          type="default"
-          size="small"
-        >default</v-button>
-        <v-button
-          type="primary"
-          size="small"
-        >primary</v-button>
-        <v-button
-          type="info"
-          size="small"
-        >info</v-button>
-        <v-button
-          type="warning"
-          size="small"
-        >warn</v-button>
-        <v-button
-          type="success"
-          size="small"
-        >success</v-button>
-        <v-button
-          type="danger"
-          size="small"
-        >danger</v-button>
-        <v-button
-          type="default"
-          size="small"
-          disabled
-        >default</v-button>
-        <v-button
-          type="primary"
-          size="small"
-          disabled
-        >primary</v-button>
-        <v-button
-          type="info"
-          size="small"
-          disabled
-        >info</v-button>
-        <v-button
-          type="warning"
-          size="small"
-          disabled
-        >warn</v-button>
-        <v-button
-          type="success"
-          size="small"
-          disabled
-        >success</v-button>
-        <v-button
-          type="danger"
-          size="small"
-          disabled
-        >danger</v-button>
-      </div>
-    </div>
-    <div class="section">
-      <div class="main">
-        <p class="section-label">Load</p>
-        <div id="load-wrapper">
-          <v-load></v-load>
-        </div>
-      </div>
+    <div class="wrapper-content">
+      <router-view></router-view>
     </div>
   </div>
 </template>
-<script>
-import { required, minLength, between } from "vuelidate/lib/validators";
-import VDialog from "./common/dialog";
-import VPage from "./common/pages";
-import VTree from "./common/tree";
-import VCheckboxGroup from "./common/checkbox-group";
-import VCheckbox from "./common/checkbox";
-import VButton from "./common/button";
-import VCard from "./common/card";
-import VSwitch from "./common/switch";
-import VSearch from "./common/search";
-import VInput from "./common/input";
-import VSelect from "./common/select";
-import VLoad from "./common/loading";
-export default {
-  components: {
-    VPage,
-    VDialog,
-    VTree,
-    VCheckboxGroup,
-    VCheckbox,
-    VButton,
-    VCard,
-    VSwitch,
-    VSearch,
-    VInput,
-    VSelect,
-    VLoad
-  },
-  data() {
-    return {
-      error: false,
-      searchValueModel: "",
-      cityList: [
-        {
-          value: "beijing",
-          label: "北京市"
-        },
-        {
-          value: "shanghai",
-          label: "上海市"
-        },
-        {
-          value: "shenzhen",
-          label: "深圳市"
-        },
-        {
-          value: "hangzhou",
-          label: "杭州市"
-        },
-        {
-          value: "nanjing",
-          label: "南京市"
-        },
-        {
-          value: "beijing",
-          label: "临汾市"
-        },
-        {
-          value: "beijing",
-          label: "郑州市"
-        },
-        {
-          value: "chongqing",
-          label: "重庆市"
-        }
-      ],
-      model1: "",
-      jobValue: ["到付", "现付"],
-      validateForm: {
-        username: "",
-        payMethod: "",
-        checkboxValue: ["a"],
-        switchValue: false
-      },
-      isVisible1: false,
-      isVisible2: false,
-      isVisible3: false,
-      isVisible4: false,
-      tags: [
-        {
-          label: "a",
-          text: "文件"
-        },
-        {
-          label: "b",
-          text: "食品"
-        },
-        {
-          label: "c",
-          text: "易碎品"
-        }
-      ],
-      tree: {},
-      curPage: 2,
-      isVisible: false
-    };
-  },
-  validations: {
-    username: {
-      required,
-      minLength: minLength(4)
-    }
-  },
-  beforeCreate: function() {
-    document.getElementsByTagName("body")[0].className = "bg-f7";
-  },
-  created() {
-    this.$ajax.get("http://localhost:8000/api/getTree").then(res => {
-      this.tree = res.data.data;
-    });
-    this.defaultData = JSON.parse(JSON.stringify(this.$data.validateForm));
-  },
-  destroyed: function() {
-    document.getElementsByTagName("body")[0].className = "";
-  },
-  methods: {
-    showToast() {
-      this.$vtoast("我是弹出消息");
-    },
-    showIconToast() {
-      this.$vtoast({ text: "我是有图标的", duration: "2000", icon: "user" });
-    },
-    showPosToast() {
-      this.$vtoast({ text: "我的位置是自定义的", position: "top" });
-    },
-    showMessage() {
-      this.$vmessage.info({ text: "这是一条普通消息" });
-    },
-    showSuccessMessage() {
-      this.$vmessage.success({ text: "这是一条成功消息" });
-    },
-    showErrorMessage() {
-      this.$vmessage.error({ text: "对方不想说话，并且向你抛出了一个异常" });
-    },
-    showWarnMessage() {
-      this.$vmessage.warning({ text: "这是一条警告消息" });
-    },
-    showLoadingMessage() {
-      this.$vmessage.loading({ text: "正在加载中", duration: 1000000000 });
-    },
-    ok() {
-      this.$vmessage.info("点击了确定");
-    },
-    cancel() {
-      this.$vmessage.info("点击了取消");
-    },
-    onFormChange(v, type) {
-      this.validateForm[type] = v;
-    },
-    onSearchChange(v, type) {
-      console.log(v, type);
-      this[type] = v;
-    },
-    handleSubmit() {
-      const formData = JSON.stringify(this.validateForm);
-      if (!this.validateForm.username) {
-        this.error = true;
-        this.$refs.error.innerText = "姓名必填";
-      } else if (!this.validateForm.payMethod) {
-        this.error = true;
-        this.$refs.error.innerText = "请选择支付方式";
-      } else {
-        this.error = false;
-        this.$ajax
-          .post("http://localhost:8000/api/customForm", formData)
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {});
-      }
-    },
-    resetForm(formName) {
-      this.$data.validateForm = Object.assign({}, this.defaultData);
-    },
-    openDialog() {
-      this.isVisible = true;
-    },
-    onPageChange(v) {
-      this.curPage = v;
-    },
-    openHandle() {}
-  }
-};
-</script>
+
 <style lang="scss" scoped>
-.wrapper {
-  .section {
-    margin: 20px;
-    padding: 10px 0;
-    background: #fff;
-    box-shadow: 0px 2px 8px #dedede;
-    .main {
-      margin: 0 20px;
-      .form-group {
-        display: flex;
-        align-items: center;
-        &.label-p-10 {
-          padding: 10px 0;
-        }
-        label {
-          flex: 0 0 15%;
-        }
-      }
-      .error {
-        color: #f44336;
-        font-size: 12px;
-      }
-    }
-    .section-label {
-      color: #657180;
-      font-weight: bold;
-      font-size: 18px;
-      margin: 0 0 10px 0;
-    }
-    .label {
+  .wrapper {
+    &:after {
+      content: "";
       display: block;
-      background: #f3693d;
-      color: #fff;
-      margin-bottom: 10px;
-      line-height: 40px;
-      text-align: center;
+      clear: both;
     }
-    .card-body {
-      &:after {
-        content: " ";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
+    .wrapper-navigate {
+      display: block;
+      width: 16%;
+      float: left;
+      .v-menu {
+        color: #515a6e;
+        .navigate-group {
+          font-size: 16px;
+          margin: 8px 0;
+          padding-left: 15px;
+        }
+        .v-menu-item-group-title {
+          height: 48px;
+          line-height: 48px;
+          font-size: 14px;
+          padding-left: 28px;
+          color: #999;
+        }
+        .v-menu-item {
+          padding: 14px 24px;
+          position: relative;
+          cursor: pointer;
+          z-index: 1;
+          transition: all .2s ease-in-out;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          padding-left: 34px;
+          display: block;
+          outline: 0;
+          list-style: none;
+          font-size: 14px;
+          border-right: 2px solid transparent;
+          &.active {
+            color: #2d8cf0;
+            background: #f0faff;
+            border-right: 2px solid #2d8cf0;
+          }
+        }
       }
-      .v-card {
-        margin-right: 20px;
-        width: 300px;
-        float: left;
+    }
+    .wrapper-content {
+      float: left;
+      display: block;
+      width: 70%;
+      border-left: 1px solid #dcdee2;
+      height: 100vh;
+      .section {
+        margin: 20px;
+        padding: 10px 0;
       }
     }
   }
-  #load-wrapper {
-    position: relative;
-    height: 100px;
-  }
-}
 </style>
 
 

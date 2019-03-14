@@ -1,0 +1,48 @@
+.main {
+    margin: 0 20px;
+    .form-group {
+        display: flex;
+        align-items: center;
+        &.label-p-10 {
+            padding: 10px 0;
+        }
+        label {
+            flex: 0 0 15%;
+        }
+    }
+    .error {
+        color: #f44336;
+        font-size: 12px;
+    }
+}
+
+.section-label {
+    color: #657180;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+
+.label {
+    display: block;
+    background: #f3693d;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.card-body {
+    &:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+    .v-card {
+        margin-right: 20px;
+        width: 300px;
+        float: left;
+    }
+}

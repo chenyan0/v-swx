@@ -1,156 +1,278 @@
 <template>
-    <div class="v-select">
-        <div class="v-select-trigger" @click="trigger()">
-            <span class="v-select-placeholder" :class="{'v-floating-placeholder':isFloat,'v-focus':isFocus}">{{placeholder}}</span>
-            <span class="v-select-value" ref="val"></span>
-            <span class="v-select-arrow"></span>
-        </div>
-        <transition name="fade">
-          <div class="v-select-modal" v-show="visible">
-            <p v-for="item in values" :key="item.id" @click="handleValue($event)">{{item}}</p>
-          </div>
-        </transition>
+  <div class="v-select">
+    <div
+      class="v-select-selection"
+      @click="toggleMenu()"
+      :class="classes"
+    >
+
+      <div :class="singleDisplayClasses">{{currentVal.label || singleDisplayValue}}</div>
+      <font-awesome-icon
+        :icon="['far', 'times-circle']"
+        class="icon-clear"
+        v-if="resetSelect"
+        @click.stop="onClear"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'caret-down']"
+        class="icon-arrow"
+        v-if="!resetSelect && !disabled"
+      />
     </div>
+    <div
+      class="v-select-dropdown"
+      v-show="visible"
+    >
+      <ul>
+        <li
+          v-for="(i,index) in values"
+          :key="i.id"
+          @click="save(i,index)"
+          class="v-select-item"
+          :class="{'v-select-item-selected':index == idx}"
+        >{{i.label}}</li>
+      </ul>
+      <ul class="v-select-not-found" v-show="showNotFoundLabel">
+        <li>{{notFoundText}}</li>
+      </ul>
+    </div>
+    <span>{{currentVal.value}}</span>
+  </div>
 </template>
 <script>
-
+const prefixCls = "v-select";
 export default {
   data() {
     return {
-        isFloat:false,
-        isFocus:false,
-        visible:false,
-       
-    }
+      prefixCls: prefixCls,
+      values: this.selectValues,
+      visible: false,
+      idx:0,
+      currentVal:[],
+      remoteInitialLabel: this.initialLabel,
+      showCloseIcon:this.clearable
+    };
   },
-  props:{
-    values:{
-      type:Array,
-      default:[]
+  props: {
+    selectValues: {
+      type: Array,
+      default: () => []
     },
-    placeholder:{
+    placeholder: {
+      type: String,
+      default: "请选择"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    size:{
       type:String,
-      default:''
+      default:"middle"
     },
-   
+    clearable: {
+        type: Boolean,
+        default: false
+    },
+    multiple: {
+        type: Boolean,
+        default: false
+    },
+    initialLabel: {
+        type: [String, Number, Array],
+    },
+    notFoundText: {
+        type: String
+    },
+    
   },
-  methods:{
-      trigger(){
-          this.isFloat=true
-          this.isFocus=true
-          this.visible=true
-      },
-      handleValue($event){
-        this.$refs.val.innerHTML=$event.target.innerHTML
-        this.visible=false
-        this.isFocus=false
-        this.$emit('change',$event.target.innerHTML)
+  computed: {
+    classes() {
+      return [
+        {
+          [`${prefixCls}-visible`]: this.visible,
+          [`${prefixCls}-disabled`]: this.disabled,
+          [`${prefixCls}-show-clear`]: this.showCloseIcon,
+          [`${prefixCls}-${this.size}`]: !!this.size
+        }
+      ];
+    },
+    resetSelect(){
+        return !this.showPlaceholder && this.clearable;
+    },
+    singleDisplayClasses(){
+        const {filterable, multiple, showPlaceholder} = this;
+        return [{
+            [prefixCls + '-placeholder']: showPlaceholder,
+            [prefixCls + '-selected-value']: !showPlaceholder && !multiple,
+        }];
+    },
+    singleDisplayValue(){
+        return `${this.selectedSingle}` || this.placeholder;
+    },
+    showPlaceholder(){
+      let status = false;
+      if (!this.multiple) {
+          const value = this.currentVal[0];
+          if (typeof value === 'undefined' || String(value).trim() === ''){
+            status = !this.remoteInitialLabel;
+          }
+      } else {
+        if (!this.currentVal.length > 0) {
+          status = true;
+          }
       }
+      return status
+    },
+    selectedSingle(){
+      const selected = this.currentVal[0];
+      return selected ? selected.label : this.placeholder
+    },
+    showNotFoundLabel () {
+        const {searchValues} = this;
+        return searchValues && searchValues.length==0;
+    },
   },
-  created(){
+  methods: {
+    toggleMenu(e, force) {
+      if (this.disabled) {
+        return false;
+      }
+      this.visible = typeof force !== 'undefined' ? force : !this.visible;
+    },
+    save(v,id) {
+      if(!this.multiple){
+        this.reset()
+      }
+      this.currentVal.push(v)
+      this.idx=id
+      this.$emit('change',v.value)
+      this.hideMenu();
+    },
+    hideMenu() {
+      this.toggleMenu(null, false);
+    },
+    reset(){
+      this.currentVal=[]
+    },
+    onClear(){
+      this.hideMenu()
+      if (this.clearable) this.reset();
+    }
   }
 };
+//toggle 有问题
 </script>
-<style lang="scss" scoped>
 
-$class:v-select;
-.#{$class} {
+<style lang="scss" scoped>
+$smallHeight: 28px;
+.v-select {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  vertical-align: middle;
+  color: #657180;
   font-size: 14px;
-  position: relative;
-  &-trigger {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-    min-width: 168px;
+  line-height: normal;
+  &-selection {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    outline: 0;
+    user-select: none;
     cursor: pointer;
     position: relative;
-    box-sizing: border-box;
-    color: rgba(0, 0, 0, 0.38);
-    border-bottom: 1px solid  #9e9e9e;
-    .#{$class}-placeholder {
-      position: relative;
-      padding: 0 2px;
-      transform-origin: left top;
-          transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      &.v-floating-placeholder {
-        top: -22px;
-        left: 0;
-        transform: scale(0.75);
-        width: 99px;
-        
-      }
-      &.v-focus{
-        color: #39f;
-      }
-    }
-    .#{$class}-value {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #d7dde4;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    .icon-clear,
+    .icon-arrow {
       position: absolute;
-      white-space: nowrap;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
-      left: 0;
-      top: 6px;
-      color: rgba(0, 0, 0, 0.87);
+      top: 50%;
+      right: 6px;
+      transform: translate(0, -50%);
+      color: #9ea7b3;
     }
-    .#{$class}-arrow {
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid;
-      margin: 0 4px;
-      color: rgba(0, 0, 0, 0.38);
+    .icon-arrow {
+      font-size: 22px;
+      transition: transform 0.3s ease;
     }
-  }
-  &-modal{
-    position: absolute;
-    background: #ffffff;
-    top: 0;
-    box-shadow: 0 0 10px #dedede;
-        min-width: 120px;
-
-    z-index: 2;
-    p{
-    padding: 5px;
-    margin: 0;
-        cursor: pointer;
-    transition: all .3s ease ;
-      &:hover{
-        background: #efefef;
+    &:hover,
+    &.v-select-visible {
+      border-color: #5cadff;
+    }
+    &.v-select-disabled {
+      background-color: #f3f3f3;
+      opacity: 1;
+      cursor: not-allowed;
+      color: #ccc;
+    }
+    &.v-select-visible {
+      box-shadow: 0 0 0 2px rgba(51, 153, 255, 0.2);
+      .icon-arrow {
+        transform: translate(0, -50%) rotate(180deg);
       }
     }
+    &.v-select-small {
+      height: 28px;
+      line-height: 28px;
+    }
+    &.v-select-middle {
+      height: 32px;
+      line-height: 32px;
+    }
+    &.v-select-large {
+      height: 36px;
+      line-height: 36px;
+    }
+    .v-select-placeholder {
+      color: #c3cbd6;
+    }
+    .v-select-placeholder,
+    .v-select-selected-value {
+      display: block;
+      height: 100%;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 8px;
+      padding-right: 24px;
+    }
   }
-}
-
-.fade-enter-active{
-  animation: fade-in 0.3s;
-
-}
-.fade-leave-active{
-  animation: fade-out 0.3s;
-
-}
-@keyframes fade-in {
-    0% {
-    transform: transform(0,-20px,0);
-    opacity: 0;
-  }
-  100% {
-    transform: transform(0,0,0);
-    opacity: 1;
-  }
-}
-@keyframes fade-out {
-    
-  0% {
-    transform:transform(0,0,0);
-    opacity: 1;
-  }
-  100% {
-    transform: transform(0,-20px,0);
-    opacity: 0;
+  &-dropdown {
+    width: inherit;
+    max-height: 200px;
+    overflow: auto;
+    margin: 5px 0;
+    padding: 5px 0;
+    background-color: #fff;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 900;
+    border-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    .v-select-item,.v-select-not-found  li {
+      margin: 0;
+      padding: 7px 16px;
+      clear: both;
+      color: #657180;
+      font-size: 12px !important;
+      white-space: nowrap;
+      list-style: none;
+      cursor: pointer;
+      &-focus,
+      &:hover {
+        background: #f3f3f3;
+      }
+      &.v-select-item-selected,
+      &.v-select-item-selected:hover {
+        color: #fff;
+        background: rgba(51, 153, 255, 0.9);
+      }
+    }
   }
 }
 </style>
-
