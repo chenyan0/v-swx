@@ -4,7 +4,7 @@ import data from '../../static/json/data.json'
 const base = 'http://localhost:8000/api'
 Mock.setup({
   // timeout: 2000 方式一 直接设置值
-  timeout: '1000 - 3000' // 方式二 设置区间 注意这个是一个字符串形式
+  timeout: '10-1000' // 方式二 设置区间 注意这个是一个字符串形式
 })
 // 专题接口
 Mock.mock(`${base}/hotproduct`, 'get', {

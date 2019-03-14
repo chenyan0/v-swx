@@ -22,8 +22,7 @@ Vue.use(Vuex)
 Vue.use(MintUI)
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
-Vue.config.productionTip = false
-Vue.prototype.$ajax = axios
+Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */
 new Vue({

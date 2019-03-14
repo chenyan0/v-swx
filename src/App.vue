@@ -1,35 +1,29 @@
 <template>
   <div id="app">
-    <!-- <router-view name="header" title="首页"></router-view> -->
-    <!-- <transition
-      :name="transitionName"
-      mode="out-in"
-    > -->
-      <!-- 命名路由  -->
-        <router-view class="Router"></router-view>
-    <!-- </transition> -->
+  
+      <keep-alive>
+        <router-view class="Router" v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view class="Router" v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
 <script>
+
 export default {
+
   name: "App",
+
   data() {
     return {
       transitionName: "slide-right"
     };
   },
-  // watch: {
-  //   //使用watch 监听$router的变化
-  //   $route(to, from) {
-  //     let isBack = this.$router.isBack; //  监听路由变化时的状态为前进还是后退
-  //     if (isBack) {
-  //       this.transitionName = "slide-right";
-  //     } else {
-  //       this.transitionName = "slide-left";
-  //     }
-  //   }
-  // }
+  computed: {
+    title: function() {
+      return this.$route.meta.title;
+    }
+  }
 };
 </script>
 <style lang="scss">

@@ -20,12 +20,5 @@ app.use(bodyParser.json({limit: '1mb'})) // body-parser 解析json格式数据
 app.use(bodyParser.urlencoded({ // 此项必须在 bodyParser.json 下面,为参数编码
   extended: true
 }))
-// router.get('/getNewsList', function (req, res) {
-//   res.json({
-//     errno: 0,
-//     data: Array.from({length: 10}).map(a => Mock.mock(categories))
-//   })
-// })
 
-// app.use('/api', router) // 域名下的访问路径
 app.listen(8000)

@@ -1,7 +1,7 @@
 import * as types from '../constants/types'
 
 const state = {
-  token: JSON.parse(sessionStorage.getItem('token')) || '',
+  token: 'sdasdsad',
   // 用户登录状态
   loginStatus: JSON.parse(sessionStorage.getItem('loginStatus')) || false,
   // 用户登录信息
