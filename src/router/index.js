@@ -8,7 +8,7 @@ import myPluginRouter from '@/components/example/index'
 Vue.use(Router)
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
-  mode: 'history',
+  mode: 'hash',
   linkExactActiveClass: 'active',
   routes: [
     ...queryRouter,
