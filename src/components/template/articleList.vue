@@ -80,7 +80,7 @@ export default {
     &.has-img .content-date {
       color: #666;
       margin-left: 6.25rem;
-       @include font-dpr(14px);
+       @include font-dpr(12px);
       display: flex;
       justify-content: space-between;
       span {

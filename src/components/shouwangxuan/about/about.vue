@@ -17,6 +17,12 @@
         <font-awesome-icon icon="chevron-right" />
       </router-link>
     </div>
+    <div class="sign-out">
+      <button
+      @click="signOut"
+          id="signout"
+        >退出登录</button>
+    </div>
   </div>
 </template>
 
@@ -26,16 +32,24 @@
       return {}
     },
   
-    methods: {}
+    methods: {
+      signOut(){
+        this.$router.push('login')
+      }
+    }
   };
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../styles/util/common';
+  @import '~@/styles/util/common';
+  $colors:
+  #118fff
+  #246FE2   //按钮
+  #5f7c8b  //wenzi
+  ;
+
   .cells {
     margin-top: 1.25rem;
-  }
-  
   .cell {
     background: #fff;
     margin-top: .625rem;
@@ -47,4 +61,25 @@
 color: #c7c7c7;
     }
   }
+  }
+  .sign-out{
+margin: .9375rem;
+         button {
+        width: 100%;
+        height: 2.5rem;
+        border-radius: 1.25rem;
+        background: nth($list: $colors, $n:2 );
+        border: 0;
+        outline: none;
+        @include font-dpr(18px);
+        color: white;
+        display: block;
+      }
+      #signout {
+        border: 1px solid nth($list: $colors, $n:2 );
+        background: transparent;
+        color: nth($list: $colors, $n:2 );
+      }
+  }
+
 </style>

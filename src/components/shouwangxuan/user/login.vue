@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import { Toast } from "mint-ui";
 import VLoad from "@/components/common/loading";
 export default {
@@ -74,10 +74,10 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.Com.loading,
-    })
+    }),
   },
   methods: {
-    ...mapActions(["setUserData", "setUserInfo", "setToken"]), //分发dispatch
+    ...mapActions([ "setToken,setLoadingState"]), //分发dispatch
     register() {
       this.$router.push("register");
     },
@@ -95,21 +95,20 @@ export default {
         });
         return;
       }
-      const USERINFO = this.$store.getters.userInfo;
       let data = {
         fullname: this.fullname,
         password: this.password,
       };
-      this.$store.dispatch("setLoadingState", true); //设置loading状态
+      this.$store.dispatch("setLoadingState", true); 
         this.$axios.post("http://localhost:8000/api/login", data).then(res => {
           if (!res.data.status) {
             Toast({
             message: "用户账号信息不匹配",
             iconClass: "icon icon-error"
           });
-            this.$store.dispatch("setLoadingState", false);
+            this.$store.dispatch("setLoadingState", false)
           } else {
-            this.$store.dispatch("setToken", res.data.token); //改变token状态
+            this.$store.dispatch("setToken", res.data.token)
             let redirect = decodeURIComponent(
               this.$route.query.redirect || "/home"
             );
@@ -119,6 +118,9 @@ export default {
           }
         });
     }
+  },
+  created(){
+ this.$store.dispatch("setLoadingState", false); 
   },
   mounted() {}
 };

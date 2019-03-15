@@ -7,7 +7,7 @@
     <div class="main-container">
       <div class="top">
         <img
-          src="../../../../static/img/banner/lxbanner.png"
+          src="../../../../static/img/banner/timg1.jpeg"
           alt=""
         >
         <h1>{{ $route.query.search ? "搜索关键字：" : ''}}<span ref="key"></span></h1>

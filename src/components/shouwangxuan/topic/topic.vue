@@ -29,7 +29,7 @@
           <h3
             class="content-title"
             :data-id="item.id"
-          >{{item.name}} <span
+          ><p>{{item.name}} </p><span
               @click="handleOrder"
               :class="item.order_status ? 'ordered' : '' "
             >{{item.order_status ? '已订阅' : '未订阅' }}</span></h3>
@@ -113,6 +113,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$colors:
+#ffbc59;
+
 .page-loadmore-wrapper {
   overflow: scroll;
 }
@@ -130,30 +133,34 @@ export default {
   }
   img {
     width: 100%;
-
     border-radius: 12px;
     height: 150px;
   }
   .content-title {
     padding: 6px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     font-size: 16px;
     line-height: 20px;
     color: #1b1b1b;
     margin: 0;
     font-weight: normal;
+    display: flex;
+    justify-content: space-between;
+    p{
+          flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
     span {
-      border: 1px solid #99b1ce;
-      color: #99b1ce;
+      border: 1px solid nth($list: $colors, $n:1);
+      color: nth($list: $colors, $n:1);
       padding: 0 6px;
       font-size: 12px;
       float: right;
       border-radius: 4px;
       &.ordered {
         color: #fff;
-        background: #99b1ce;
+        background: nth($list: $colors, $n:1);
       }
     }
   }

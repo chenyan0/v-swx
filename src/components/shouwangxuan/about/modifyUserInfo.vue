@@ -93,9 +93,9 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../styles/base";
+  @import "~@/styles/base";
   $colors : #118fff #246FE2 //按钮
-  #5f7c8b //wenzi
+  #5f7c8b 
   ;
   .wrapper {
     .edit-avatar {

@@ -14,6 +14,7 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="专题">
         <topic />
+        <!-- <copyright/> -->
       </mt-tab-container-item>
       <mt-tab-container-item id="我的">
         <mine />

@@ -1,8 +1,7 @@
 
 <template>
   <div>
- 
-    <!-- <mt-swipe :auto="4000" class="banner">
+    <mt-swipe :auto="4000" class="banner">
       <mt-swipe-item
         v-for="item in items"
         :key=item.id
@@ -10,17 +9,18 @@
         <a :href="item.href">
           <img
             :src="item.url"
-            :alt="item.title"
+            alt="言轩"
           >
         </a>
       </mt-swipe-item>
-    </mt-swipe> -->
+    </mt-swipe>
     <div class="search-form">
       <form>
         <input
           type="text"
           placeholder="搜索你感兴趣的内容..."
           class="search-input" id="search-input" ref="input"
+          v-model="searchKey"
         >
         <button class="search-button" type="button" @click="formSubmit">
           <font-awesome-icon icon="search" />
@@ -94,27 +94,20 @@ export default {
     return {
       items: [
         {
-          title: "中银乐享金生终身养老年金保险",
           href: "",
-          url: require("../../../../static/img/banner/lxbanner.png")
+          url: require("../../../../static/img/banner/timg1.jpeg")
         },
         {
-          title: "中银三星尊享家盈二号终身寿险",
           href: "/jiaying",
-          url: require("../../../../static/img/banner/jfbanner.png")
+          url: require("../../../../static/img/banner/timg2.jpeg")
         },
         {
-          title: "中银聚富年金保险",
           href: "",
-          url: require("../../../../static/img/banner/jfbanner.png")
-        },
-        {
-          title: "中银祥佑尊享版终身重大疾病保险",
-          href: "",
-          url: require("../../../../static/img/banner/xybanner.png")
+          url: require("../../../../static/img/banner/timg3.jpeg")
         }
       ],
       curpage: 1,
+      searchKey:'',
       list: []
     };
   },
@@ -145,11 +138,11 @@ export default {
           });
     },
     formSubmit(){
-      let key = this.$refs.input.value;
-      if(key != ''){
-        this.$router.push({ path: '/list', query: { search: key }})
+      if(!this.searchKey){
+        Toast('提交信息为空')
       }else{
-        Toast('提交信息为空');
+        this.$router.push({ path: '/list', query: { search: this.searchKey }})
+        this.searchKey=''
       }
     }
   },
@@ -159,6 +152,7 @@ export default {
   beforeCreate() {
     document.getElementsByTagName("body")[0].className = "bg-fff";
   },
+
 
 };
 </script>
