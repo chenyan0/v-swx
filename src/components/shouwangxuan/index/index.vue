@@ -2,7 +2,7 @@
 <template>
   <div>
  
-    <mt-swipe :auto="4000" class="banner">
+    <!-- <mt-swipe :auto="4000" class="banner">
       <mt-swipe-item
         v-for="item in items"
         :key=item.id
@@ -14,7 +14,7 @@
           >
         </a>
       </mt-swipe-item>
-    </mt-swipe>
+    </mt-swipe> -->
     <div class="search-form">
       <form>
         <input

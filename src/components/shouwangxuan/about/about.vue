@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="cells">
-       <router-link tag="div" :to="{path:'/onlineplan'}" class="cell">
+       <!-- <router-link tag="div" :to="{path:'/onlineplan'}" class="cell">
         <span>计划书</span>
         <font-awesome-icon icon="chevron-right" />
       </router-link>
        <router-link tag="div" :to="{path:'/salary'}" class="cell">
         <span>薪资查询</span>
         <font-awesome-icon icon="chevron-right" />
-      </router-link>
+      </router-link> -->
         <router-link tag="div" :to="{path:'/custom'}" class="cell"><span>我的组件库</span>
         <font-awesome-icon icon="chevron-right" />
         </router-link>

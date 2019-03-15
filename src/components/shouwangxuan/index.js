@@ -37,7 +37,7 @@ export default [
       default: Home
     },
     meta: {
-      title: '守望轩',
+      title: '言轩',
       index: 2,
       keepAlive: true
     }

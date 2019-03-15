@@ -1,6 +1,6 @@
 <template>
     <div class="copyright">
-        <p>© 2018 守望轩</p>
+        <p>© 2018 言轩</p>
     </div>
 </template>
 <style lang="scss" scoped>
