@@ -1,0 +1,147 @@
+{
+    "admin": {
+
+    },
+    "hottj": [{
+            "id": 1,
+            "name": "中银三星尊享家盈二号终身寿险",
+            "href": "jiaying/index",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/jyimg.png"
+        },
+        {
+            "id": 2,
+            "name": "中银聚富年金保险",
+            "href": "jufu/index",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/jfimg.png"
+        },
+        {
+            "id": 3,
+            "name": "中银祥佑尊享版终身重大疾病保险",
+            "href": "xiangyou/index",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/xyimg.png"
+        },
+        {
+            "id": 4,
+            "name": "中银乐享金生终身养老年金保险",
+            "href": "lexiang/index",
+            "desc": "保证给付 | 领取灵活 | 保费豁免",
+            "src": "../../static/img/lximg.png"
+        }
+    ],
+    "calculusResult": {
+        "insuranceExpenses": 78220.75,
+        "cum_Prem": 2564.84
+    },
+    "feeData": [{
+        "0": 1
+    }, {
+        "1": 2
+    }],
+    "tree": {
+        "grade": 0,
+        "name": "总公司部门",
+        "children": [{
+                "grade": 11,
+                "parent": 0,
+                "name": "财务部",
+                "children": [{
+                        "grade": 2111,
+                        "parent": 211,
+                        "name": "北京sss",
+                        "children": [{
+                            "grade": 21111,
+                            "parent": 2111,
+                            "name": "张三丰"
+                        }]
+                    },
+                    {
+                        "grade": 2112,
+                        "parent": 211,
+                        "name": "上海",
+                        "children": [{
+                            "grade": 21121,
+                            "parent": 2112,
+                            "name": "林夕"
+                        }]
+                    }
+                ]
+            },
+            {
+                "grade": 12,
+                "parent": 0,
+                "name": "技术部",
+                "children": [{
+                        "grade": 221,
+                        "parent": 12,
+                        "name": "甄宓"
+                    },
+                    {
+                        "grade": 222,
+                        "parent": 12,
+                        "name": "吴鑫"
+                    },
+                    {
+                        "grade": 223,
+                        "parent": 12,
+                        "name": "琳琳"
+                    }
+                ]
+            },
+            {
+                "grade": 13,
+                "parent": 0,
+                "name": "人事部",
+                "children": [{
+                    "grade": 231,
+                    "parent": 13,
+                    "name": "宁馨"
+                }]
+            }
+        ]
+    },
+    "sqData": [{
+            "month": "2017-12",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        },
+        {
+            "month": "2017-11",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        },
+        {
+            "month": "2017-10",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        },
+        {
+            "month": "2017-9",
+            "baseSalary": 4000,
+            "serviceSubsidy": 1000,
+            "postSubsidy": 1000,
+            "behaviorSubsidy": 1000,
+            "performance": 15000,
+            "bonus": 13000
+        }
+    ],
+    "searchData": [
+        "张雪", "蜜蜜", "真心", "孟林", "真假呀", "张天", "孟婆汤", "辛弦", "郑板桥"
+    ]
+
+
+}
