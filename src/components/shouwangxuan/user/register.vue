@@ -19,42 +19,42 @@
       </span>
     </div>
     <div class="edit-info">
-      <h1>Basic Infomation</h1>
+      <h1>基本信息</h1>
       <div class="form-group">
         <input
           type="text"
           v-model="form.fullname"
-          placeholder="Full Name"
+          placeholder="用户名"
         >
       </div>
       <div class="form-group">
         <input
           type="email"
              v-model="form.email"
-          placeholder="Email"
+          placeholder="邮箱"
         >
       </div>
     </div>
     <div class="edit-info private">
-      <h1>Private Infomation</h1>
+      <h1>私人信息</h1>
       <div class="form-group">
         <input
           type="password"
              v-model="form.password"
-          placeholder="Password"
+          placeholder="密码"
         >
       </div>
       <div class="form-group">
         <input
           type="number"
           v-model="form.mobile"
-          placeholder="Mobile"
+          placeholder="手机号"
         >
       </div>
-      <button @click="submit">Sign-Up</button>
+      <button @click="submit">注册</button>
     </div>
     <router-link class="link-to-another" tag="div" :to="{path:'login'}">
-      Already have an account ?
+      已有账户 ?
     </router-link>
   </div>
 </template>

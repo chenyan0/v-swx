@@ -39,18 +39,18 @@
         <button
           @click="login"
           id="signin"
-        >Sign In</button>
+        >登陆</button>
         <button
           @click="register"
           id="signup"
-        >Sign Up</button>
+        >注册</button>
       </div>
       <router-link
         class="link-to-another"
         tag="div"
         :to="{path:'register'}"
       >
-        Forget password ?
+        忘记密码 ?
       </router-link>
     </div>
     <v-load v-if="loading"></v-load>

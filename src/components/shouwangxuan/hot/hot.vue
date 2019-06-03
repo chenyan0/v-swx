@@ -11,6 +11,7 @@
       <!-- tab-container -->
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
+
           <Article-List :data="list" />
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
@@ -81,8 +82,9 @@ export default {
 .hot-container {
   padding-top: 40px;
   background-color: #fff;
-  .Article-List {
-    padding: 0 12px;
+ 
+  .common-list {
+    padding: 0 15px;
   }
   .mint-navbar .mint-tab-item {
     background: #fff;

@@ -11,7 +11,7 @@
         </span>
       </div>
       <div class="edit-info">
-        <h1>Basic Infomation</h1>
+        <h1>基本信息</h1>
         <div class="form-group">
           <input type="text" v-model="form.fullname" placeholder="Full Name">
         </div>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="edit-info private">
-        <h1>Private Infomation</h1>
+        <h1>私人信息</h1>
         <div class="form-group">
           <input type="password" v-model="form.password" placeholder="Password">
         </div>

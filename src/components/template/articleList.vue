@@ -68,14 +68,14 @@ export default {
     }
     &.has-img .content-title {
       margin-left: 6.25rem;
-      height: 2.5rem;
+      height: 2.6rem;
       margin-bottom: .625rem;
       overflow:hidden; 
       text-overflow:ellipsis; 
       display:-webkit-box; 
       -webkit-box-orient:vertical;
       -webkit-line-clamp:2; 
-      @include font-dpr(14px);
+      @include font-dpr(16px);
     }
     &.has-img .content-date {
       color: #666;
