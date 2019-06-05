@@ -159,7 +159,7 @@ $colors:
       margin: 10px 0;
           display: flex;
       & > label {
-        font-size: 14px;
+        font-size:16px;
         width: 30px;
         display: inline-block;
         text-align: center;
@@ -181,7 +181,7 @@ $colors:
         background-color: transparent;
         height: 30px;
         outline: none;
-        font-size: 14px;
+        font-size: 16px;
         padding-left: 10px;
         flex: 1;
          color:nth($list: $colors, $n:3)
