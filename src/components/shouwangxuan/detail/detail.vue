@@ -5,86 +5,7 @@
       isBack
     ></Header>
     <div class="main-container">
-      <div class="content-article-detail">
-        <h1 class="entry-title">{{article.post_title}}</h1>
-        <div class="entry-date">
-          <span>
-            <font-awesome-icon :icon="['far', 'clock']" />
-            <span class="entry-icon-text">{{article.post_date}}</span>
-          </span>
-          <span>
-            <font-awesome-icon :icon="['far', 'comment']" />
-            <span class="entry-icon-text">{{article.total_comments}}</span>
-          </span>
-          <span>
-            <font-awesome-icon :icon="['far', 'eye']" />
-            <span class="entry-icon-text">{{article.pageviews}}</span>
-          </span>
-          <span>
-            <font-awesome-icon :icon="['far', 'heart']" />
-            <span class="entry-icon-text">{{article.like_count}}</span>
-          </span>
-        </div>
-        <div class="article-text">
-          {{article.post_content}}
-        </div>
-      </div>
-      <!-- 上一页 下一页 -->
-      <div class="pagination"  >
-        <router-link
-          tag="p" v-if="article.prev_page" 
-          :to="{ path: '/detail',query:{id:article.prev_page.id ? article.prev_page.id : 1 }}"
-        >← {{article.prev_page.title}}</router-link>
-        <router-link
-          tag="p" v-if="article.next_page" 
-          :to="{ path: '/detail',query:{id:article.next_page.id ? article.next_page.id : 1}}"
-        >{{article.next_page.title}} →</router-link>
-      </div>
-      <!-- 猜你喜欢 -->
-      <div class="relatedPost mgt-20">
-        <div class="part-title">
-          <span>
-            猜你喜欢
-          </span>
-        </div>
-        <ul>
-          <router-link
-            :to="{}"
-            tag="li"
-          >1.山东省都发的搜救发搜房</router-link>
-          <router-link
-            :to="{}"
-            tag="li"
-          >2.山东省都发的搜救发搜房</router-link>
-          <router-link
-            :to="{}"
-            tag="li"
-          >3.山东省都发的搜救发搜房</router-link>
-          <router-link
-            :to="{}"
-            tag="li"
-          >4.山东省都发的搜救发搜房</router-link>
-        </ul>
-      </div>
-      <!-- 点赞 -->
-      <div class="praise mgt-20">
-        <div class="part-title">
-          <span>
-            点赞
-          </span>
-        </div>
-        <p class="count">有{{praiseSum}}评论人点赞</p>
-
-        <div>
-          <img
-            v-for="item in article.praise"
-            :key="item.id"
-            :src="item.praise_user_thumb"
-            class="praise-thumb"
-            alt=""
-          >
-        </div>
-      </div>
+      <article-content :article="article"></article-content>
       <!-- 评论区 -->
       <div class="commentArea mgt-20">
         <div class="part-title">
@@ -95,24 +16,28 @@
         </div>
         <p class="count">有{{commentSum}}条评论</p>
         <div class="comment-lists">
+          <div v-if="commentSum==0" id="empty-tip">快来发表你的评论吧</div>
           <div
+          v-else
             class="comment-item"
-            v-for="item in article.comments_info"
-            :key="item.id"
+            v-for="(item,index) in article.comments_info"
+            :key="index"
           >
             <div class="comment-author">
               <img
-                :src="item.comments_thumb"
+                :src="item.thumb"
                 alt=""
               >
-              <span>{{item.comments_username}}</span>
-              <span>{{item.comments_date }}</span>
+              <span>{{item.name}}</span>
+              <span>{{item.time }}</span>
             </div>
             <div class="comment-text">
-              <p>
-                {{item.comments_text}}
-                </p>
-                <p><span>William Davis</span> 回复 <span>Lisa Robinson</span>的撒的恢弘我红枫缎hi欧萨腐败日哦IQ澎湃飞虎队刷副本望闻问切</p>
+              <p @click="changecomer(item.name, index)">{{item.content}} </p>
+              <div v-if="item.reply">
+              <div class="reply" v-for="reply in item.reply" :key="reply.id">
+                <p @click="changecomer(reply.responder, index)"><span>{{reply.responder}}</span>&nbsp;&nbsp;回复&nbsp;&nbsp;<span>{{reply.reviewers}}</span>&nbsp;&nbsp;{{reply.content}}</p>
+              </div>
+              </div>
             </div>
           </div>
         </div>
@@ -132,12 +57,11 @@
       <div class="comment-input">
         <input
           type="text"
-          name=""
           ref="commentText"
-          id=""
           placeholder="评论..."
+          v-model="commentText"
         >
-        <button @click="postComment">发送</button>
+        <button :class="{'disabled':disabled}" @click="postComment">发送</button>
       </div>
       <div class="emoji">
         <font-awesome-icon
@@ -149,6 +73,7 @@
   </div>
 </template>
 <script>
+import ArticleContent from "./articleContent"
 import Header from "../../template/header";
 import formatDate from "../../../utils/formatDate";
 import { Toast,Indicator } from "mint-ui";
@@ -161,18 +86,44 @@ export default {
     }
   },
   components: {
-    Header
+    Header,
+    ArticleContent
   },
   data() {
     return {
       article: {},
       commentList: [],
-      praiseSum: "",
-      commentSum: "",
-      id: ""
+      commentSum: "",    //文章评论总计
+      id: "",
+      disabled:true,
+      commentText:"",   //评论内容
+      type: 0,                //0为评论作者1为评论别人的评论2为评论别人的别人
+		oldComment: null,    //被选中评论的name
+		chosedIndex: -1,    //被选中评论的index
     };
   },
+   watch: {
+    $route: function(to, from) {
+      const newId = to.query.id;
+      const oldId = from.query.id;
+      if(oldId){
+
+        this.id = newId;
+        this.fetchData();
+      }
+    },
+    commentText(val,oldval){
+     this.disabled= val ? false : true
+    }
+  },
   methods: {
+    changecomer(name,index){
+      console.log(name,index)
+      this.oldComment = name;
+			this.chosedIndex = index;
+			this.type = 1;
+          this.$refs.commentText.focus()
+    },
     fetchData() {
       Indicator.close();
       Indicator.open({
@@ -195,25 +146,37 @@ export default {
       this.$router.push({ path: "home" });
     },
     postComment() {
-      let v = this.$refs.commentText.value;
+      let v = this.commentText;
       const params = {
-        comments_thumb: this.$store.getters.userInfo.avatorUrl,
-        comments_date: formatDate(new Date(), "yyyy-MM-dd"),
-        comments_username: this.$store.getters.userInfo.fullname,
-        comments_text: v
+        thumb: this.$store.getters.userInfo.avatorUrl,
+        time: formatDate(new Date(), "yyyy-MM-dd"),
+        name: this.$store.getters.userInfo.fullname,
+        content: v,
+        reply: []
       };
       if (v) {
-        this.article.comments_info.unshift(params);
-        this.commentSum++;
-        this.$refs.commentText.value = "";
-        this.$axios
-          .post("http://localhost:8000/api/article/postComment", params)
-          .then(res => {
-            console.log(res);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        if(this.type==0){
+          this.article.comments_info.unshift(params);
+          this.commentSum++;
+        }else if(this.type==1){
+          this.article.comments_info[this.chosedIndex].reply.push({
+					responder: this.$store.getters.userInfo.fullname,
+					reviewers:this.oldComment,
+          time: formatDate(new Date(), "yyyy-MM-dd"),
+          content:v
+				});
+        this.type = 0;
+        
+        }
+          this.commentText = "";
+        // this.$axios
+        //   .post("http://localhost:8000/api/article/postComment", params)
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //   });
       } else {
         Toast({
           message: "请填写评论后再发表",
@@ -223,7 +186,7 @@ export default {
       }
     },
     sort(v) {
-      this.article.comments_info = this.sortByKey(v, "comments_date");
+      this.article.comments_info = this.sortByKey(v, "time");
     },
     sortByKey(array, key) {
       return array.slice().sort(function(a, b) {
@@ -238,19 +201,11 @@ export default {
     document.getElementsByTagName("body")[0].className = "bg-fff";
   },
   created() {
-    this.fetchData();
+    this.$nextTick(function(){
+      this.fetchData()
+    })
   },
-  watch: {
-    $route: function(to, from) {
-      const newId = to.query.id;
-      const oldId = from.query.id;
-      if(oldId){
-
-        this.id = newId;
-        this.fetchData();
-      }
-    }
-  },
+ 
   mounted(){
   }
 };
@@ -328,8 +283,13 @@ export default {
     
   }
 }
+#empty-tip{
+    text-align: center;
+    line-height: 40px;
+    color: #999;
+  }
 .commentBlock {
-  height: 40px;
+  height: 46px;
   background: #fff;
   border-top: 1px solid #eee;
   position: fixed;
@@ -338,6 +298,7 @@ export default {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  
   .icon {
     color: #666;
   }
@@ -349,8 +310,9 @@ export default {
     overflow: hidden;
     flex: 1;
     display: flex;
-    height: 32px;
+    height: 38px;
     input {
+    font-size: 14px;
       background: #f4f8f7;
       border: 0;
       height: 100%;
@@ -359,12 +321,16 @@ export default {
       flex: 1;
     }
     button {
-      background: #efefef;
       border: 0;
       height: 100%;
       width: 70px;
-      color: #999;
       outline: none;
+         background: #FF9800;
+          color: #fff;
+      &.disabled{
+      background: #efefef;
+      color: #999;
+      }
     }
   }
   .emoji {
@@ -379,7 +345,7 @@ export default {
     margin-bottom: 6px;
     .comment-text {
       p{
-            font-size: 12px;
+            font-size: 14px;
     color: #666;
     margin-left: 40px;
     text-indent: 2em;
