@@ -5,7 +5,7 @@
         <input type="file" name="" id="" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
         <img :src="avatorUrl" alt="">
       </div>
-      <p ref="name" @click="jumpLink"></p>
+      <p ref="name" @click="jumpLink">{{username}}</p>
     </div>
     <div class="mine-block">
       <mt-navbar v-model="selected">
@@ -58,14 +58,13 @@
     Indicator
   } from "mint-ui";
   import {
-    mapGetters
+    mapGetters,mapActions
   } from 'vuex'
   
   export default {
     data() {
       return {
         selected: "1",
-        avatorUrl: "",
         list: []
       };
     },
@@ -73,16 +72,18 @@
       document.getElementsByTagName("body")[0].className = "bg-f7"
     },
     computed: {
-      ...mapGetters([
-        'loginStatus',
-        'userInfo'
-      ])
+      ...mapGetters( {
+        status: 'loginStatus',
+        uinfo: 'userInfo'
+      }),
+      username(){
+        return  this.status ? this.uinfo.fullname : '请登录'
+      },
+      avatorUrl(){
+        return this.uinfo.avatorUrl
+      }
     },
     created() {
-      this.$nextTick(() => {
-        this.$refs.name.innerHTML = this.loginStatus ? this.userInfo.fullname : '请登录'
-        this.avatorUrl = this.userInfo.avatorUrl
-      });
       this.fetchData(this.selected)
     },
     watch: {
@@ -91,6 +92,7 @@
       }
     },
     methods: {
+       ...mapActions(["setUserInfo"]),
       jumpLink(){
         if(!this.loginStatus){
            this.$router.push("login")
@@ -99,6 +101,9 @@
         }
       },
       changeImage(e) {
+        if(typeof FileReader == "undefined"){
+            alert("您的浏览器不支持FileReader对象！");
+        }
         let file = e.target.files[0];
         this.file = file;
         let reader = new FileReader();
@@ -106,6 +111,8 @@
         reader.readAsDataURL(file);
         reader.onload = function(e) {
           that.avatorUrl = this.result;
+            that.$store.dispatch("avatorUrl", this.result)
+
         };
       },
       fetchData(t) {
@@ -164,30 +171,40 @@
         width: 100%;
         height: 100%;
         opacity: 0;
+        z-index: 100;
       }
     }
   }
   
   .mine-block {
-    .mint-navbar .mint-tab-item {
-      background: #fff;
-      color: #9babba;
-      text-align: center;
-      box-sizing: border-box;
-      margin-bottom: 0;
+    .mint-navbar {
+
+      .mint-tab-item {
+        background: #fff;
+        color: #9babba;
+        text-align: center;
+        box-sizing: border-box;
+        margin-bottom: 0;
+           font-size: 16px;
+      }
+       .mint-tab-item-label{
+        font-size: 16px;
+    }
     }
     .mint-tab-item.is-selected {
       border-bottom: 2px solid #495056;
       color: #495056;
     }
+   
   }
+  
   
   ul {
     padding: 0 15px 0 30px;
     list-style: decimal;
     li {
       margin-top: 10px;
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 </style>

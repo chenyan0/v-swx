@@ -40,8 +40,6 @@
         </router-link>
       </div>
     </mt-loadmore>
-
-    <copyright />
   </div>
 
 </template>

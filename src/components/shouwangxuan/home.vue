@@ -10,7 +10,6 @@
     >
       <mt-tab-container-item id="首页">
           <index />
-        <copyright/>
       </mt-tab-container-item>
       <mt-tab-container-item id="专题">
         <topic />
@@ -18,7 +17,6 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="我的">
         <mine />
-        <copyright/>
       </mt-tab-container-item>
       <mt-tab-container-item id="关于">
          <about />
