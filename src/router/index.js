@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import planRouter from '@/components/plan/index'
 import queryRouter from '@/components/query/index'
 import swxRouter from '@/components/shouwangxuan/index'
-import myPluginRouter from '@/components/example/index'
 Vue.use(Router)
 const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
@@ -13,8 +12,7 @@ const router = new Router({
   routes: [
     ...queryRouter,
     ...planRouter,
-    ...swxRouter,
-    ...myPluginRouter
+    ...swxRouter
   ]
 })
 router.beforeEach((to, from, next) => {
