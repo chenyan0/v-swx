@@ -16,7 +16,7 @@ export default [
     name: 'login',
     component: Login,
     meta: {
-      title: '登录',
+      title: '登陆',
       index: 1
     }
   },
