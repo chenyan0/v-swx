@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { Toast } from "mint-ui";
 import VLoad from "@/components/common/loading";
 export default {

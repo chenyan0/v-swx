@@ -55,7 +55,7 @@
 
 <script>
   import {
-    Indicator
+    Indicator,Toast
   } from "mint-ui";
   import {
     mapGetters,mapActions
@@ -94,7 +94,7 @@
     methods: {
        ...mapActions(["setUserInfo"]),
       jumpLink(){
-        if(!this.loginStatus){
+        if(!this.status){
            this.$router.push("login")
         }else{
           return
@@ -104,15 +104,24 @@
         if(typeof FileReader == "undefined"){
             alert("您的浏览器不支持FileReader对象！");
         }
+        if(!this.status){
+            Toast({
+              message: "请先登陆",
+              iconClass: "icon icon-error",
+              position: "top"
+            });
+            return
+        }
         let file = e.target.files[0];
         this.file = file;
         let reader = new FileReader();
         let that = this;
         reader.readAsDataURL(file);
         reader.onload = function(e) {
-          that.avatorUrl = this.result;
-            that.$store.dispatch("avatorUrl", this.result)
-
+          console.log(that.uinfo)
+           that.$set(that.uinfo,"avatorUrl", this.result)
+           const copy = Object.assign({}, that.uinfo)
+            that.$store.dispatch("updateUserInfo",copy)
         };
       },
       fetchData(t) {
@@ -123,12 +132,8 @@
         });
         const url = "http://localhost:8000/api/hotpost";
         const self = this;
-        this.$axios
-          .post(url, {
-            t: t
-          })
-          .then(
-            res => {
+        this.$axios.post(url, {t: t})
+          .then( res => {
               Indicator.close();
               self.list = res.data.data;
             },
@@ -140,8 +145,6 @@
             console.log(error);
           });
       }
-  
-  
     }
   };
 </script>

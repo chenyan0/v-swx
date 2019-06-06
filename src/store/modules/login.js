@@ -5,7 +5,7 @@ const state = {
   // 用户登录状态
   loginStatus: JSON.parse(sessionStorage.getItem('loginStatus')) || false,
   // 用户登录信息
-  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {},
+  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {}
 }
 
 const actions = {
@@ -14,9 +14,7 @@ const actions = {
      */
   setUserInfo ({ commit }, res) {
     sessionStorage.setItem('userInfo', JSON.stringify(res))
-    sessionStorage.setItem('loginStatus', true)
     commit(types.SET_USER_INFO, res)
-    commit(types.SET_LOGIN_STATUS, true)
   },
 
   /**
@@ -33,7 +31,14 @@ const actions = {
     */
   setToken ({ commit }, res) {
     sessionStorage.setItem('token', res)
+    sessionStorage.setItem('loginStatus', true)
     commit(types.SET_TOKEN, res)
+    commit(types.SET_LOGIN_STATUS, true)
+  },
+  updateUserInfo ({commit}, res) {
+    console.log(res)
+    sessionStorage.setItem('userInfo', res)
+    commit(types.UPDATE_USER_INFO, res)
   }
 }
 
@@ -52,6 +57,11 @@ const mutations = {
   },
   [types.SET_TOKEN] (state, res) {
     state.token = res
+  },
+  [types.UPDATE_USER_INFO] (state, info) {
+    let data = Object.assign(state.userInfo, info)
+    console.log(info, data)
+    state.userInfo = data
   }
 }
 

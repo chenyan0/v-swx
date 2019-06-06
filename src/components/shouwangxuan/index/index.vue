@@ -125,7 +125,6 @@ export default {
           .then(
             res => {
               self.list.push(...res.data.data) ;
-              console.log(res.data.data,self.list)
               Indicator.close();
               return res;
             },

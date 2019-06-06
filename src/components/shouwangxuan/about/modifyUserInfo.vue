@@ -36,7 +36,8 @@
 <script>
   import Header from "@/components/template/header"
   import {
-    mapActions
+    mapActions,
+    mapGetters
   } from "vuex"
   export default {
     components: {
@@ -45,16 +46,19 @@
   
     data() {
       return {
-        form: {
-          avatorUrl: this.$store.getters.userInfo.avatorUrl,
-          fullname: this.$store.getters.userInfo.fullname,
-          email: this.$store.getters.userInfo.email,
-          password: this.$store.getters.userInfo.password,
-          mobile: this.$store.getters.userInfo.mobile
-        }
+        // form: {
+        //   avatorUrl: this.$store.getters.userInfo.avatorUrl,
+        //   fullname: this.$store.getters.userInfo.fullname,
+        //   email: this.$store.getters.userInfo.email,
+        //   password: this.$store.getters.userInfo.password,
+        //   mobile: this.$store.getters.userInfo.mobile
+        // }
       }
     },
     computed: {
+      ...mapGetters({
+        form: "userInfo"
+      }),
       title: function() {
         return this.$route.meta.title;
       }
