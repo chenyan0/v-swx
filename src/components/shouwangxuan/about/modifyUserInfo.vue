@@ -13,21 +13,21 @@
       <div class="edit-info">
         <h1>基本信息</h1>
         <div class="form-group">
-          <input type="text" v-model="form.fullname" placeholder="Full Name">
+          <input type="text" v-model="form.fullname" placeholder="用户名">
         </div>
         <div class="form-group">
-          <input type="email" v-model="form.email" placeholder="Email">
+          <input type="email" v-model="form.email" placeholder="邮箱">
         </div>
       </div>
       <div class="edit-info private">
         <h1>私人信息</h1>
         <div class="form-group">
-          <input type="password" v-model="form.password" placeholder="Password">
+          <input type="password" v-model="form.password" placeholder="密码">
         </div>
         <div class="form-group">
-          <input type="number" v-model="form.mobile" placeholder="Mobile">
+          <input type="number" v-model="form.mobile" placeholder="手机号">
         </div>
-        <button @click="submit">Sure</button>
+        <button @click="submit">确定</button>
       </div>
      
     </div>
@@ -35,10 +35,8 @@
 
 <script>
   import Header from "@/components/template/header"
-  import {
-    mapActions,
-    mapGetters
-  } from "vuex"
+  import { Toast } from 'mint-ui'
+  import { mapActions,  mapGetters } from "vuex"
   export default {
     components: {
       Header
@@ -46,13 +44,6 @@
   
     data() {
       return {
-        // form: {
-        //   avatorUrl: this.$store.getters.userInfo.avatorUrl,
-        //   fullname: this.$store.getters.userInfo.fullname,
-        //   email: this.$store.getters.userInfo.email,
-        //   password: this.$store.getters.userInfo.password,
-        //   mobile: this.$store.getters.userInfo.mobile
-        // }
       }
     },
     computed: {
@@ -64,7 +55,7 @@
       }
     },
     methods: {
-      ...mapActions(["setUserInfo"]),
+      ...mapActions(["updateUserInfo"]),
       changeImage(e) {
         let file = e.target.files[0]
         this.file = file
@@ -77,29 +68,28 @@
       },
       submit() {
         const data = this.form
-        this.$axios.post("http://localhost:8000/api/register", data).then(res => {
-          if (!res.data.status) {
-            Toast({
-              message: res.data.message,
-              iconClass: "icon icon-error"
-            });
-          } else {
-            this.setUserInfo(data);
-            this.$router.replace("/login");
-          }
-        });
+        this.updateUserInfo(data).then(res =>{
+          Toast({
+            message: res.data.message,
+          });
+        }).catch(err => {
+          Toast({
+            message: err,
+            iconClass: "icon icon-error"
+          });
+        })
       }
     },
      beforeCreate(){
-    document.getElementsByTagName("body")[0].className = "bg-fff";
-  }
+        document.getElementsByTagName("body")[0].className = "bg-fff";
+      }
   };
 </script>
 
 <style lang="scss" scoped>
   @import "~@/styles/base";
   $colors : #118fff #246FE2 //按钮
-  #5f7c8b 
+  #5f7c8b //wenzi
   ;
   .wrapper {
     .edit-avatar {
@@ -127,6 +117,7 @@
           width: 100%;
           height: 100%;
           opacity: 0;
+          z-index: 100;
         }
       }
       .edit-trigger {
@@ -183,3 +174,6 @@
     }
   }
 </style>
+
+
+

@@ -16,14 +16,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
   export default {
     data() {
       return {}
     },
   
     methods: {
+      ...mapActions(["LogOut"]),
       signOut(){
-        this.$router.push('login')
+        this.$store.dispatch('LogOut').then(() => {
+          this.$router.push('login')
+        }).catch(()=>{
+
+        })
       }
     }
   };

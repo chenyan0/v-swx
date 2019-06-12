@@ -77,7 +77,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions([ "setToken,setLoadingState"]), //分发dispatch
+    ...mapActions([ "setLoadingState,LoginByUsername"]), //分发dispatch
     register() {
       this.$router.push("register");
     },
@@ -99,30 +99,25 @@ export default {
         fullname: this.fullname,
         password: this.password,
       };
-      this.$store.dispatch("setLoadingState", true); 
-        this.$axios.post("http://localhost:8000/api/login", data).then(res => {
-          if (!res.data.status) {
-            Toast({
+      this.$store.dispatch("LoginByUsername", data).then(() =>{
+          let redirect = decodeURIComponent(
+            this.$route.query.redirect || "/home"
+          );
+          this.$router.push({
+            path: redirect
+          });
+      }).catch((err)=>{
+        console.log(err)
+         Toast({
             message: "用户账号信息不匹配",
             iconClass: "icon icon-error"
           });
-            this.$store.dispatch("setLoadingState", false)
-          } else {
-            this.$store.dispatch("setToken", res.data.token)
-            let redirect = decodeURIComponent(
-              this.$route.query.redirect || "/home"
-            );
-            this.$router.push({
-              path: redirect
-            });
-          }
-        });
+      }); 
     }
   },
   created(){
- this.$store.dispatch("setLoadingState", false); 
+    this.$store.dispatch("setLoadingState", false); 
   },
-  mounted() {}
 };
 </script>
 <style lang="scss" scoped>

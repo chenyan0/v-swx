@@ -5,7 +5,7 @@ import App from './App'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import router from './router'
-import axios from 'axios'
+import axios from './api/request'
 import Vuelidate from 'vuelidate'
 import store from './store/index'
 import Vuex from 'vuex'
@@ -23,7 +23,6 @@ Vue.use(MintUI)
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

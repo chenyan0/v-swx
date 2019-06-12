@@ -33,29 +33,58 @@ Mock.mock(`${base}/customForm`, 'post', {
   status: 1,
   message: '提交成功'
 })
+const usermap = {
+  admin: {
+    token: 'admin',
+    introduction: '我是超级管理员',
+    fullname: 'admin',
+    pass: '123456',
+    roles: ['admin'],
+    status: 1
+  },
+  user: [{
+    token: 'user',
+    introduction: '我是用户',
+    fullname: 'user',
+    pass: '123456',
+    roles: ['/system', '/system/permit', '/system/permit/account']
+  }]
+
+}
 // =====================分割线=====================
 //  用户登录
 Mock.mock(`${base}/login`, 'post', (options) => {
   const { fullname, password } = JSON.parse(options.body)
-  console.log(fullname, password)
-  if (password === '123456' && fullname === 'admin') {
-    return {
-      code: 0,
-      status: 1,
-      token: 'dsadsadasffmoiniofew',
-      message: '登录成功'
+  if (fullname === 'admin') {
+    if (usermap[fullname].pass === password) {
+      console.log(usermap['admin'])
+      return usermap['admin']
     }
   } else {
-    return {
-      code: 0,
-      status: 1,
-      token: 'dsadsadasffmoiniofew',
-      message: '登录成功'
+    for (let elem of usermap['user'].values()) {
+      if (elem.fullname === fullname && elem.pass === password) {
+        return elem
+      }
     }
+  }
+})
+Mock.mock(`${base}/logout`, 'post', () => 'success')
+Mock.mock(`${base}/updateUserInfo`, 'post', (options) => {
+  return {
+    message: '修改成功'
   }
 })
 // 用户注册账户
 Mock.mock(`${base}/register`, 'post', (options) => {
+  const { fullname, password } = JSON.parse(options.body)
+  usermap['user'].push({
+    token: 'user',
+    introduction: '我是用户',
+    fullname: fullname,
+    pass: password,
+    roles: ['/system', '/system/permit', '/system/permit/account']
+  })
+  console.log(usermap)
   return {
     code: 0,
     status: 1,
