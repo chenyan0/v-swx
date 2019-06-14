@@ -38,6 +38,7 @@
   import {
     mapActions
   } from "vuex";
+  import { registerApi } from '@/api/login'
   export default {
     data() {
       return {
@@ -65,7 +66,7 @@
       },
       submit() {
         const data = this.form
-        this.$axios.post("http://localhost:8000/api/register", data).then(res => {
+        registerApi(data).then(res => {
           if (!res.data.status) {
             Toast({
               message: res.data.message,

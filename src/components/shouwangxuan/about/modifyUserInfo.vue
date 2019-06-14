@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-      <Header :title="title" :islogin="false" isBack/>
+      <Header :title="$route.meta.title" :islogin="false" isBack/>
       <div class="edit-avatar">
         <div class="avator">
           <input type="file" name="" id="" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
@@ -22,7 +22,7 @@
       <div class="edit-info private">
         <h1>私人信息</h1>
         <div class="form-group">
-          <input type="password" v-model="form.password" placeholder="密码">
+          <input type="password" v-model="form.pass" placeholder="密码">
         </div>
         <div class="form-group">
           <input type="number" v-model="form.mobile" placeholder="手机号">
@@ -50,9 +50,6 @@
       ...mapGetters({
         form: "userInfo"
       }),
-      title: function() {
-        return this.$route.meta.title;
-      }
     },
     methods: {
       ...mapActions(["updateUserInfo"]),

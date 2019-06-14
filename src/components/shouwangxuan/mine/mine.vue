@@ -130,7 +130,7 @@
           text: "Loading...",
           spinnerType: "fading-circle"
         });
-        const url = "http://localhost:8000/api/hotpost";
+        const url = "http://localhost:3000/post/hot";
         const self = this;
         this.$axios.post(url, {t: t})
           .then( res => {

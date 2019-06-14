@@ -82,7 +82,7 @@ export default {
       this.$refs.loadmore.onTopLoaded(id);
     },
     fetchData(page) {
-      const url = "http://localhost:8000/api/categories";
+      const url = "http://localhost:3000/post/categories";
       this.$axios
         .post(url, { pager: this.page })
         .then(

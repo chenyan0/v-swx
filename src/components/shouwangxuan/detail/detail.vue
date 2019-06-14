@@ -131,7 +131,7 @@ export default {
         spinnerType: "fading-circle"
       });
       this.$axios
-        .post("http://localhost:8000/api/article/detail", { id: this.$route.query.id })
+        .post("http://localhost:3000/post/detail", { id: this.$route.query.id })
         .then(res => {
           this.article = res.data.data;
           this.praiseSum = this.article.praise.length;

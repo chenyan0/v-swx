@@ -48,7 +48,7 @@
       <router-link
         class="link-to-another"
         tag="div"
-        :to="{path:'register'}"
+        :to="{path:'forgetPassword'}"
       >
         忘记密码 ?
       </router-link>
@@ -90,7 +90,6 @@ export default {
       if (!this.fullname || !this.password) {
         Toast({
           message: "请填写完整",
-          iconClass: "icon icon-error",
           position: "top"
         });
         return;
@@ -110,7 +109,7 @@ export default {
         console.log(err)
          Toast({
             message: "用户账号信息不匹配",
-            iconClass: "icon icon-error"
+            position: "top"
           });
       }); 
     }

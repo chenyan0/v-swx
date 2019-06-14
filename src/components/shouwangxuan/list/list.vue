@@ -66,7 +66,7 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:8000/api/post";
+      const url = "http://localhost:3000/post";
       const self = this;
       this.$axios
         .get(url)

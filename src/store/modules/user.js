@@ -18,6 +18,7 @@ const user = {
           sessionStorage.setItem('token', token)
           commit(types.SET_TOKEN, token)
           commit(types.SET_LOGIN_STATUS, true)
+          commit(types.SET_USER_INFO, res.data)
           resolve()
         }).catch(err => {
           reject(err)

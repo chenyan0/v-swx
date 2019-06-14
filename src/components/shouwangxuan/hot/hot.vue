@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="热门" isBack></Header>
+    <Header :title="$route.meta.title" isBack></Header>
     <div class="hot-container">
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">评论数</mt-tab-item>
@@ -55,7 +55,7 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:8000/api/hotpost";
+      const url = "http://localhost:3000/post/hot";
       const self = this;
         this.$axios
           .post(url,{t:t})
