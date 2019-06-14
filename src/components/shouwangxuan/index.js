@@ -1,6 +1,7 @@
 import Home from './home'
 import Login from './user/login'
 import Register from './user/register'
+import ForgetPassword from './user/forgetPassword'
 import Header from '../template/header'
 import List from './list/list'
 import Hot from './hot/hot'
@@ -26,6 +27,15 @@ export default [
     component: Register,
     meta: {
       title: '注册',
+      index: 1
+    }
+  },
+  {
+    path: '/forgetPassword',
+    name: 'forgetPassword',
+    component: ForgetPassword,
+    meta: {
+      title: '找回密码',
       index: 1
     }
   },
