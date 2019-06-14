@@ -1,5 +1,4 @@
 
-// var Mock = require('../api/mock')
 // import Mock from 'mockjs'
 // import {categories} from './mock'
 var express = require('express')

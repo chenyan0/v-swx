@@ -36,7 +36,6 @@ Mock.mock(`${base}/customForm`, 'post', {
 const usermap = {
   admin: {
     token: 'admin',
-    introduction: '我是超级管理员',
     fullname: 'admin',
     pass: '123456',
     roles: ['admin'],
@@ -44,12 +43,10 @@ const usermap = {
   },
   user: [{
     token: 'user',
-    introduction: '我是用户',
     fullname: 'user',
     pass: '123456',
     roles: ['/system', '/system/permit', '/system/permit/account']
   }]
-
 }
 // =====================分割线=====================
 //  用户登录
@@ -84,7 +81,6 @@ Mock.mock(`${base}/register`, 'post', (options) => {
     pass: password,
     roles: ['/system', '/system/permit', '/system/permit/account']
   })
-  console.log(usermap)
   return {
     code: 0,
     status: 1,

@@ -1,10 +1,13 @@
 import axios from 'axios'
 export function loginByUsernameApi (data) {
-  return axios.post('http://localhost:8000/api/login', data)
+  return axios.post('http://localhost:3000/user/login', data)
 }
 export function logoutApi () {
-  return axios.post('http://localhost:8000/api/logout')
+  return axios.post('http://localhost:3000/user/logout')
 }
 export function updateUserInfoApi (data) {
-  return axios.post('http://localhost:8000/api/updateUserInfo', data)
+  return axios.post('http://localhost:3000/user/updateUserInfo', data)
+}
+export function registerApi (data) {
+  return axios.post('http://localhost:3000/user/register', data)
 }

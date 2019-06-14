@@ -70,10 +70,10 @@ const articleDetail = {
     'content': () => Random.cparagraph(1, 5),
     'reply|0-2': [
       {
-        'responder': '傲娇的',
-        'reviewers': '有毒的黄同学',
-        'time': '2016-09-05',
-        'content': '你说得对你说得对你说得对你说得对你说得对'
+        'responder': Random.cname(),
+        'reviewers': Random.cname(),
+        'time': Random.date(),
+        'content': Random.paragraph()
       }
     ]
   }],

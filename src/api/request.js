@@ -16,10 +16,8 @@ axios.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 axios.interceptors.response.use(response => {
-  console.log(response)
   return response
 }, error => {
-  console.error(error.response.data)
   // 获取状态码
   const {status} = error.response
   if (status === 401) {
