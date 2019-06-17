@@ -1,5 +1,6 @@
-var express = require('express')
-var router = express.Router()
+import api from '../api'
+import express from 'express'
+const router = express.Router()
 const usermap = {
   admin: {
     token: 'admin',
@@ -16,7 +17,7 @@ const usermap = {
   }]
 }
 /* GET users listing. */
-router.post('/login', function (req, res, next) {
+router.post('/login', function (req, res) {
   console.log(req.body)
   const {fullname, password} = req.body
   console.log(fullname, password)
@@ -33,27 +34,28 @@ router.post('/login', function (req, res, next) {
     })
   }
 })
-router.post('/logout', function (req, res, next) {
+router.post('/logout', function (req, res) {
   res.send('success')
 })
-router.post('/updateUserInfo', function (req, res, next) {
+router.post('/updateUserInfo', function (req, res) {
   res.json({
     message: '修改成功'
   })
 })
-router.post('/register', function (req, res, next) {
+router.post('/register', function (req) {
   const { fullname, password } = JSON.parse(req)
-  usermap['user'].push({
-    token: 'user',
-    introduction: '我是用户',
-    fullname: fullname,
-    pass: password,
-    roles: ['/system', '/system/permit', '/system/permit/account']
-  })
-  res.json({
-    code: 0,
-    status: 1,
-    message: '注册成功'
-  })
+  api.insertValue(fullname, password)
+  // usermap['user'].push({
+  //   token: 'user',
+  //   introduction: '我是用户',
+  //   fullname: fullname,
+  //   pass: password,
+  //   roles: ['/system', '/system/permit', '/system/permit/account']
+  // })
+  // res.json({
+  //   code: 0,
+  //   status: 1,
+  //   message: '注册成功'
+  // })
 })
 module.exports = router
