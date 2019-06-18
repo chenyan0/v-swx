@@ -1,54 +1,74 @@
-import mysql from 'mysql'
-import dbConfig from './db'
-import sqlMap from './sqlMap'
+const mysql = require('mysql')
+const dbConfig = require('./db')
+const sqlMap = require('./sqlMap')
 
 const pool = mysql.createPool({
-  host: dbConfig.mysql.host,
-  user: dbConfig.mysql.user,
-  password: dbConfig.mysql.password,
-  database: dbConfig.mysql.database,
-  port: dbConfig.mysql.port,
+  host: dbConfig.host,
+  user: dbConfig.user,
+  password: dbConfig.password,
+  database: dbConfig.database,
+  port: dbConfig.port,
   multipleStatements: true
 })
-const insertValue = function (req, res, next) {
-  pool.getConnection((_err, connection) => {
-    const sql = sqlMap.insertValue
-    connection.query(sql, (_err, result) => {
-      console.log(result)
-      res.json(result)
-      connection.release()
-    })
-  })
-}
-const getValue = function (req, res, next) {
-  const {id} = req.query
-  pool.getConnection((_err, connection) => {
-    const sql = sqlMap.getValue
-    connection.query(sql, [id], (_err, result) => {
-      console.log(result)
-      connection.release()
-    })
-  })
-}
-const updateValue = function (req, res, next) {
-  const {id, name} = req.body
-  pool.getConnection((_err, connection) => {
-    const sql = mysql.updateValue
-    connection.query(sql, [name, id], (_err, result) => {
-      console.log(result)
-      connection.release()
-    })
-  })
-}
-const delValue = function (req, res, next) {
-  const {id} = req.body
-  pool.getConnection((_err, connection) => {
-    const sql = sqlMap.delValue
-    connection.query(sql, [id], (_err, result) => {
-      console.log(result)
-      connection.release()
-    })
-  })
-}
 
-export default { insertValue, getValue, updateValue, delValue }
+module.exports = {
+  insertValue: function (req, res) {
+    const { fullname, password } = req.body
+    pool.getConnection((_err, connection) => {
+      const sql = sqlMap.insertValue
+      if (_err) {
+        console.log(_err)
+      }
+      connection.query(sql, [fullname, password], (_err, result) => {
+        if (_err) {
+          console.log(_err)
+        }
+        if (result) {
+          res.json({status: 1})
+        }
+        connection.release()
+      })
+    })
+  },
+  getValue: function (req, res) {
+    const { fullname, password } = req.body
+    pool.getConnection((_err, connection) => {
+      const sql = sqlMap.getValue
+      if (_err) {
+        console.log(_err)
+      }
+      connection.query(sql, [fullname, password], (_err, result) => {
+        console.log(result)
+        if (_err) {
+          console.log(_err)
+        }
+        if (result[0] === undefined) {
+          res.json({status: 0, message: '用户账号信息不匹配'})
+        } else {
+          res.json({status: 1})
+        }
+        connection.release()
+      })
+    })
+  },
+  updateValue: function (req, res, next) {
+    const { id, name } = req.body
+    pool.getConnection((_err, connection) => {
+      const sql = mysql.updateValue
+      connection.query(sql, [name, id], (_err, result) => {
+        console.log(result)
+        connection.release()
+      })
+    })
+  },
+  delValue: function (req, res, next) {
+    const { id } = req.body
+    pool.getConnection((_err, connection) => {
+      const sql = sqlMap.delValue
+      connection.query(sql, [id], (_err, result) => {
+        console.log(result)
+        connection.release()
+      })
+    })
+  }
+}

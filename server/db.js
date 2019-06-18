@@ -5,4 +5,4 @@ const mysql = {
   database: 'yanxuan',
   port: '3306'
 }
-export default mysql
+module.exports = mysql

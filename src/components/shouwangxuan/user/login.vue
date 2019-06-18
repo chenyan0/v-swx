@@ -98,19 +98,23 @@ export default {
         fullname: this.fullname,
         password: this.password,
       };
-      this.$store.dispatch("LoginByUsername", data).then(() =>{
-          let redirect = decodeURIComponent(
-            this.$route.query.redirect || "/home"
-          );
-          this.$router.push({
-            path: redirect
-          });
+      this.$store.dispatch("LoginByUsername", data).then(res => {
+        console.log(res)
+        if(res.data.status){
+            let redirect = decodeURIComponent(
+              this.$route.query.redirect || "/home"
+            );
+            this.$router.push({
+              path: redirect
+            });
+          }else{
+            Toast({
+              message: res.data.message,
+              position: "top"
+            });
+          }
       }).catch((err)=>{
         console.log(err)
-         Toast({
-            message: "用户账号信息不匹配",
-            position: "top"
-          });
       }); 
     }
   },

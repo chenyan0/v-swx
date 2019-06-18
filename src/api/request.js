@@ -15,20 +15,20 @@ axios.interceptors.request.use(config => {
   // 对请求错误做些什么
   return Promise.reject(error)
 })
-axios.interceptors.response.use(response => {
-  return response
-}, error => {
-  // 获取状态码
-  const {status} = error.response
-  if (status === 401) {
-    console.error('token失效,请重新登录')
-    // 清除token
-    localStorage.removeItem('token')
-    // 重新登录
-    router.push('/login')
-  }
+// axios.interceptors.response.use(response => {
+//   return response
+// }, error => {
+//   // 获取状态码
+//   const {status} = error.response
+//   if (status === 401) {
+//     console.error('token失效,请重新登录')
+//     // 清除token
+//     localStorage.removeItem('token')
+//     // 重新登录
+//     router.push('/login')
+//   }
 
-  return Promise.reject(error)
-})
+//   return Promise.reject(error)
+// })
 
 export default axios

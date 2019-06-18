@@ -19,7 +19,7 @@ const user = {
           commit(types.SET_TOKEN, token)
           commit(types.SET_LOGIN_STATUS, true)
           commit(types.SET_USER_INFO, res.data)
-          resolve()
+          resolve(res)
         }).catch(err => {
           reject(err)
         })
@@ -27,9 +27,9 @@ const user = {
     },
     LogOut ({commit, state}) {
       return new Promise((resolve, reject) => {
-        logoutApi(state.token).then(() => {
+        logoutApi(state.token).then((res) => {
           commit(types.SET_TOKEN, '')
-          resolve()
+          resolve(res)
         })
       })
     },
