@@ -1,7 +1,7 @@
 const mysql = require('mysql')
 const dbConfig = require('./db')
 const sqlMap = require('./sqlMap')
-
+const uuid = require('node-uuid')
 const pool = mysql.createPool({
   host: dbConfig.host,
   user: dbConfig.user,
@@ -13,13 +13,16 @@ const pool = mysql.createPool({
 
 module.exports = {
   insertValue: function (req, res) {
-    const { fullname, password } = req.body
+    const v = Object.values(req.body)
+    const id = uuid.v1().replace(/\-/g, '')
+    const query = [id].concat(v)
+    console.log(query)
     pool.getConnection((_err, connection) => {
       const sql = sqlMap.insertValue
       if (_err) {
         console.log(_err)
       }
-      connection.query(sql, [fullname, password], (_err, result) => {
+      connection.query(sql, query, (_err, result) => {
         if (_err) {
           console.log(_err)
         }
@@ -37,15 +40,19 @@ module.exports = {
       if (_err) {
         console.log(_err)
       }
-      connection.query(sql, [fullname, password], (_err, result) => {
-        console.log(result)
+      connection.query(sql, [fullname], (_err, result) => {
+        console.log(result[0])
         if (_err) {
           console.log(_err)
         }
         if (result[0] === undefined) {
-          res.json({status: 0, message: '用户账号信息不匹配'})
+          res.json({status: 0, message: '用户不存在'})
         } else {
-          res.json({status: 1})
+          if (result[0].password !== password) {
+            res.json({status: 0, message: '用户账号信息不匹配'})
+          } else {
+            res.json({status: 1, data: result[0]})
+          }
         }
         connection.release()
       })

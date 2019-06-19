@@ -1,21 +1,7 @@
 const API = require('../api')
 const express = require('express')
 const router = express.Router()
-const usermap = {
-  admin: {
-    token: 'admin',
-    fullname: 'admin',
-    pass: '123456',
-    roles: ['admin'],
-    status: 1
-  },
-  user: [{
-    token: 'user',
-    fullname: 'user',
-    pass: '123456',
-    roles: ['/system', '/system/permit', '/system/permit/account']
-  }]
-}
+
 /* GET users listing. */
 router.post('/login', (req, res) => {
   API.getValue(req, res)
