@@ -43,10 +43,10 @@
     data() {
       return {
         form: {
-          avatorUrl: "",
           fullname: "",
-          email: "",
           password: "",
+          avatorUrl: "",
+          email: "",
           mobile: ""
         }
       }
