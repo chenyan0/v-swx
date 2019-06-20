@@ -2,12 +2,12 @@
   <div class="wrapper">
     <div class="edit-avatar">
       <div class="avator">
-        <input type="file" name="" id="" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
+        <input type="file" name="" id="" ref="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
         <img :src="form.avatorUrl" alt="">
       </div>
       <span class="edit-trigger">
-           <font-awesome-icon :icon="['fas', 'edit']" />
-        </span>
+             <font-awesome-icon :icon="['fas', 'edit']" />
+          </span>
     </div>
     <div class="edit-info">
       <h1>基本信息</h1>
@@ -35,17 +35,19 @@
 </template>
 
 <script>
+import {Toast} from 'mint-ui'
   import {
     mapActions
   } from "vuex";
-  import { registerApi } from '@/api/login'
+  import {
+    registerApi,uploadApi
+  } from '@/api/login'
   export default {
     data() {
       return {
         form: {
           fullname: "",
           password: "",
-          avatorUrl: "",
           email: "",
           mobile: ""
         }
@@ -54,15 +56,16 @@
     methods: {
       ...mapActions(["setUserInfo"]),
       changeImage(e) {
-        let file = e.target.files[0]
-        let reader = new FileReader()
-        this.file = file
-        // 将图片将转成 base64 格式  
-        reader.readAsDataURL(file)
-        let that=this
-        reader.onload = function(e) {
-          that.form.avatorUrl = this.result;
-        }
+        let obj = new FormData(this.form)
+        obj.append('file', e.target.files[0])
+        uploadApi(obj).then(res => {
+          if (!res.data.status) {
+            Toast({
+              message: res.data.message,
+              iconClass: "icon icon-error"
+            });
+          } else {}
+        });
       },
       submit() {
         const data = this.form
@@ -87,7 +90,7 @@
 
 <style lang="scss" scoped>
   @import "../../../styles/base";
-  $colors : #118fff #246FE2 //按钮
+  $colors: #118fff #246FE2 //按钮
   #5f7c8b //wenzi
   ;
   .wrapper {
