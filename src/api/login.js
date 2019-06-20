@@ -11,3 +11,6 @@ export function updateUserInfoApi (data) {
 export function registerApi (data) {
   return axios.post('http://localhost:3000/user/register', data)
 }
+export function uploadApi (data) {
+  return axios.post('http://localhost:3000/user/upload', data, {headers: {'Content-Type': false, 'Process-Data': false}})
+}
