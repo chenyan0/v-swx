@@ -1,5 +1,5 @@
 const sqlMap = {
-  insertValue: 'INSERT INTO test(id,name,password,email,mobile) VALUES (?,?,?,?,?)',
+  insertValue: 'INSERT INTO test(id,name,password,email,mobile,avator) VALUES (?,?,?,?,?,?)',
   getValue: 'SELECT * FROM test WHERE name = ?',
   updateValue: 'UPDATE test SET name = ? WHERE id = ?',
   delValue: 'DELETE FROM test WHERE id = ?'

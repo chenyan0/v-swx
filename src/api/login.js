@@ -9,8 +9,10 @@ export function updateUserInfoApi (data) {
   return axios.post('http://localhost:3000/user/updateUserInfo', data)
 }
 export function registerApi (data) {
-  return axios.post('http://localhost:3000/user/register', data)
+  const headerConfig = {headers: { 'Content-Type': 'multipart/form-data' }}
+  return axios.post('http://localhost:3000/user/register', data, headerConfig)
 }
 export function uploadApi (data) {
-  return axios.post('http://localhost:3000/user/upload', data, {headers: {'Content-Type': false, 'Process-Data': false}})
+  const headerConfig = {headers: { 'Content-Type': 'multipart/form-data' }}
+  return axios.post('http://localhost:3000/user/upload', data, headerConfig)
 }

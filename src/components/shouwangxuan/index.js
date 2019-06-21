@@ -9,10 +9,6 @@ import Detail from './detail/detail'
 import ModifyUserInfo from './about/modifyUserInfo'
 export default [
   {
-    path: '/',
-    redirect: 'login'
-  },
-  {
     path: '/login',
     name: 'login',
     component: Login,

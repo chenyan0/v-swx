@@ -13,9 +13,9 @@ const pool = mysql.createPool({
 
 module.exports = {
   insertValue: function (req, res) {
-    const v = Object.values(req.body)
+    console.log(req)
     const id = uuid.v1().replace(/\-/g, '')
-    const query = [id].concat(v)
+    const query = [id].concat(req)
     console.log(query)
     pool.getConnection((_err, connection) => {
       const sql = sqlMap.insertValue

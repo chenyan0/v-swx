@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="edit-avatar">
       <div class="avator">
-        <input type="file" name="" id="" ref="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
-        <img :src="form.avatorUrl" alt="">
+        <input type="file"  name="avator" id="" ref="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
+        <img :src="form.avator" alt="">
       </div>
       <span class="edit-trigger">
              <font-awesome-icon :icon="['fas', 'edit']" />
@@ -46,6 +46,7 @@ import {Toast} from 'mint-ui'
     data() {
       return {
         form: {
+          avator:"",
           fullname: "",
           password: "",
           email: "",
@@ -56,20 +57,29 @@ import {Toast} from 'mint-ui'
     methods: {
       ...mapActions(["setUserInfo"]),
       changeImage(e) {
-        let obj = new FormData(this.form)
-        obj.append('file', e.target.files[0])
-        uploadApi(obj).then(res => {
-          if (!res.data.status) {
-            Toast({
-              message: res.data.message,
-              iconClass: "icon icon-error"
-            });
-          } else {}
-        });
+      //   let obj = new FormData()
+      //   obj.append('avatar', e.target.files[0])
+      //   uploadApi(obj).then(res => {
+      //     console.log(res)
+      //     if (!res.data.status) {
+      //       Toast({
+      //         message: res.data.message,
+      //         iconClass: "icon icon-error"
+      //       });
+      //     } else {
+      //       this.avatorUrl=res.data.url
+      //     }
+      //   });
       },
       submit() {
         const data = this.form
-        registerApi(data).then(res => {
+        let obj = new FormData(this.form)
+        obj.append("avator",this.$refs.file.files[0])
+        obj.append("fullname",this.form.fullname)
+        obj.append("password",this.form.password)
+        obj.append("email",this.form.email)
+        obj.append("mobile",this.form.mobile)
+        registerApi(obj).then(res => {
           if (!res.data.status) {
             Toast({
               message: res.data.message,
