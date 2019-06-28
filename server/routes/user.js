@@ -1,7 +1,6 @@
 const API = require('../api')
 const express = require('express')
 const multer = require('multer')
-const formidable = require('formidable')
 const router = express.Router()
 
 /* GET users listing. */
@@ -16,7 +15,10 @@ router.post('/updateUserInfo', function (req, res) {
     message: '修改成功'
   })
 })
-var datatime = 'server/upload'
+router.post('/getUserInfo', function (req, res) {
+  API.getUserInfo(req, res)
+})
+var datatime = 'upload'
 var storage = multer.diskStorage({
   destination: datatime,
   filename (req, file, cb) {
@@ -37,9 +39,7 @@ router.post('/upload', upload.single('avatar'), function (req, res) {
   })
 })
 router.post('/register', upload.single('avator'), (req, res) => {
-  const data = Object.values(req.body)
-  const { path } = req.file
-  data.push(path)
-  API.insertValue(data, res)
+  req.body.path = req.file.path
+  API.insertValue(req, res)
 })
 module.exports = router

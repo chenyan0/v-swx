@@ -2,6 +2,8 @@ const mysql = require('mysql')
 const dbConfig = require('./db')
 const sqlMap = require('./sqlMap')
 const uuid = require('node-uuid')
+const jwt = require('jsonwebtoken')
+const md5 = require('md5')
 const pool = mysql.createPool({
   host: dbConfig.host,
   user: dbConfig.user,
@@ -13,21 +15,19 @@ const pool = mysql.createPool({
 
 module.exports = {
   insertValue: function (req, res) {
-    console.log(req)
     const id = uuid.v1().replace(/\-/g, '')
-    const query = [id].concat(req)
-    console.log(query)
+    const { fullname, password, path, email, mobile } = req.body
     pool.getConnection((_err, connection) => {
       const sql = sqlMap.insertValue
       if (_err) {
         console.log(_err)
       }
-      connection.query(sql, query, (_err, result) => {
+      connection.query(sql, [id, fullname, md5(password), email, mobile, path], (_err, result) => {
         if (_err) {
           console.log(_err)
         }
         if (result) {
-          res.json({status: 1})
+          res.json({message: '注册成功', status: 1})
         }
         connection.release()
       })
@@ -40,19 +40,24 @@ module.exports = {
       if (_err) {
         console.log(_err)
       }
-      connection.query(sql, [fullname], (_err, result) => {
-        console.log(result[0])
+      connection.query(sql, fullname, (_err, result) => {
         if (_err) {
           console.log(_err)
         }
-        if (result[0] === undefined) {
-          res.json({status: 0, message: '用户不存在'})
-        } else {
-          if (result[0].password !== password) {
+        if (result.length !== 0) {
+          let content = {name: fullname} // 要生成token的主题信息
+          let secretOrPrivateKey = 'jwt' // 这是加密的key（密钥）
+          let token = jwt.sign(content, secretOrPrivateKey, {
+            expiresIn: 60 * 60 * 1 // 1小时过期
+          })
+          result[0].token = token // token写入数据库
+          if (result[0].password !== md5(password)) {
             res.json({status: 0, message: '用户账号信息不匹配'})
-          } else {
-            res.json({status: 1, data: result[0]})
+            return false
           }
+          res.json({status: 1, mesaage: '登陆成功', data: {token: token, fullname: fullname, id: result[0].id}})
+        } else {
+          res.json({status: 0, message: '用户不存在'})
         }
         connection.release()
       })
@@ -77,5 +82,18 @@ module.exports = {
         connection.release()
       })
     })
+  },
+  getUserInfo: function (req, res, next) {
+    pool.getConnection((_err, connection) => {
+      const sql = sqlMap.getUserInfo
+      if (_err) {
+        console.log(_err)
+      }
+      connection.query(sql, req.body.id, (_err, result) => {
+        console.log(req.body, result)
+        res.json(result[0])
+      })
+    })
   }
+
 }
