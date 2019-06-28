@@ -14,11 +14,14 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByUsernameApi(res).then(res => {
           console.log(res)
-          const { token } = res.data
-          sessionStorage.setItem('token', token)
-          commit(types.SET_TOKEN, token)
-          commit(types.SET_LOGIN_STATUS, true)
-          commit(types.SET_USER_INFO, res.data)
+          if (res.data.status) {
+            const { token, name } = res.data.data
+            localStorage.setItem('token', token)
+            localStorage.setItem('name', name)
+            commit(types.SET_TOKEN, token)
+            commit(types.SET_LOGIN_STATUS, true)
+            commit(types.SET_USER_INFO, res.data.data)
+          }
           resolve(res)
         }).catch(err => {
           reject(err)

@@ -5,6 +5,9 @@ export function loginByUsernameApi (data) {
 export function logoutApi () {
   return axios.post('http://localhost:3000/user/logout')
 }
+export function getUserInfoApi (id) {
+  return axios.post('http://localhost:3000/user/getUserInfo', id)
+}
 export function updateUserInfoApi (data) {
   return axios.post('http://localhost:3000/user/updateUserInfo', data)
 }
