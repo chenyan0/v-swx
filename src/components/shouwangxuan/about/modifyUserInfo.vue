@@ -4,7 +4,7 @@
       <div class="edit-avatar">
         <div class="avator">
           <input type="file" name="" id="" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
-          <img :src="form.avatorUrl" alt="">
+          <img :src="utils.BASEURL + info.avator" alt="">
         </div>
         <span class="edit-trigger">
            <font-awesome-icon :icon="['fas', 'edit']" />
@@ -13,37 +13,44 @@
       <div class="edit-info">
         <h1>基本信息</h1>
         <div class="form-group">
-          <input type="text" v-model="form.fullname" placeholder="用户名">
+          <input type="text" v-model="info.fullname" placeholder="用户名">
         </div>
         <div class="form-group">
-          <input type="email" v-model="form.email" placeholder="邮箱">
+          <input type="email" v-model="info.email" placeholder="邮箱">
         </div>
-      </div>
-      <div class="edit-info private">
-        <h1>私人信息</h1>
-        <div class="form-group">
-          <input type="password" v-model="form.pass" placeholder="密码">
+         <div class="form-group">
+          <input type="number" v-model="info.mobile" placeholder="手机号">
         </div>
         <div class="form-group">
-          <input type="number" v-model="form.mobile" placeholder="手机号">
+          <input type="number" v-model="info.pass" placeholder="旧密码">
+        </div>
+        <div class="form-group">
+          <input type="number" v-model="info.repeatpass" placeholder="新密码">
         </div>
         <button @click="submit">确定</button>
       </div>
+      
+        
+       
      
     </div>
 </template>
 
 <script>
-  import Header from "@/components/template/header"
   import { Toast } from 'mint-ui'
   import { mapActions,  mapGetters } from "vuex"
+  import { getUserInfoApi} from '@/api/login'
+  import utils from '@/utils/config'
+  import Header from "@/components/template/header"
   export default {
     components: {
       Header
     },
-  
     data() {
       return {
+    utils,
+
+        info:{},
       }
     },
     computed: {
@@ -52,7 +59,7 @@
       }),
     },
     methods: {
-      ...mapActions(["updateUserInfo"]),
+      ...mapActions(["getUserInfoApi"]),   
       changeImage(e) {
         let file = e.target.files[0]
         this.file = file
@@ -77,7 +84,18 @@
         })
       }
     },
+    mounted(){
+        getUserInfoApi({id:this.form.id}).then((res)=>{
+          console.log(this.form)
+           console.log(res)
+           if(res.status=='200'){
+             this.info = Object.assign({},this.info,res.data)
+           }
+         }).catch(()=>{
+      })
+    },
      beforeCreate(){
+       
         document.getElementsByTagName("body")[0].className = "bg-fff";
       }
   };

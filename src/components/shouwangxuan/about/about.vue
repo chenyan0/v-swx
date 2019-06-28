@@ -5,6 +5,22 @@
         <span>修改个人资料</span>
         <font-awesome-icon icon="chevron-right" />
       </router-link>
+         <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>修改密码</span>
+        <font-awesome-icon icon="chevron-right" />
+      </router-link>
+         <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>我的足迹</span>
+        <font-awesome-icon icon="chevron-right" />
+      </router-link>
+        <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>订阅的专题</span>
+        <font-awesome-icon icon="chevron-right" />
+      </router-link>
+         <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>意见反馈</span>
+        <font-awesome-icon icon="chevron-right" />
+      </router-link>
     </div>
     <div class="sign-out">
       <button
