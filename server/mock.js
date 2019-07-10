@@ -10,9 +10,9 @@ const DATA = {
     'status': 'publish',
     'post_title': () => Random.ctitle(),
     'post_thumbnail_image|1': [
-      '@image(100x75, #4C2329, #fff, Mock.js)',
-      '@image(100x75, #FAE7D8, #6C6C6C, @Syntax)',
-      '@image(100x75, #F2B287, #fff, Pro.web)'
+      '@image(100x75, #4C2329, #fff, 言轩)',
+      '@image(100x75,#b7b7ea, #6C6C6C, 言轩)',
+      '@image(100x75, #F2B287, #fff, 言轩)'
     ],
     'total_comments|1-100': 1,
     'category_name': () => Random.ctitle(),
@@ -40,9 +40,9 @@ const DATA = {
     'status': () => 'publish',
     'post_title': () => Random.ctitle(),
     'post_thumbnail_image|1': [
-      '@image(100x75, #4C2329, #fff, Mock.js)',
-      '@image(100x75, #FAE7D8, #6C6C6C, @Syntax)',
-      '@image(100x75, #F2B287, #fff, Pro.web)'
+      '@image(100x75, #4C2329, #fff, 言轩)',
+      '@image(100x75, #FAE7D8, #6C6C6C, 言轩)',
+      '@image(100x75, #F2B287, #fff, 言轩)'
     ],
     'post_content': () => `<div id="newsDetailContent" class="detail-content-content"><p class=" first-p"><span class="bjh-p">今天凌晨苹果举办的WWDC19开发者大会上，我们见到了iOS 13、iPadOS、macOS 10.15、watchOS 6等新系统版本，其中iOS 13终于解决了以往了解音量遮挡页面的败笔。</span></p><div class="img-container"><img src="https://t12.baidu.com/it/u=3044151248,3218909247&amp;fm=173&amp;app=49&amp;f=JPEG?w=640&amp;h=320&amp;s=61F2A36715E2BB0102B54D8603007092&amp;access=215967317" data-save="true" class="original" style="max-width:100%;text-align:center"></div><p class=""><span class="bjh-p">在最新的iOS 13中，当我们调节音量的时候，不会再像之前在页面的最中间区域显示，而是该到了屏幕的左上角，这主要是因为音量调节的物理按键也在机身的左侧。此外，之前音量调剂的UI为方块形，而最新的iOS 13改为了圆角矩形。</span></p><p class=""><span class="bjh-p">之前iOS的音量调节区域确实十分影响用户的使用，比如当我们看视频的时候调节音量，就会明显感觉到遮挡画面，而采用全新的设计后，我们的画面再也不会被音量调节遮挡。</span></p><p class=""><span class="bjh-p">此外，iOS 13的音量调节区域也可以通过手指拖动来调节，比如我们可以在唤出音量调节区域后，通过手指的滑动精准的调节自己需要的音量大小。</span></p></div>
   `,
@@ -67,13 +67,13 @@ const DATA = {
       ],
       'time': () => Random.date('yyyy-mm-dd'),
       'name': () => Random.cname(),
-      'content': () => Random.cparagraph(1, 5),
+      'content': () => Random.ctitle(10, 18),
       'reply|0-2': [
         {
           'responder': Random.cname(),
           'reviewers': Random.cname(),
           'time': Random.date(),
-          'content': Random.paragraph()
+          'content': Random.ctitle(10, 18)
         }
       ]
     }],

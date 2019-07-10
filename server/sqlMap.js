@@ -1,8 +1,10 @@
 const sqlMap = {
-  insertValue: 'INSERT INTO test(id,fullname,password,email,mobile,avator) VALUES (?,?,?,?,?,?)',
-  getValue: 'SELECT * FROM test WHERE fullname = ?',
-  updateValue: 'UPDATE test SET fullname = ? WHERE id = ?',
+  addUser: 'INSERT INTO test(id,fullname,password,email,mobile,avator) VALUES (?,?,?,?,?,?)',
+  getUserByName: 'SELECT * FROM test WHERE fullname = ?',
+  updateUserBaseInfo: 'UPDATE test SET fullname = ?,email = ?, mobile = ?,avator = ? WHERE id = ?',
   delValue: 'DELETE FROM test WHERE id = ?',
-  getUserInfo: 'SELECT * FROM test WHERE id = ?'
+  getUserinfoById: 'SELECT * FROM test WHERE id = ?',
+  updateUserPass: 'update test SET password = ? WHERE id = ?'
+
 }
 module.exports = sqlMap
