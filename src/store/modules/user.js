@@ -1,23 +1,22 @@
 import * as types from '../constants/types'
-import {loginByUsernameApi, logoutApi, updateUserInfoApi} from '@/api/login'
+import {loginByUsernameApi, logoutApi, updateUserInfoApi, updateUserPassApi} from '@/api/login'
 
 const user = {
   state: {
-    token: sessionStorage.getItem('token') ? sessionStorage.getItem('token') : '',
+    token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
     // 用户登录状态
     loginStatus: false,
     // 用户登录信息
-    userInfo: sessionStorage.getItem('userInfo') ? JSON.parse(sessionStorage.getItem('userInfo')) : {}
+    userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {}
   },
   actions: {
     LoginByUsername ({commit}, res) {
       return new Promise((resolve, reject) => {
         loginByUsernameApi(res).then(res => {
           console.log(res)
-          if (res.data.status) {
-            const { token, name } = res.data.data
+          if (res.status === 200) {
+            const { token } = res.data.data
             localStorage.setItem('token', token)
-            localStorage.setItem('name', name)
             commit(types.SET_TOKEN, token)
             commit(types.SET_LOGIN_STATUS, true)
             commit(types.SET_USER_INFO, res.data.data)
@@ -49,15 +48,22 @@ const user = {
       sessionStorage.setItem('userInfo', JSON.stringify(res))
       commit(types.SET_USER_INFO, res)
     },
-
     updateUserInfo ({ commit }, res) {
       return new Promise((resolve, reject) => {
         updateUserInfoApi(res).then(data => {
-          console.log(res)
           sessionStorage.setItem('userInfo', JSON.stringify(res))
           commit(types.UPDATE_USER_INFO, res)
           resolve(data)
         }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    updateUserPass ({commit}, res) {
+      return new Promise((resolve, reject) => {
+        updateUserPassApi(res).then(data => {
+          resolve(data)
+        }).catch((err) => {
           reject(err)
         })
       })
