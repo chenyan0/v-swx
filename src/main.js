@@ -9,7 +9,6 @@ import axios from './api/request'
 import Vuelidate from 'vuelidate'
 import store from './store/index'
 import Vuex from 'vuex'
-import MyPlugins from './components/common/index'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
@@ -17,7 +16,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(fas)
 library.add(far)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.use(MyPlugins)
 Vue.use(Vuex)
 Vue.use(MintUI)
 Vue.use(Vuelidate)
