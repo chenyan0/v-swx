@@ -59,10 +59,8 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { Toast } from "mint-ui";
-import VLoad from "@/components/common/loading";
 export default {
   components: {
-    VLoad
   },
   data() {
     return {
@@ -100,7 +98,7 @@ export default {
       };
       this.$store.dispatch("LoginByUsername", data).then(res => {
         console.log(res)
-        if(res.data.status){
+        if(res.data.code){
             let redirect = decodeURIComponent(
               this.$route.query.redirect || "/home"
             );
@@ -127,7 +125,7 @@ export default {
 @import "../../../styles/base";
 $colors:
   #118fff
-  #246FE2   //按钮
+  #5787d0   //按钮
   #5f7c8b  //wenzi
   ;
 

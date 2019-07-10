@@ -6,7 +6,8 @@ import Header from '../template/header'
 import List from './list/list'
 import Hot from './hot/hot'
 import Detail from './detail/detail'
-import ModifyUserInfo from './about/modifyUserInfo'
+import ModifyUserInfo from './mine/modifyUserInfo'
+import ModifyPass from './mine/modifyPass'
 export default [
   {
     path: '/',
@@ -90,6 +91,14 @@ export default [
     component: ModifyUserInfo,
     meta: {
       title: '修改个人资料'
+    }
+  },
+  {
+    path: '/modifyPass',
+    name: 'modifyPass',
+    component: ModifyPass,
+    meta: {
+      title: '修改密码'
     }
   }
 ]

@@ -51,10 +51,10 @@ export default {
     display: flex;
     align-items: center;
       justify-content: space-between;
-    background:#246FE2;
+    background:#5787d0;
     line-height: 40px;
     color: #fff;
-    position: fixed;
+    // position: fixed;
     top: 0;
     z-index: 3;
     #middle{

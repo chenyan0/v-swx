@@ -1,45 +1,46 @@
 <template>
   <div class="wrapper">
-      <Header :title="$route.meta.title" :islogin="false" isBack/>
-      <div class="edit-avatar">
-        <div class="avator">
-          <input type="file" name="" id="" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
-          <img :src="utils.BASEURL + info.avator" alt="">
-        </div>
-        <span class="edit-trigger">
-           <font-awesome-icon :icon="['fas', 'edit']" />
-        </span>
+    <Header :title="$route.meta.title" :islogin="false" isBack/>
+    <div class="edit-avatar">
+      <div class="avator">
+        <input type="file"  name="avator"  ref="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
+        <img :src="info.avator" alt="">
       </div>
-      <div class="edit-info">
-        <h1>基本信息</h1>
-        <div class="form-group">
-          <input type="text" v-model="info.fullname" placeholder="用户名">
-        </div>
-        <div class="form-group">
-          <input type="email" v-model="info.email" placeholder="邮箱">
-        </div>
-         <div class="form-group">
-          <input type="number" v-model="info.mobile" placeholder="手机号">
-        </div>
-        <div class="form-group">
-          <input type="number" v-model="info.pass" placeholder="旧密码">
-        </div>
-        <div class="form-group">
-          <input type="number" v-model="info.repeatpass" placeholder="新密码">
-        </div>
-        <button @click="submit">确定</button>
-      </div>
-      
-        
-       
-     
+      <span class="edit-trigger">
+             <font-awesome-icon :icon="['fas', 'edit']" />
+          </span>
     </div>
+    <div class="edit-info">
+      <h1>基本信息</h1>
+      <div class="form-group">
+        <input type="text" v-model="info.fullname" placeholder="用户名">
+      </div>
+      <div class="form-group">
+        <input type="email" v-model="info.email" placeholder="邮箱">
+      </div>
+      <div class="form-group">
+        <input type="number" v-model="info.mobile" placeholder="手机号">
+      </div>
+      <button @click="submit">确定</button>
+    </div>
+  
+  
+  
+  
+  </div>
 </template>
 
 <script>
-  import { Toast } from 'mint-ui'
-  import { mapActions,  mapGetters } from "vuex"
-  import { getUserInfoApi} from '@/api/login'
+  import {
+    Toast
+  } from 'mint-ui'
+  import {
+    mapActions,
+    mapGetters
+  } from "vuex"
+  import {
+    getUserInfoApi,updateUserInfoApi
+  } from '@/api/login'
   import utils from '@/utils/config'
   import Header from "@/components/template/header"
   export default {
@@ -48,18 +49,19 @@
     },
     data() {
       return {
-    utils,
-
-        info:{},
+        utils,
+        info:{
+        }
       }
     },
     computed: {
       ...mapGetters({
         form: "userInfo"
       }),
+      
     },
     methods: {
-      ...mapActions(["getUserInfoApi"]),   
+      ...mapActions(["getUserInfoApi"]),
       changeImage(e) {
         let file = e.target.files[0]
         this.file = file
@@ -67,43 +69,42 @@
         let that = this
         reader.readAsDataURL(file)
         reader.onload = function(e) {
-          that.form.avatorUrl = this.result;
+          that.info.avator = this.result;
         }
       },
       submit() {
-        const data = this.form
-        this.updateUserInfo(data).then(res =>{
-          Toast({
-            message: res.data.message,
-          });
-        }).catch(err => {
-          Toast({
-            message: err,
-            iconClass: "icon icon-error"
-          });
+        let obj = new FormData()
+        obj.append("id", this.form.id)
+        obj.append("avator", this.$refs.file.files[0])
+        obj.append("fullname", this.info.fullname)
+        obj.append("email", this.info.email)
+        obj.append("mobile", this.info.mobile)
+        updateUserInfoApi(obj).then(res => {
+          console.log(res)
+           Toast({
+              message: res.data.message,
+            });
         })
       }
     },
-    mounted(){
-        getUserInfoApi({id:this.form.id}).then((res)=>{
-          console.log(this.form)
-           console.log(res)
-           if(res.status=='200'){
-             this.info = Object.assign({},this.info,res.data)
-           }
-         }).catch(()=>{
-      })
+    mounted() {
+      getUserInfoApi({
+        id: this.form.id
+      }).then((res) => {
+        if (res.status == '200') {
+          this.info = Object.assign({}, this.info, res.data)
+        }
+      }).catch(() => {})
     },
-     beforeCreate(){
-       
-        document.getElementsByTagName("body")[0].className = "bg-fff";
-      }
+    beforeCreate() {
+      document.getElementsByTagName("body")[0].className = "bg-fff";
+    }
   };
 </script>
 
 <style lang="scss" scoped>
   @import "~@/styles/base";
-  $colors : #118fff #246FE2 //按钮
+  $colors: #118fff #5787d0 //按钮
   #5f7c8b //wenzi
   ;
   .wrapper {

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Header
+    <!-- <Header
       :title="title"
       :islogin="false"
-    />
+    /> -->
     <mt-tab-container
       class="page-tabbar-container"
       v-model="selected"
@@ -15,11 +15,11 @@
         <topic />
         <!-- <copyright/> -->
       </mt-tab-container-item>
-      <mt-tab-container-item id="我的">
-        <mine />
+      <mt-tab-container-item id="动态">
+        <Activity />
       </mt-tab-container-item>
-      <mt-tab-container-item id="关于">
-         <about />
+      <mt-tab-container-item id="我的">
+         <Mine />
         <copyright/>
       </mt-tab-container-item>
     </mt-tab-container>
@@ -32,21 +32,21 @@
       </mt-tab-item>
       <mt-tab-item id="专题">
         <div class="tab-icon">
-          <font-awesome-icon icon="comment" class="icon"/>
+          <font-awesome-icon icon="thumbtack" class="icon"/>
         </div>
         <p>专题</p>
       </mt-tab-item>
-      <mt-tab-item id="我的">
+      <mt-tab-item id="动态">
         <div class="tab-icon">
-          <font-awesome-icon icon="user" class="icon"/>
+          <font-awesome-icon icon="dice-d20" class="icon"/>
         </div>
-        <p>我的</p>
+        <p>动态</p>
       </mt-tab-item>
-      <mt-tab-item id="关于">
+      <mt-tab-item id="我的">
         <div class="tab-icon">
           <font-awesome-icon icon="dot-circle" class="icon"/>
         </div>
-        <p>关于</p>
+        <p>我的</p>
       </mt-tab-item>
     </mt-tabbar>
   </div>
@@ -54,16 +54,16 @@
 <script>
 import Index from "./index/index"
 import Topic from "./topic/topic"
+import Activity from "./activity/activity"
 import Mine from "./mine/mine"
-import About from "./about/about"
 import Header from "../template/header"
 import Copyright from "../template/copyright"
 export default {
   components: {
     Index,
     Topic,
+    Activity,
     Mine,
-    About,
     Header,
     Copyright
   },
@@ -104,7 +104,7 @@ ul {
   }
 }
 .page-tabbar-container {
-  padding-top: 40px;
+  // padding-top: 40px;
   padding-bottom: 50px;
 }
 .mint-tabbar {
@@ -116,7 +116,7 @@ ul {
     color: #9babba;
   }
   > .mint-tab-item.is-selected {
-    color: #246FE2;
+    color: #5787d0;
     background-color: transparent;
   }
   .icon{

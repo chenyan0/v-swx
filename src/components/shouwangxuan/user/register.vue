@@ -69,7 +69,6 @@
         }
       },
       submit() {
-        const data = this.form
         let obj = new FormData()
         obj.append("avator", this.$refs.file.files[0])
         obj.append("fullname", this.form.fullname)
@@ -77,19 +76,18 @@
         obj.append("email", this.form.email)
         obj.append("mobile", this.form.mobile)
         registerApi(obj).then(res => {
-          if (!res.data.status) {
+          console.log(res)
+          if (!res.data.code) {
             Toast({
               message: res.data.message,
-              iconClass: "icon icon-error"
             });
           } else {
-            this.setUserInfo(data);
             Toast({
               message: res.data.message,
             });
             this.$router.replace("/login");
           }
-        });
+        })
       }
     },
     beforeCreate() {
@@ -100,7 +98,7 @@
 
 <style lang="scss" scoped>
   @import "../../../styles/base";
-  $colors: #118fff #246FE2 //按钮
+  $colors: #118fff #5787d0 //按钮
   #5f7c8b //wenzi
   ;
   .wrapper {

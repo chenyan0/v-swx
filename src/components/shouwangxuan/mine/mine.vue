@@ -1,159 +1,129 @@
 <template>
   <div>
-    <div class="top">
+     <div class="top">
       <div class="avator">
-        <input type="file" name="" id="" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
-        <img :src="avatorUrl" alt="">
+        <img :src="utils.BASEURL + avatorUrl" alt="">
       </div>
-      <p ref="name" @click="jumpLink">{{username}}</p>
+      <p ref="name">{{username}}</p>
     </div>
-    <div class="mine-block">
-      <mt-navbar v-model="selected">
-        <mt-tab-item id="1">浏览</mt-tab-item>
-        <mt-tab-item id="2">评论</mt-tab-item>
-        <mt-tab-item id="3">点赞</mt-tab-item>
-        <mt-tab-item id="4">鼓励</mt-tab-item>
-        <mt-tab-item id="5">订阅</mt-tab-item>
-        <mt-tab-item id="6">言论</mt-tab-item>
-      </mt-navbar>
-      <!-- tab-container -->
-      <mt-tab-container v-model="selected">
-        <mt-tab-container-item id="1">
-          <ul>
-            <router-link :to="{path:'/detail'}" tag="li" v-for="i in list" :key="i.id">{{i.post_title}}</router-link>
-          </ul>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="2">
-          <ul>
-            <router-link :to="{path:'/detail'}" tag="li" v-for="i in list" :key="i.id">{{i.post_title}}</router-link>
-          </ul>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="3">
-          <ul>
-            <router-link :to="{path:'/detail'}" tag="li" v-for="i in list" :key="i.id">{{i.post_title}}</router-link>
-          </ul>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="4">
-          <ul>
-            <router-link :to="{path:'/detail'}" tag="li" v-for="i in list" :key="i.id">{{i.post_title}}</router-link>
-          </ul>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="5">
-          <ul>
-            <router-link :to="{path:'/detail'}" tag="li" v-for="i in list" :key="i.id">{{i.post_title}}</router-link>
-          </ul>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="6">
-          <ul>
-            <router-link :to="{path:'/detail'}" tag="li" v-for="i in list" :key="i.id">{{i.post_title}}</router-link>
-          </ul>
-        </mt-tab-container-item>
-      </mt-tab-container>
+    <div class="cells">
+      <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>
+             <font-awesome-icon icon="user-cog" class="cell-sm-icon" style="color: #5787d0;"/>修改个人资料
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+      <router-link tag="div" :to="{path:'/modifyPass'}" class="cell">
+        <span>
+             <font-awesome-icon icon="shield-alt" class="cell-sm-icon"  style=" color: #FF9800;"/>修改密码
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+    </div>
+    <div class="cells">
+      <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>
+             <font-awesome-icon icon="heart" class="cell-sm-icon"    style=" color: #FF9800;"/>我的收藏
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+      <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+        <span>
+             <font-awesome-icon icon="university" class="cell-sm-icon"    style=" color: #FF9800;"/>我的订阅
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+      <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+           <span>
+             <font-awesome-icon icon="history" class="cell-sm-icon"  style="color: #5787d0;"/>我的足迹
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+     
+    </div>
+    <div class="cells">
+          <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+           <span>
+             <font-awesome-icon icon="lightbulb" class="cell-sm-icon"  style="color: #FF9800;"/>消息中心
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+       <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+         <span>
+             <font-awesome-icon icon="cookie-bite" class="cell-sm-icon" style="color: #8BC34A;"/>意见反馈
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+      <router-link tag="div" :to="{path:'/modifyUserInfo'}" class="cell">
+           <span>
+             <font-awesome-icon icon="sliders-h" class="cell-sm-icon"   style="color: #5787d0;"/>设置
+         </span>
+        <font-awesome-icon icon="chevron-right" class="arrow-right"/>
+      </router-link>
+    </div>
+    <div class="sign-out">
+      <button @click="signOut" id="signout">退出登录</button>
     </div>
   </div>
 </template>
 
 <script>
   import {
-    Indicator,Toast
-  } from "mint-ui";
-  import {
-    mapGetters,mapActions
+    mapActions,mapGetters
   } from 'vuex'
-  
+    import {
+    getUserInfoApi,
+  } from '@/api/login'
+  import utils from '@/utils/config'
   export default {
     data() {
       return {
-        selected: "1",
-        list: []
-      };
-    },
-    beforeCreate() {
-      document.getElementsByTagName("body")[0].className = "bg-f7"
+        utils,
+        avatorUrl:""
+      }
     },
     computed: {
-      ...mapGetters( {
+      ...mapGetters({
         status: 'loginStatus',
         uinfo: 'userInfo'
       }),
-      username(){
-        return  this.status ? this.uinfo.fullname : '请登录'
-      },
-      avatorUrl(){
-        return this.uinfo.avatorUrl
-      }
-    },
-    created() {
-      this.fetchData(this.selected)
-    },
-    watch: {
-      selected: function() {
-        this.fetchData(this.selected)
+      username() {
+        return this.status ? this.uinfo.fullname : '请登录'
       }
     },
     methods: {
-       ...mapActions(["setUserInfo"]),
-      jumpLink(){
-        if(!this.status){
-           this.$router.push("login")
-        }else{
-          return
-        }
-      },
-      changeImage(e) {
-        if(typeof FileReader == "undefined"){
-            alert("您的浏览器不支持FileReader对象！");
-        }
-        if(!this.status){
-            Toast({
-              message: "请先登陆",
-              iconClass: "icon icon-error",
-              position: "top"
-            });
-            return
-        }
-        let file = e.target.files[0];
-        this.file = file;
-        let reader = new FileReader();
-        let that = this;
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-          console.log(that.uinfo)
-           that.$set(that.uinfo,"avatorUrl", this.result)
-           const copy = Object.assign({}, that.uinfo)
-            that.$store.dispatch("updateUserInfo",copy)
-        };
-      },
-      fetchData(t) {
-        Indicator.close();
-        Indicator.open({
-          text: "Loading...",
-          spinnerType: "fading-circle"
-        });
-        const url = "http://localhost:3000/post/hot";
-        const self = this;
-        this.$axios.post(url, {t: t})
-          .then( res => {
-              Indicator.close();
-              self.list = res.data.data;
-            },
-            err => {
-              console.log(err);
-            }
-          )
-          .catch(error => {
-            console.log(error);
-          });
+      ...mapActions(["LogOut"]),
+      signOut() {
+        this.$store.dispatch('LogOut').then(() => {
+          this.$router.push('login')
+        }).catch(() => {
+  
+        })
       }
+    },
+    created(){
+       getUserInfoApi({
+          id: this.uinfo.id
+        }).then((res) => {
+          if (res.status == '200') {
+            console.log(res)
+            this.avatorUrl = res.data.avator
+          }
+        }).catch(() => {})
     }
+
   };
 </script>
 
 <style lang="scss" scoped>
+  @import '~@/styles/util/common';
+  $colors : #118fff #5787d0 //按钮
+  #5f7c8b //wenzi
+  ;
   .top {
     padding: 30px 0;
     text-align: center;
-    background: #246FE2;
+    background: #5787d0;
     color: #fff;
     font-size: 14px;
     .avator {
@@ -167,49 +137,54 @@
         width: 100%;
         height: 100%;
       }
-      [type="file"] {
+    }
+  }
+  .cells {
+    margin-top: .5rem;
+    .cell {
+      background: #fff;
+      padding: .625rem .9375rem;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      &:last-child:after {
+        border-bottom: 0;
+      }
+      &:after {
+        content: "";
         position: absolute;
-        left: 0;
-        top: 0;
+        left: 1rem;
+        bottom: 0;
         width: 100%;
-        height: 100%;
-        opacity: 0;
-        z-index: 100;
+        border-bottom: 1px solid #f3f3f3;
+      }
+      .arrow-right {
+        color: #c7c7c7;
+      }
+      .cell-sm-icon{
+width: 1.25em;
+margin-right: 1rem;
       }
     }
   }
   
-  .mine-block {
-    .mint-navbar {
-
-      .mint-tab-item {
-        background: #fff;
-        color: #9babba;
-        text-align: center;
-        box-sizing: border-box;
-        margin-bottom: 0;
-           font-size: 16px;
-      }
-       .mint-tab-item-label{
-        font-size: 16px;
+  .sign-out {
+    margin: .9375rem;
+    button {
+      width: 100%;
+      height: 2.5rem;
+      border-radius: 1.25rem;
+      background: nth($list: $colors, $n:2);
+      border: 0;
+      outline: none;
+      @include font-dpr(18px);
+      color: white;
+      display: block;
     }
-    }
-    .mint-tab-item.is-selected {
-      border-bottom: 2px solid #495056;
-      color: #495056;
-    }
-   
-  }
-  
-  
-  ul {
-    padding: 0 15px 0 30px;
-    list-style: decimal;
-    li {
-      margin-top: 10px;
-      font-size: 16px;
+    #signout {
+      border: 1px solid nth($list: $colors, $n:2);
+      background: transparent;
+      color: nth($list: $colors, $n:2);
     }
   }
 </style>
-
-

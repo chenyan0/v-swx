@@ -84,8 +84,9 @@
   </div>
 </template>
 <script>
-import ArticleList from "../../template/articleList";
 import { Indicator,Toast } from "mint-ui";
+import {getListApi} from "@/api/login"
+import ArticleList from "../../template/articleList";
 export default {
   components: {
     ArticleList,
@@ -118,23 +119,14 @@ export default {
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:3000/post";
-      const self = this;
-        this.$axios
-          .get(url)
-          .then(
-            res => {
-              self.list.push(...res.data.data) ;
-              Indicator.close();
-              return res;
-            },
-            err => {
-              console.log(err);
-            }
-          )
-          .catch(error => {
-            console.log(error);
-          });
+      getListApi().then(res => {
+        this.list=res.data.data
+         Indicator.close();
+      },err => {
+            console.log(err);
+      }).catch(err => {
+            console.log(err);
+      })
     },
     formSubmit(){
       if(!this.searchKey){

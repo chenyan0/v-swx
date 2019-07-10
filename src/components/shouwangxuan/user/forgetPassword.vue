@@ -89,7 +89,7 @@
 
 <style lang="scss" scoped>
     @import "../../../styles/base";
-    $colors: #118fff #246FE2 //按钮
+    $colors: #118fff #5787d0 //按钮
     #5f7c8b //wenzi
     ;
     .forget-form {
@@ -129,15 +129,16 @@
                 border: 1px solid rgba(0, 140, 255, 0.4);
                 background: transparent;
                 color: #5f7c8b;
-                border-radius: 10px;
-                width: 100px;
+                  border-radius: 6px;
+    width: 90px;
+    line-height: 24px;
             }
             .isVisible{
                color: #5f7c8b;
             }
             &>input {
                 border: 0;
-                background-color: white;
+                background-color:transparent;
                 height: 30px;
                 outline: none;
                 font-size: 14px;
