@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import planRouter from '@/components/plan/index'
-import queryRouter from '@/components/query/index'
 import swxRouter from '@/components/shouwangxuan/index'
 Vue.use(Router)
 const router = new Router({
@@ -9,8 +7,6 @@ const router = new Router({
   mode: 'hash',
   linkExactActiveClass: 'active',
   routes: [
-    ...queryRouter,
-    ...planRouter,
     ...swxRouter
   ]
 })
@@ -26,8 +22,8 @@ router.beforeEach((to, from, next) => {
       let token = localStorage.getItem('token')
       if (token === 'null' || token === '') {
         next({
-          path: '/login',
-          query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+          path: '/login'
+          // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
         })
       } else {
         next()
