@@ -8,6 +8,7 @@ import Hot from './hot/hot'
 import Detail from './detail/detail'
 import ModifyUserInfo from './mine/modifyUserInfo'
 import ModifyPass from './mine/modifyPass'
+import SearchResult from './index/searchResult'
 export default [
   {
     path: '/',
@@ -54,15 +55,15 @@ export default [
     }
   },
   {
-    path: '/list/:id',
-    name: 'list',
-    component: List,
+    path: '/search',
+    name: 'search',
+    component: SearchResult,
     meta: {
-      title: '查询结果'
+      title: '搜索结果'
     }
   },
   {
-    path: '/list',
+    path: '/list/:id',
     name: 'list',
     component: List,
     meta: {

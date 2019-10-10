@@ -65,15 +65,8 @@
         }
       }
     },
-  computed: {
-     ...mapGetters({
-        base: "userInfo"
-      }),
-    },
-  
     methods: {
       submit() {
-        console.log(this.base)
          if (!this.$v.form.oldPass.required) {
           Toast({
             message: '密码不能为空',
@@ -92,7 +85,7 @@
           })
           return
         }
-        this.form= Object.assign({}, this.form, {id:this.base.id })
+        this.form= Object.assign({}, this.form, {id:localStorage.getItem('id') })
         console.log(this.form)
         updateUserPassApi(this.form).then(res =>{
           Toast({

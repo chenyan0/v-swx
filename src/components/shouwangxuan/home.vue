@@ -8,41 +8,30 @@
       class="page-tabbar-container"
       v-model="selected"
     >
-      <mt-tab-container-item id="首页">
-          <index />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="专题">
-        <topic />
-        <!-- <copyright/> -->
-      </mt-tab-container-item>
-      <mt-tab-container-item id="动态">
-        <Activity />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="我的">
-         <Mine />
-        <copyright/>
-      </mt-tab-container-item>
+     <mt-tab-container-item :id="selected">
+       <component :is="currentView" keep-alive></component>
+        </mt-tab-container-item >
     </mt-tab-container>
     <mt-tabbar v-model="selected">
-      <mt-tab-item id="首页">
+      <mt-tab-item id="首页" @click.native="selectChange('Index')">
         <div class="tab-icon">
           <font-awesome-icon icon="home" class="icon"/>
         </div>
         <p>首页</p>
       </mt-tab-item>
-      <mt-tab-item id="专题">
+      <mt-tab-item id="专题" @click.native="selectChange('Topic')">
         <div class="tab-icon">
           <font-awesome-icon icon="thumbtack" class="icon"/>
         </div>
         <p>专题</p>
       </mt-tab-item>
-      <mt-tab-item id="动态">
+      <mt-tab-item id="动态" @click.native="selectChange('Activity')">
         <div class="tab-icon">
           <font-awesome-icon icon="dice-d20" class="icon"/>
         </div>
         <p>动态</p>
       </mt-tab-item>
-      <mt-tab-item id="我的">
+      <mt-tab-item id="我的" @click.native="selectChange('Mine')">
         <div class="tab-icon">
           <font-awesome-icon icon="dot-circle" class="icon"/>
         </div>
@@ -69,13 +58,19 @@ export default {
   },
   data() {
     return {
-      selected: "首页"
+      selected: '首页',
+      currentView:'Index'
     };
   },
   
   computed: {
     title: function() {
       return this.$route.meta.title;
+    }
+  },
+  methods:{
+    selectChange(view){
+this.currentView=view
     }
   },
   activated(){

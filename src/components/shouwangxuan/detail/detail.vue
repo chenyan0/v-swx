@@ -52,10 +52,13 @@
     Toast,
     Indicator
   } from "mint-ui"
-  import {getPostDetailApi} from '@/api/login'
+
+  import {getPostDetailApi, getUserInfoApi} from '@/api/login'
   import ArticleContent from "./articleContent"
   import Header from "../../template/header"
   import formatDate from "../../../utils/formatDate"
+import { mapGetters } from 'vuex';
+import utils from '@/utils/config'
   
   export default {
     filters: {
@@ -70,6 +73,7 @@
     },
     data() {
       return {
+        utils,
         article: {},
         commentList: [],
         commentSum: "", //文章评论总计
@@ -79,14 +83,23 @@
         type: 0, //0为评论作者1为评论别人的评论2为评论别人的别人
         oldComment: null, //被选中评论的name
         chosedIndex: -1, //被选中评论的index
-      };
+      }
     },
+computed:{
+   ...mapGetters({
+        userinfo: "userInfo"
+      }),
+      // user(){
+      //    getUserInfoApi(this.userinfo.id).then((data)=>{
+      //      console.log(data)
+      //    })
+      // }
+},
     watch: {
       $route: function(to, from) {
         const newId = to.query.id;
         const oldId = from.query.id;
         if (oldId) {
-  
           this.id = newId;
           this.fetchData();
         }
@@ -122,7 +135,6 @@
         }).catch(err => {
           console.log(err)
         })
-  
       },
       goHome() {
         this.$router.push({
@@ -132,9 +144,9 @@
       postComment() {
         let v = this.commentText;
         const params = {
-          thumb: this.$store.getters.userInfo.avator,
+          thumb: utils.BASEURL+this.userinfo.avator,
           time: formatDate(new Date(), "yyyy-MM-dd"),
-          name: this.$store.getters.userInfo.fullname,
+          name: this.userinfo.fullname,
           content: v,
           reply: []
         };
@@ -144,7 +156,7 @@
             this.commentSum++;
           } else if (this.type == 1) {
             this.article.comments_info[this.chosedIndex].reply.push({
-              responder: this.$store.getters.userInfo.fullname,
+              responder: this.userinfo.fullname,
               reviewers: this.oldComment,
               time: formatDate(new Date(), "yyyy-MM-dd"),
               content: v
@@ -152,14 +164,6 @@
             this.type = 0;
           }
           this.commentText = "";
-          // this.$axios
-          //   .post("http://localhost:8000/api/article/postComment", params)
-          //   .then(res => {
-          //     console.log(res);
-          //   })
-          //   .catch(error => {
-          //     console.log(error);
-          //   });
         } else {
           Toast({
             message: "请填写评论后再发表",
@@ -183,6 +187,7 @@
     beforeCreate() {
       document.getElementsByTagName("body")[0].className = "bg-fff";
     },
+  
     created() {
       this.$nextTick(function() {
         this.fetchData()

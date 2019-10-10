@@ -4,7 +4,7 @@
     <div class="edit-avatar">
       <div class="avator">
         <input type="file"  name="avator"  ref="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="changeImage($event)">
-        <img :src="info.avator" alt="">
+        <img :src="userinfo.avator" alt="">
       </div>
       <span class="edit-trigger">
              <font-awesome-icon :icon="['fas', 'edit']" />
@@ -13,20 +13,16 @@
     <div class="edit-info">
       <h1>基本信息</h1>
       <div class="form-group">
-        <input type="text" v-model="info.fullname" placeholder="用户名">
+        <input type="text" v-model="userinfo.fullname" placeholder="用户名">
       </div>
       <div class="form-group">
-        <input type="email" v-model="info.email" placeholder="邮箱">
+        <input type="email" v-model="userinfo.email" placeholder="邮箱">
       </div>
       <div class="form-group">
-        <input type="number" v-model="info.mobile" placeholder="手机号">
+        <input type="number" v-model="userinfo.mobile" placeholder="手机号">
       </div>
       <button @click="submit">确定</button>
     </div>
-  
-  
-  
-  
   </div>
 </template>
 
@@ -50,18 +46,15 @@
     data() {
       return {
         utils,
-        info:{
-        }
       }
     },
     computed: {
       ...mapGetters({
-        form: "userInfo"
+        userinfo: "userInfo"
       }),
       
     },
     methods: {
-      ...mapActions(["getUserInfoApi"]),
       changeImage(e) {
         let file = e.target.files[0]
         this.file = file
@@ -74,7 +67,7 @@
       },
       submit() {
         let obj = new FormData()
-        obj.append("id", this.form.id)
+        obj.append("id", localStorage.getItem('id'))
         obj.append("avator", this.$refs.file.files[0])
         obj.append("fullname", this.info.fullname)
         obj.append("email", this.info.email)
@@ -87,15 +80,7 @@
         })
       }
     },
-    mounted() {
-      getUserInfoApi({
-        id: this.form.id
-      }).then((res) => {
-        if (res.status == '200') {
-          this.info = Object.assign({}, this.info, res.data)
-        }
-      }).catch(() => {})
-    },
+  
     beforeCreate() {
       document.getElementsByTagName("body")[0].className = "bg-fff";
     }

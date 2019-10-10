@@ -1,11 +1,11 @@
 import * as types from '../constants/types'
-import {loginByUsernameApi, logoutApi, updateUserInfoApi, updateUserPassApi} from '@/api/login'
+import {loginByUsernameApi, logoutApi, updateUserInfoApi, updateUserPassApi, followBloggerApi} from '@/api/login'
 
 const user = {
   state: {
     token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
     // 用户登录状态
-    loginStatus: false,
+    loginStatus: !!localStorage.getItem('token'),
     // 用户登录信息
     userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {}
   },
@@ -15,11 +15,16 @@ const user = {
         loginByUsernameApi(res).then(res => {
           console.log(res)
           if (res.status === 200) {
-            const { token } = res.data.data
-            localStorage.setItem('token', token)
-            commit(types.SET_TOKEN, token)
-            commit(types.SET_LOGIN_STATUS, true)
-            commit(types.SET_USER_INFO, res.data.data)
+            if (res.data.code) {
+              const { token, id } = res.data.data
+              localStorage.setItem('token', token)
+              localStorage.setItem('id', id)
+              commit(types.SET_TOKEN, token)
+              commit(types.SET_LOGIN_STATUS, true)
+              commit(types.SET_USER_INFO, res.data.data)
+            } else {
+              commit(types.SET_USER_INFO, res.data.data)
+            }
           }
           resolve(res)
         }).catch(err => {
@@ -30,20 +35,13 @@ const user = {
     LogOut ({commit, state}) {
       return new Promise((resolve, reject) => {
         logoutApi(state.token).then((res) => {
+          localStorage.removeItem('token')
+          localStorage.removeItem('id')
           commit(types.SET_TOKEN, '')
           resolve(res)
         })
       })
     },
-    FedLogOut ({commit}) {
-      return new Promise(resolve => {
-        commit(types.SET_TOKEN, '')
-        resolve()
-      })
-    },
-    /**
-       * 用户登录
-       */
     setUserInfo ({ commit }, res) {
       sessionStorage.setItem('userInfo', JSON.stringify(res))
       commit(types.SET_USER_INFO, res)
@@ -85,6 +83,17 @@ const user = {
       sessionStorage.setItem('loginStatus', true)
       commit(types.SET_TOKEN, res)
       commit(types.SET_LOGIN_STATUS, true)
+    },
+    followTopic ({ commit }, res) {
+      return new Promise((resolve, reject) => {
+        followBloggerApi(res).then((data) => {
+          console.log(data)
+          commit(types.SET_FOLLOWTOPIC_STATUS, true)
+          resolve(data)
+        }).catch(() => {
+
+        })
+      })
     }
 
   },
@@ -102,6 +111,9 @@ const user = {
       let data = Object.assign(state.userInfo, info)
       console.log(info, data)
       state.userInfo = info
+    },
+    [types.SET_FOLLOWTOPIC_STATUS] (state, res) {
+      state.followTopicStatus = res
     }
   }
 }

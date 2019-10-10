@@ -4,10 +4,14 @@
     <div class="main-container">
       <div class="top">
         <img src="../../../../static/img/banner/timg1.jpeg" alt="">
-        <h1>{{ $route.query.search ? "搜索关键字：" : ''}}<span ref="key"></span></h1>
-        <span ref="desc"></span>
+        <h1>搜索关键字:<span ref="key"></span></h1>
+        <span ref="desc">本搜索是全文搜索</span>
       </div>
-      <Article-List :data="list" />
+      <Article-List :data="list" v-if="list.length"/>
+      <div v-else class="default-none">
+        <img src="../../../../static/img/none.jpg" alt="">
+        <p>啥也没找到</p>
+      </div>
     </div>
   
   </div>
@@ -18,10 +22,11 @@
     Indicator
   } from "mint-ui";
   import {
-    getListApi,getCateDetailListApi
+    searchApi
   } from "@/api/login"
   import ArticleList from "../../template/cateDetailList";
   import Header from "../../template/header";
+
   
   export default {
     components: {
@@ -34,29 +39,26 @@
         source: ''
       };
     },
-    watch: {
-  
-    },
+     beforeCreate() {
+    document.getElementsByTagName("body")[0].className = "bg-fff";
+  },
     created() {
       const {
         params,
         query
       } = this.$route
       this.$nextTick(() => {
-       console.log(params)
-        this.$refs.key.innerHTML = query.search || params.name
-        this.$refs.desc.innerHTML = params.desc ? params.desc : "本搜索是全文搜索"
+        this.$refs.key.innerHTML = query.val 
       });
       this.fetchData()
     },
     beforeRouteEnter(to, from, next) {
-      if (to.query.search) {} else if (to.params.id) {}
+      if (to.query.val) {} else if (to.params.id) {}
       next(vm => {})
     },
     computed: {
       title: function() {
-        let t = this.$route.query.search ? "搜索词:" + this.$route.query.search : this.$route.params.name
-        return t
+        return    "搜索词:" + this.$route.query.val 
       }
     },
     methods: {
@@ -66,22 +68,14 @@
           text: "Loading...",
           spinnerType: "fading-circle"
         });
-        getCateDetailListApi({'id':this.$route.params.id}).then(res => {
-          this.list = res.data
+        searchApi({'text':this.$route.query.val}).then(res => {
+          this.list=res.data
           Indicator.close();
         }, err => {
           console.log(err);
         }).catch(err => {
           console.log(err);
         })
-        // getListApi().then(res => {
-        //   this.list = res.data.data
-        //   Indicator.close();
-        // }, err => {
-        //   console.log(err);
-        // }).catch(err => {
-        //   console.log(err);
-        // })
       }
     },
   
@@ -89,6 +83,19 @@
 </script>
 
 <style lang="scss" scoped>
+.default-none{
+  margin-top: 20px;
+  text-align: center;
+  img{
+    width: 50%;
+
+  }
+  p
+  {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+}
   .main-container {
     padding: 0;
     .top {

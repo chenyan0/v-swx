@@ -86,7 +86,7 @@
 <script>
 import { Indicator,Toast } from "mint-ui";
 import {getListApi} from "@/api/login"
-import ArticleList from "../../template/articleList";
+import ArticleList from "../../template/cateDetailList";
 export default {
   components: {
     ArticleList,
@@ -120,7 +120,7 @@ export default {
         spinnerType: "fading-circle"
       });
       getListApi().then(res => {
-        this.list=res.data.data
+        this.list=res.data
          Indicator.close();
       },err => {
             console.log(err);
@@ -132,7 +132,7 @@ export default {
       if(!this.searchKey){
         Toast('提交信息为空')
       }else{
-        this.$router.push({ path: '/list', query: { search: this.searchKey }})
+        this.$router.push({ path: '/search', query: { val: this.searchKey }})
         this.searchKey=''
       }
     }
@@ -228,9 +228,7 @@ form {
     justify-content: center;
     align-items: center;
     width: 160px;
-    height: 80px;
     border-radius: 6px;
-    background-image: url(http://wx2.sinaimg.cn/mw690/d0cdcf72gy1fxkemocghrj209f04gmx2.jpg);
     background-size: 100%;
   }
   .top-Nav2-item2 {
@@ -238,10 +236,7 @@ form {
     justify-content: center;
     align-items: center;
     width: 160px;
-    height: 80px;
     border-radius: 6px;
-    background-image: url(http://wx2.sinaimg.cn/mw690/d0cdcf72gy1fxkemkkrkbj209f04g3yp.jpg);
-    background-size: 100%;
   }
   .top-Nav2-item-word {
     display: flex;
@@ -251,7 +246,7 @@ form {
     font-size: 12px;
     font-weight: 500;
     height: 30px;
-    width: 100px;
+    width: 160px;
     background-color: #fff;
     border-radius: 15px;
     border: 1px #c4c4c4 solid;

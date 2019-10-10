@@ -3,33 +3,31 @@
     <Header :title="$route.meta.title" isBack></Header>
     <div class="hot-container">
       <mt-navbar v-model="selected">
-        <mt-tab-item id="1">评论数</mt-tab-item>
-        <mt-tab-item id="2">浏览数</mt-tab-item>
-        <mt-tab-item id="3">点赞数</mt-tab-item>
-        <mt-tab-item id="4">鼓励数</mt-tab-item>
+        <mt-tab-item id="total_comments">评论数</mt-tab-item>
+        <mt-tab-item id="pageviews">浏览数</mt-tab-item>
+        <mt-tab-item id="like_count">点赞数</mt-tab-item>
       </mt-navbar>
       <!-- tab-container -->
       <mt-tab-container v-model="selected">
-        <mt-tab-container-item id="1">
+        <mt-tab-container-item id="total_comments">
 
           <Article-List :data="list" />
         </mt-tab-container-item>
-        <mt-tab-container-item id="2">
+        <mt-tab-container-item id="pageviews">
           <Article-List :data="list" />
         </mt-tab-container-item>
-        <mt-tab-container-item id="3">
+        <mt-tab-container-item id="like_count">
           <Article-List :data="list" />
         </mt-tab-container-item>
-        <mt-tab-container-item id="4">
-          <Article-List :data="list" />
-        </mt-tab-container-item>
+    
       </mt-tab-container>
     </div>
   </div>
 </template>
 <script>
 import Header from "../../template/header";
-import ArticleList from "../../template/articleList";
+import ArticleList from "../../template/cateDetailList";
+import {getHotListApi} from '@/api/login'
 import { Indicator } from "mint-ui";
 export default {
   components: {
@@ -40,7 +38,7 @@ export default {
     return {
       curpage: 1,
       list: [],
-      selected: "1"
+      selected: 'total_comments'
     };
   },
   watch:{
@@ -49,28 +47,21 @@ export default {
     }
   },
   methods: {
-    fetchData(t) {
+    fetchData(params) {
       Indicator.close();
       Indicator.open({
         text: "Loading...",
         spinnerType: "fading-circle"
       });
-      const url = "http://localhost:3000/post/hot";
-      const self = this;
-        this.$axios
-          .post(url,{t:t})
-          .then(
-            res => {
-              self.list = res.data.data;
-              Indicator.close();
-            },
-            err => {
-              console.log(err);
-            }
-          )
-          .catch(error => {
-            console.log(error);
-          });
+      getHotListApi({type:params}).then((res)=>{
+        this.list = res.data
+        Indicator.close();
+      },err=>{
+        console.log(err);
+      }).catch(error => {
+        console.log(error);
+      })
+    
     }
   },
   created() {
@@ -80,9 +71,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .hot-container {
-  padding-top: 40px;
   background-color: #fff;
- 
   .common-list {
     padding: 0 15px;
   }

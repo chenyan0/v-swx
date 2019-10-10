@@ -1,13 +1,13 @@
 <template>
   <div class="page-loadmore-wrapper" ref="wrapper" >
-  
     <mt-loadmore :auto-fill="false" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" @bottom-status-change="handleBottomChange">
       <div class="topic-common-list">
-        <router-link :to="{ name: 'list', params: { id:item.id, name:item.name, desc:item.description }}" tag="div" class="list-item" v-for="item in list" :key="item.id">
-          <img :src="item.category_thumbnail_image" alt="" :data-id="item.id">
-          <h3 class="content-title" :data-id="item.id">
-            <p>{{item.name}} </p><span @click="handleOrder" :class="item.order_status ? 'ordered' : '' ">{{item.order_status ? '已订阅' : '未订阅' }}</span></h3>
-          <p class="content-brief" :data-id="item.id">{{item.description}}</p>
+        <router-link :to="{ name: 'list', params: { id:item.t_id, name:item.t_name, desc:item.t_desc}}" tag="div" class="list-item" v-for="item in list" :key="item.id">
+          <img :src="utils.BASEURL+item.t_thumbnail_image" alt="" :data-id="item.id">
+          <h3 class="content-title" :data-id="item.t_id">
+            <p>{{item.t_name}} </p>
+            <span @click="handleOrder" :class="item.order_status ? 'ordered' : '' ">{{item.order_status ? '已订阅' : '未订阅' }}</span></h3>
+          <p class="content-brief" :data-id="item.t_id">{{item.t_desc}}</p>
         </router-link>
       </div>
     </mt-loadmore>
@@ -18,6 +18,8 @@
 import {
     getCategoryListApi
   } from "@/api/login"
+  import utils from '@/utils/config'
+
   import Copyright from "../../template/copyright";
   import {
     Loadmore
@@ -28,6 +30,7 @@ import {
     },
     data() {
       return {
+        utils,
         list: [],
         bottomStatus: "",
         allLoaded: false,
@@ -62,7 +65,8 @@ import {
           pager: this.page
         }).then(res => {
           if (res.status == 200) {
-            let list = res.data.data;
+            console.log(res)
+            let list = res.data;
             list.map(n => this.list.push(n));
           }
         }, err => {
@@ -92,6 +96,7 @@ import {
     padding: 15px 0px;
     margin: 0 15px;
     overflow: auto;
+    touch-action: none;
   }
   
   .list-item {

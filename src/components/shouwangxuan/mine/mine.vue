@@ -79,17 +79,14 @@
     data() {
       return {
         utils,
-        avatorUrl:""
+        avatorUrl:"",
+        username:'请登录'
       }
     },
     computed: {
       ...mapGetters({
-        status: 'loginStatus',
-        uinfo: 'userInfo'
       }),
-      username() {
-        return this.status ? this.uinfo.fullname : '请登录'
-      }
+      
     },
     methods: {
       ...mapActions(["LogOut"]),
@@ -103,11 +100,12 @@
     },
     created(){
        getUserInfoApi({
-          id: this.uinfo.id
+          id: localStorage.getItem('id')
         }).then((res) => {
           if (res.status == '200') {
-            console.log(res)
+            this.$store.dispatch("setUserInfo",res.data)
             this.avatorUrl = res.data.avator
+            this.username=res.data.fullname
           }
         }).catch(() => {})
     }
@@ -140,10 +138,11 @@
     }
   }
   .cells {
-    margin-top: .5rem;
+    margin-top: 10px;
     .cell {
       background: #fff;
-      padding: .625rem .9375rem;
+      padding: 10px;
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
       position: relative;
@@ -169,11 +168,11 @@ margin-right: 1rem;
   }
   
   .sign-out {
-    margin: .9375rem;
+    margin: 20px;
     button {
       width: 100%;
-      height: 2.5rem;
-      border-radius: 1.25rem;
+       height: 34px;
+    border-radius: 17px;
       background: nth($list: $colors, $n:2);
       border: 0;
       outline: none;
