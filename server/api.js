@@ -81,12 +81,47 @@ const updateUserPass = async (value, res) => {
     res.json({ message: '密码修改成功' })
   }
 }
-//  修改用户基础信息
+// 修改用户基础信息
 const updateUserBaseInfo = async (value, res) => {
   const { fullname, email, mobile, path, id } = value
-  console.log(fullname, email, mobile, path, id)
   await query(sqlMap.updateUserBaseInfo, [fullname, email, mobile, path, id])
   res.json({ code: 1, message: '修改成功' })
+}
+const getRecommendBlogger = async (res) => {
+  const v = await query(sqlMap.getRecommendBlogger)
+  console.log(v)
+  res.json(v)
+}
+// 关注博主
+const followBlogger = async (value, res) => {
+  console.log(value)
+}
+const getTopicList = async (res) => {
+  const v = await query(sqlMap.getTopicList)
+  res.json(v)
+}
+const getCateDetailList = async (value, res) => {
+  const {id} = value
+  const v = await query(sqlMap.getCateDetailList, id)
+  res.json(v)
+}
+const searchPost = async (value, res) => {
+  const { text } = value
+  const v = await query(sqlMap.searchPost, text)
+  console.log(v)
+  res.json(v)
+}
+const getArticles = async (res) => {
+  const v = await query(sqlMap.getArticles)
+  console.log(v)
+  res.json(v)
+}
+const getHotArticles = async (value, res) => {
+  const {type} = value
+  console.log(type)
+  const v = await query(`SELECT * FROM articles ORDER BY ${type} DESC`)
+  console.log(v)
+  res.json(v)
 }
 module.exports = {
   addUser,
@@ -94,6 +129,13 @@ module.exports = {
   getUserById,
   updateUserPass,
   updateUserBaseInfo,
+  getRecommendBlogger,
+  followBlogger,
+  getTopicList,
+  getCateDetailList,
+  searchPost,
+  getArticles,
+  getHotArticles,
   delValue: function (req, res, next) {
     const { id } = req.body
     pool.getConnection((_err, connection) => {

@@ -20,6 +20,17 @@ const DATA = {
     'like_count|0-200': 1,
     'pageviews|0-10000': 0
   },
+  blogger: {
+    'id|+1': 1,
+    'name': '@cname',
+    'latestArt': () => Random.ctitle(),
+    'post_thumbnail_image|1': [
+      '@image(100x75, #4C2329, #fff, 言轩)',
+      '@image(100x75, #FAE7D8, #6C6C6C, 言轩)',
+      '@image(100x75, #F2B287, #fff, 言轩)'
+    ],
+    'follow': '@boolean()'
+  },
   categories: {
     'id|+1': 1,
     'count': 150,

@@ -4,15 +4,16 @@ var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 
-var indexRouter = require('./routes/index')
-var userRouter = require('./routes/user')
-var articleRouter = require('./routes/article')
+
 var cors = require('cors')
 var bodyParser = require('body-parser')
 var app = express()
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
+var route = require('./route')
+route(app)
 // 设置跨域访问
 app.use(cors())
 
@@ -24,9 +25,6 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/upload', express.static('./upload'))
-app.use('/', indexRouter)
-app.use('/user', userRouter)
-app.use('/post', articleRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
